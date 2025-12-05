@@ -1,2 +1,2 @@
-# MethylCIBERSORT(origin reference)
-# meth_atlas(made by ourselves)
+# MethylCIBERSORT(designed for deconvolution)
+# meth_atlas(designed by ourselves)
