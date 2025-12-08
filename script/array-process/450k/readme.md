@@ -1,8 +1,8 @@
-# 🧬 DNA Methylation Data Processing and Quality Control Pipeline for 450K Array Data (GSE125105, GSE127824, GSE88824) with IDAT Files
+# DNA Methylation Data Processing and Quality Control Pipeline for 450K Array Data (GSE125105, GSE127824, GSE88824) with IDAT Files
 
 This project provides a complete **R language pipeline** for processing raw Illumina 450K DNA methylation array data (`.idat` files). The script covers the entire workflow from reading raw data to generating high-quality $\beta$ values, adhering strictly to best practices for bioinformatics data preprocessing and quality control (QC).
 
-## 🎯 Project Overview
+## Project Overview
 
 This pipeline is designed to transform raw Illumina IDAT files into a normalized and filtered $\beta$ value matrix, suitable for downstream Epigenome-Wide Association Studies (EWAS) or deconvolution analyses.
 
@@ -16,7 +16,7 @@ This pipeline is designed to transform raw Illumina IDAT files into a normalized
 | **Probe Filtering** | Removes **SNP**-related probes and probes located on sex chromosomes (`chrX/chrY`). | `setdiff`, `intersect` |
 | **Output Generation** | Saves the final processed $\beta$ values per sample into individual text files. | Custom `R` function |
 
-## ⚙️ Installation Dependencies
+## Installation Dependencies
 
 To run this script, the following R packages are required. It is highly recommended to install them within a **Conda** or **renv** environment to avoid dependency conflicts.
 
@@ -31,7 +31,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install(c("minfi", "impute", "IlluminaHumanMethylation450kmanifest"))
 ```
 
-## 🚀 Usage Guide
+## Usage Guide
 
 ### Running the Pipeline:
 
@@ -55,7 +55,7 @@ load("/data/zhangmch/ewas_array/script/450k/450K_cg_annotation.RData")
 output_dir <- "/data/zhangmch/ewas_array/result/GSE125105"
 ```
 
-## 📁 Code Explanation
+## Code Explanation
 
 ### 1. Set Working Directory and Load Libraries
 ```r
@@ -157,7 +157,7 @@ output_dir <- "/data/zhangmch/ewas_array/result/GSE125105"
 save_columns_as_files(beta, output_dir)
 ```
 
-## 💾 Output Files
+## Output Files
 
 A separate `.txt` file will be generated for each sample in the specified `output_dir` directory.
 
