@@ -1,6 +1,6 @@
 # DNA Methylation Data Processing and Quality Control Pipeline for 850K (EPIC) Array Data (GSE123914, GSE112618, GSE110554, GSE184269) with IDAT Files
 
-This project provides a complete **R language pipeline** for processing raw Illumina 450K DNA methylation array data (`.idat` files). The script covers the entire workflow from reading raw data to generating high-quality $\beta$ values, adhering strictly to best practices for bioinformatics data preprocessing and quality control (QC).
+This project provides a complete **R language pipeline** for processing raw Illumina 850K (EPIC) DNA methylation array data (`.idat` files). The script covers the entire workflow from reading raw data to generating high-quality $\beta$ values, adhering strictly to best practices for bioinformatics data preprocessing and quality control (QC).
 
 ## Project Overview
 
@@ -46,13 +46,13 @@ BiocManager::install(c("minfi", "impute", "IlluminaHumanMethylation450kmanifest"
 setwd("/data/zhangmch/ewas_array/data")
 
 # 6. Path to SNP Probe List file
-load("/data/zhangmch/ewas_array/script/450k/snp_cg_450K.RData")
+load("/data/zhangmch/ewas_array/script/850k/snp_cg_850K.RData")
 
 # 7. Path to Probe Annotation file
-load("/data/zhangmch/ewas_array/script/450k/450K_cg_annotation.RData")
+load("/data/zhangmch/ewas_array/script/850k/850K_cg_annotation.RData")
 
 # 8. Output Directory
-output_dir <- "/data/zhangmch/ewas_array/result/GSE125105"
+output_dir <- "/data/zhangmch/ewas_array/result/GSE184269"
 ```
 
 ## Code Explanation
@@ -75,11 +75,11 @@ library(R.utils)
 
 ### 2. Read and Initial Preprocessing
 ```r
-gz_files <- list.files(path = "./GSE125105", pattern = "\\.idat\\.gz$", full.names = TRUE)
+gz_files <- list.files(path = "./GSE184269", pattern = "\\.idat\\.gz$", full.names = TRUE)
 for (file in gz_files) {
   gunzip(file, remove = FALSE) # Unzip and retain original files
 }
-rgset = read.metharray.exp("./GSE125105")
+rgset = read.metharray.exp("./GSE184269")
 mset = preprocessIllumina(rgset)
 beta_na = getBeta(mset, offset = 100) # Extract beta values with offset
 beta_na = round(beta_na, 3)
@@ -98,7 +98,7 @@ beta_na = data.frame(beta_na)
 ### 4. BMIQ Normalization (Bias Adjustment)
 ```r
 beta_na_clean <- na.omit(beta_na) # Temporarily remove NA rows for champ.norm input
-myNorm <- champ.norm(beta=beta_na_clean, arraytype="450K", cores=24)
+myNorm <- champ.norm(beta=beta_na_clean, arraytype="EPIC", cores=24)
 beta_BMIQ <- myNorm
 ```
 
@@ -111,7 +111,7 @@ NA_r = rowSums(is.na(beta))
 NA_c = colSums(is.na(beta))
 
 # Filter samples with > 15% missing data
-beta_remain = beta[, which(NA_c <= 485512*0.15)] 
+beta_remain = beta[, which(NA_c <= 865859*0.15)] 
 # Filter probes with > 10% missing data
 beta_remain = beta_remain[which(NA_r <= dim(beta_remain)[2]/10),] 
 
@@ -122,13 +122,13 @@ beta = data.frame(beta_knn$data)
 
 ### 6. Remove SNP Probes
 ```
-load("/data/zhangmch/ewas_array/script/450k/snp_cg_450K.RData")
+load("/data/zhangmch/ewas_array/script/450k/snp_cg_850K.RData")
 beta = beta[ setdiff( row.names(beta), snp_cg$cg_snp),]
 ```
 
 ### 7. Remove Sex Chromosome Probes (chrX/chrY)
 ```
-load("/data/zhangmch/ewas_array/script/450k/450K_cg_annotation.RData")
+load("/data/zhangmch/ewas_array/script/450k/850K_cg_annotation.RData")
 gene_annotation <- b
 # Filter out X chromosome probes
 gene_annotation = gene_annotation[which(gene_annotation$X3 != "chrX"),]
@@ -162,7 +162,7 @@ save_columns_as_files(beta, output_dir)
 A separate `.txt` file will be generated for each sample in the specified `output_dir` directory.
 
 ### File Naming Format:
-`[Sample_ID].txt` (e.g., `GSM123456.txt`)
+`[Sample_ID].txt` (e.g., `GSM5583168.txt`)
 
 ### File Content:
 Each file contains two tab-separated columns (with no headers): the CpG ID and the sample's processed $\beta$ value.
