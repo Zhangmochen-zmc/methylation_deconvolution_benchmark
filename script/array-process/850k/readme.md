@@ -27,8 +27,6 @@ install.packages(c("GEOquery", "gmqn", "minfi", "gplots", "limma", "WGCNA", "imp
 # Note: Some dependency packages (like minfi or manifest files) must be installed from Bioconductor
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
-
-BiocManager::install(c("minfi", "impute", "IlluminaHumanMethylation450kmanifest"))
 ```
 
 ## Usage Guide
@@ -122,13 +120,13 @@ beta = data.frame(beta_knn$data)
 
 ### 6. Remove SNP Probes
 ```
-load("/data/zhangmch/ewas_array/script/450k/snp_cg_850K.RData")
+load("/data/zhangmch/ewas_array/script/850k/snp_cg_850K.RData")
 beta = beta[ setdiff( row.names(beta), snp_cg$cg_snp),]
 ```
 
 ### 7. Remove Sex Chromosome Probes (chrX/chrY)
 ```
-load("/data/zhangmch/ewas_array/script/450k/850K_cg_annotation.RData")
+load("/data/zhangmch/ewas_array/script/850k/850K_cg_annotation.RData")
 gene_annotation <- b
 # Filter out X chromosome probes
 gene_annotation = gene_annotation[which(gene_annotation$X3 != "chrX"),]
