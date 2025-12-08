@@ -1,4 +1,4 @@
-# DNA Methylation Data Processing and Quality Control Pipeline for 850K Array Data (GSE125105, GSE127824, GSE88824) with IDAT Files
+# DNA Methylation Data Processing and Quality Control Pipeline for 850K (EPIC) Array Data (GSE123914, GSE112618, GSE110554, GSE184269) with IDAT Files
 
 This project provides a complete **R language pipeline** for processing raw Illumina 450K DNA methylation array data (`.idat` files). The script covers the entire workflow from reading raw data to generating high-quality $\beta$ values, adhering strictly to best practices for bioinformatics data preprocessing and quality control (QC).
 
