@@ -4,7 +4,7 @@ import os
 # =========================================
 DATA_DIR = "test_data" # pending folder
 OUTPUT_DIR = "aric_ref"        
-REF_FILE = "ref.csv"  # reference file
+REF_FILE = "ref_raw.csv"  # reference file
 # =========================================
 
 # 1. prepare
