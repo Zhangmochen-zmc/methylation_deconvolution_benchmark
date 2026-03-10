@@ -1,10 +1,10 @@
 import os
 import glob
 import time
-import gc  # 垃圾回收模块
-import pandas as pd # 用于保存性能记录，如果没有装pandas，可以改用csv模块
+import gc  
+import pandas as pd 
 from memory_profiler import memory_usage
-from ARIC import *  # 从已部署的环境导入 ARIC
+from ARIC import *  
 
 def run_benchmark():
     # --- 1. 路径配置 ---
