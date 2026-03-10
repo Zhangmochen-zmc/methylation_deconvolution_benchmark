@@ -8,44 +8,41 @@ from ARIC import *
 
 def run_benchmark():
     # 1. path configuration 
-    data_dir = ""  
-    results_dir = "results_random_5"
+    data_dir = "aric_ref"  
+    results_dir = "aric_result"
     
-    # 用于记录性能指标的列表
+    # list used for recording performance metrics
     benchmark_records = []
 
-    # --- 2. 准备输出目录 ---
+    # 2. prepare output directory 
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
 
-    # --- 3. 获取 mix 文件列表 ---
-    # 只获取 mix_ 开头的文件，然后去寻找对应的 ref_
+    # 3. get list of mix files 
     mix_files = glob.glob(os.path.join(data_dir, "mix_*.csv"))
     
     print(f"==========================================")
-    print(f"在 '{data_dir}' 中检测到 {len(mix_files)} 个 mix 文件，开始批量处理...")
+    print(f"{len(mix_files)} mix files were detected in '{data_dir}', batch processing begins...")
     print(f"==========================================\n")
 
-    # --- 4. 循环遍历 ---
+    # 4. looping through 
     for i, mix_path in enumerate(mix_files):
-        # 4.1 构造文件名和保存路径
-        file_name = os.path.basename(mix_path) # 例如: mix_GSE125105.csv
-        base_name = os.path.splitext(file_name)[0] # 例如: mix_GSE125105
+        # 4.1 create filename and save path
+        file_name = os.path.basename(mix_path) # such as: mix_GSE125105.csv
+        base_name = os.path.splitext(file_name)[0] # such as: mix_GSE125105
         
-        # 4.1.1 【关键修改】动态匹配对应的 ref 文件
-        # 逻辑：将文件名中的 "mix_" 替换为 "ref_"
+        # 4.1.1 match the corresponding ref file
         if file_name.startswith("mix_"):
             ref_file_name = file_name.replace("mix_", "ref_", 1)
         else:
-            # 防止文件名不规范（虽然glob已经过滤了，但为了保险）
             ref_file_name = "ref_" + file_name
             
         ref_path = os.path.join(data_dir, ref_file_name)
 
-        # 4.1.2 检查对应的 Ref 文件是否存在
+        # 4.1.2 check if the corresponding ref file exists.
         if not os.path.exists(ref_path):
-            print(f"[{i+1}/{len(mix_files)}] 跳过: {file_name}")
-            print(f"      >>> 错误: 找不到对应的 Ref 文件: {ref_file_name}")
+            print(f"[{i+1}/{len(mix_files)}] skip: {file_name}")
+            print(f">>> error: not corresponding ref file: {ref_file_name}")
             benchmark_records.append({
                 "File": file_name,
                 "Status": "Skipped",
@@ -53,19 +50,17 @@ def run_benchmark():
             })
             continue
 
-        # 保持原命名习惯: results/mix_GSE125105_prop.csv
         save_path = os.path.join(results_dir, f"{base_name}_prop.csv")
 
-        print(f"[{i+1}/{len(mix_files)}] 正在处理配对:")
+        print(f"[{i+1}/{len(mix_files)}] pair:")
         print(f"      Mix: {file_name}")
         print(f"      Ref: {ref_file_name}")
         
-        # 4.2 【关键】强制垃圾回收
+        # 4.2 gc and time
         gc.collect() 
         time.sleep(1) 
 
-        # 4.3 准备参数
-        # 这里将动态获取的 ref_path 传入
+        # 4.3 prepare params
         aric_kwargs = {
             'mix_path': mix_path,
             'ref_path': ref_path, 
@@ -73,14 +68,13 @@ def run_benchmark():
             'is_methylation': True
         }
 
-        # 4.4 开始监控 (时间和内存)
+        # 4.4 time and memory
         start_time = time.perf_counter()
         
         peak_memory_mb = 0
         error_msg = "None"
         
         try:
-            # 运行核心函数并监控内存峰值
             mem_max = memory_usage(
                 (ARIC, [], aric_kwargs), 
                 max_usage=True, 
@@ -94,24 +88,22 @@ def run_benchmark():
                 peak_memory_mb = mem_max
 
         except Exception as e:
-            print(f"      >>> 运行错误: {e}")
+            print(f">>> error: {e}")
             error_msg = str(e)
             peak_memory_mb = 0 
 
-        # 记录结束时间
+        # ending time
         end_time = time.perf_counter()
         elapsed_time = end_time - start_time
 
-        # --- 5. 输出当前文件的结果 ---
-        print(f"  -> 耗时 (Time):   {elapsed_time:.4f} s")
-        print(f"  -> 峰值内存 (Mem): {peak_memory_mb:.4f} MB")
-        print(f"  -> 结果已保存至:   {save_path}")
+        # 5. results
+        print(f"results: {save_path}")
         print("-" * 40)
 
-        # 记录到列表
+        # record
         benchmark_records.append({
             "File": file_name,
-            "Ref_File": ref_file_name, # 记录一下用了哪个ref
+            "Ref_File": ref_file_name,
             "Save_Path": save_path,
             "Time_Seconds": round(elapsed_time, 4),
             "Peak_Memory_MB": round(peak_memory_mb, 4),
@@ -119,14 +111,14 @@ def run_benchmark():
             "Error": error_msg
         })
 
-    # --- 6. 保存所有统计结果到 CSV ---
-    log_file = "benchmark.csv"
+    # 6. benchmark_results
+    log_file = "aric_benchmark.csv"
     try:
         df = pd.DataFrame(benchmark_records)
         df.to_csv(log_file, index=False)
-        print(f"\n全部完成！性能统计已保存至: {log_file}")
+        print(f"\n done! bechmark results: {log_file}")
     except Exception as e:
-        print(f"\n全部完成！但保存性能统计表失败: {e}")
+        print(f"\n done! bechmark results fail: {e}")
         print(benchmark_records)
 
 if __name__ == "__main__":
