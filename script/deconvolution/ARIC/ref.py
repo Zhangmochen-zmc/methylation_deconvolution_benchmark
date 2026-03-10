@@ -7,7 +7,7 @@ OUTPUT_DIR = "aric_ref"
 REF_FILE = "ref.csv"  # reference file
 # =========================================
 
-# 1.prepare
+# 1. prepare
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
     print(f"Create output directory: {OUTPUT_DIR}")
@@ -19,7 +19,7 @@ original_ref_shape = ref_master.shape
 ref_master.dropna(inplace=True) # Ref remove NA
 print(f"Ref original_ref_shape: {original_ref_shape} -> ref_master.shape: {ref_master.shape}")
 
-# 2. test_data folder
+# 3. test_data folder
 files = [f for f in os.listdir(DATA_DIR) if f.endswith(".csv")]
 print(f"[*] '{DATA_DIR}' find {len(files)} CSV files。")
 
@@ -38,25 +38,22 @@ for file_name in files:
         mix.dropna(inplace=True)
         
         # ----------------------------
-        # B. 找出不在交集中的行并取交集
+        # B. find rows that are not in the intersection and find the intersection.
         # ----------------------------
-        # 注意：这里是用当前的 mix 和 主 ref 取交集
         common_cpg = mix.index.intersection(ref_master.index)
         
-        # 如果交集为空，跳过
+        # if the intersection is empty, skip.
         if len(common_cpg) == 0:
-            print(f"  [警告] {file_name} 与参考文件没有公共行(index)，跳过！")
+            print(f"  [warning] {file_name} is no common line (index) with the reference file")
             continue
 
-        # 保留交集
+        # Preserve intersection
         mix_fixed = mix.loc[common_cpg]
         ref_fixed = ref_master.loc[common_cpg]
         
         # ----------------------------
-        # C. 保存文件
+        # C. save file
         # ----------------------------
-        # 为了区分不同 mix 对应的 ref，我们需要重命名
-        # 例如: data/sample1.csv -> ref/mix_sample1.csv 和 ref/ref_sample1.csv
         
         mix_out_name = f"mix_{file_name}"
         ref_out_name = f"ref_{file_name}"
@@ -68,30 +65,30 @@ for file_name in files:
         ref_fixed.to_csv(ref_out_path)
         
         # ----------------------------
-        # D. 统计与检查 (针对当前文件)
+        # D. check
         # ----------------------------
-        print(f"  -> 处理完毕")
-        print(f"  -> 最终形状: {mix_fixed.shape}")
-        print(f"  -> 保存至: {mix_out_path} 和 {ref_out_path}")
+        print(f"  -> done")
+        print(f"  -> final shape: {mix_fixed.shape}")
+        print(f"  -> save: {mix_out_path} 和 {ref_out_path}")
         
-        # 检查负值
+        # check negative values
         neg_mix = (mix_fixed < 0).sum().sum()
         neg_ref = (ref_fixed < 0).sum().sum()
         if neg_mix > 0 or neg_ref > 0:
-            print(f"  -> [提示] 负值数量: mix={neg_mix}, ref={neg_ref}")
+            print(f"  -> [tip] negative values: mix={neg_mix}, ref={neg_ref}")
             
-        # 检查行名一致性
+        # check line name consistency
         if not mix_fixed.index.equals(ref_fixed.index):
-            print("  -> [错误] 行名不一致！")
+            print("  -> [error] Inconsistent line names！")
 
-        # 检查方差 (仅检查 Ref)
+        # check ref
         ref_var = ref_fixed.var(axis=1)
         low_var_count = (ref_var < 1e-6).sum()
         if low_var_count > 0:
-            print(f"  -> [提示] 方差极低 (<1e-6) 的 CpG 数: {low_var_count}")
+            print(f"  -> [tip] CpG numbers with extremely low variance (<1e-6): {low_var_count}")
 
     except Exception as e:
-        print(f"  [Error] 处理 {file_name} 时发生错误: {e}")
+        print(f"  [Error] process {file_name} error: {e}")
 
 print(f"\n{'='*40}")
-print("所有文件处理完成。")
+print("Done!")
