@@ -21,22 +21,21 @@ print(f"Ref original_ref_shape: {original_ref_shape} -> ref_master.shape: {ref_m
 
 # 2. test_data folder
 files = [f for f in os.listdir(DATA_DIR) if f.endswith(".csv")]
-print(f"[*] 在 '{DATA_DIR}' 下找到 {len(files)} 个 CSV 文件待处理。")
+print(f"[*] '{DATA_DIR}' find {len(files)} CSV files。")
 
 for file_name in files:
     file_path = os.path.join(DATA_DIR, file_name)
     print(f"\n{'='*40}")
-    print(f"正在处理文件: {file_name}")
+    print(f"processing file: {file_name}")
     
     try:
-        # 读取 Mix 数据
+        # read Mix data
         mix = pd.read_csv(file_path, index_col=0)
         
         # ----------------------------
-        # A. 删除包含 NA 的行
+        # A. delete NA
         # ----------------------------
         mix.dropna(inplace=True)
-        # Ref 已经在循环外去除了 NA
         
         # ----------------------------
         # B. 找出不在交集中的行并取交集
