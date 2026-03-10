@@ -1,8 +1,8 @@
 library(tools)           
 library("MethylCIBERSORT")
 
-beta_file <- "/data/yuxy/data/data/wgbs_850k/data/real.csv" 
-ref_file  <- "/data/yuxy/data/data/wgbs_850k/wgbs_850k_ref_raw.RData"
+beta_file <- "test.csv" 
+ref_file  <- "ref_raw.RData"
 csv_name <- file_path_sans_ext(basename(beta_file))
 output_dir <- "ref"
 
