@@ -1,7 +1,7 @@
 library(tools)           
 library("MethylCIBERSORT")
 
-beta_file <- "test.csv" 
+beta_file <- "test_data.csv" 
 ref_file  <- "ref_raw.RData"
 csv_name <- file_path_sans_ext(basename(beta_file))
 output_dir <- "ref"
