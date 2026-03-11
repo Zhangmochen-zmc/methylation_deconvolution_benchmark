@@ -7,7 +7,7 @@
 # Usage: bash auto_detect_wgbs.sh <input_folder> [threads]
 # =======================================================
 
-# 1. Argument Check
+# Argument Check
 if [ $# -lt 1 ]; then
     echo "Error: Missing arguments."
     echo "Usage: bash $0 <input_folder_path> [threads]"
@@ -24,7 +24,7 @@ if [ ! -d "$INPUT_DIR" ]; then
 fi
 
 # =======================================================
-# Helper Function: Convert Beta to BED (Common Step)
+# Convert Beta to BED
 # =======================================================
 generate_bed_from_beta() {
     local BASENAME=$1
@@ -131,7 +131,7 @@ for FILE in "${FILES[@]}"; do
     if [ "$MODE" == "BAM" ]; then
         SORTED_BAM="${SORTED_DIR}/${BASENAME}.sorted.bam"
         
-        # 1. Sort
+        # Sort
         if [ -f "$SORTED_BAM" ]; then
             echo "[1/3] Sorted BAM exists, skipping sort..."
         else
@@ -139,7 +139,7 @@ for FILE in "${FILES[@]}"; do
             samtools sort -@ "$THREADS" -o "$SORTED_BAM" "${FILE}"
         fi
 
-        # 2. Bam2Pat
+        # Bam2Pat
         echo "[2/3] Running bam2pat..."
         # wgbstools generates output based on input filename
         # input: name.sorted.bam -> output: name.sorted.pat.gz
@@ -177,7 +177,7 @@ for FILE in "${FILES[@]}"; do
     fi
 
     # ---------------------------------------------------
-    # Common Step: Generate BED
+    # Generate BED
     # ---------------------------------------------------
     if [ ! -f "$TARGET_BETA" ]; then
         echo "Error: Beta file missing for ${BASENAME}. Skipping BED generation."
