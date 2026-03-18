@@ -16,7 +16,7 @@ process_methylation_data <- function(base_path) {
   
   # Loop through each file and integrate the data.
   for (file in files) {
-    cat("正在读取文件：", file, "\n")  # 打印正在读取的文件名
+    cat("Reading file：", file, "\n") 
     
     # read data
     data <- read.table(file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
@@ -276,99 +276,96 @@ process_multiple_DHS_DMC_optimized <- function(DHS_DMC_list, merged_data, cell_t
     # Extract the corresponding DHS_DMC data
     DHS_DMC_data <- DHS_DMC_list[[cell_type]]
     
-    # 调用处理每个细胞类型的函数
+    # Calling the function that processes each cell type
     result <- process_DHS_DMC_optimized(DHS_DMC_data, merged_data, cell_type)
     
-    # 存储结果
+    # Save results
     results_list[[cell_type]] <- result
   }
   
-  # 返回所有细胞类型的结果列表
+  # Returns a list of results for all cell types.
   return(results_list)
 }
 
-# 原来的单细胞类型处理函数
+# Original single-cell type processing function
 process_DHS_DMC_optimized <- function(DHS_DMC_data, merged_data, cell_type) {
   
-  # 将 DHS_DMC_data 的行名转换为一个新的列 cg_probe
+  # Convert the row names of DHS_DMC_data to a new column cg_probe
   DHS_DMC_data$cg_probe <- rownames(DHS_DMC_data)
   
-  # 移除含有 NA 的 cg_probe 行
+  # Remove cg_probe lines containing NA
   DHS_DMC_data <- DHS_DMC_data[!is.na(rownames(DHS_DMC_data)), ]
   merged_data <- merged_data[!is.na(merged_data$cg_probe), ]
   
-  # 获取包含 cell_type 的列
+  # Get the column containing cell_type
   cell_columns <- grep(cell_type, colnames(merged_data), value = TRUE)
   
-  # 获取不包含 cell_type 的列，排除 cg_probe 列
+  # Retrieve columns that do not contain cell_type, excluding the cg_probe column.
   other_columns <- setdiff(colnames(merged_data), c(cell_columns, "cg_probe"))
   
-  # 使用 merge 将 DHS_DMC_data 和 merged_data 合并（按 cg_probe）
+  # Use merge to combine DHS_DMC_data and merged_data (by cg_probe)
   merged_data_with_DMC <- merge(DHS_DMC_data, merged_data, by = "cg_probe", all.x = TRUE)
   
-  # 检查合并后的数据
+  # Check the merged data
   if (any(is.na(merged_data_with_DMC))) {
-    warning("合并后数据中存在 NA 值，可能是 cg_probe 匹配失败。")
+    warning("The presence of NA values ​​in the merged data may indicate that cg_probe failed to match.")
   }
   
-  # 强制转换为数值型数据（以防止字符型数据导致错误）
+  # Force conversion to numeric data (to prevent errors caused by character data)
   merged_data_with_DMC[cell_columns] <- sapply(merged_data_with_DMC[cell_columns], as.numeric)
   merged_data_with_DMC[other_columns] <- sapply(merged_data_with_DMC[other_columns], as.numeric)
   
-  # 检查转换后的数据
+  # Check the converted data
   if (any(is.na(merged_data_with_DMC[cell_columns]))) {
-    warning("cell_columns 中包含 NA 值，检查数据源。")
+    warning("The cell_columns contains NA values; check the data source.")
   }
   if (any(is.na(merged_data_with_DMC[other_columns]))) {
-    warning("other_columns 中包含 NA 值，检查数据源。")
+    warning("The other_columns contains NA values; check the data source.")
   }
   
-  # 计算 cell_average 和 other_average
+  # Calculate cell_average and other_average
   merged_data_with_DMC$cell_average <- rowMeans(merged_data_with_DMC[, cell_columns], na.rm = TRUE)
   merged_data_with_DMC$other_average <- rowMeans(merged_data_with_DMC[, other_columns], na.rm = TRUE)
   
-  # 检查计算的平均值是否为 NA
+  # Check if the calculated average is NA.
   if (any(is.na(merged_data_with_DMC$cell_average)) || any(is.na(merged_data_with_DMC$other_average))) {
-    warning("计算 cell_average 或 other_average 时出现 NA 值。")
+    warning("NA values ​​appear when calculating cell_average or other_average.")
   }
   
-  # 计算 cell_diff 和 cell_diff+
+  # Calculate cell_diff and cell_diff+
   merged_data_with_DMC$cell_diff <- merged_data_with_DMC$cell_average - merged_data_with_DMC$other_average
   merged_data_with_DMC$cell_diff_plus <- abs(merged_data_with_DMC$cell_diff)
   
-  # 提取需要的结果，并按 cell_diff+ 排序
+  # Extract the desired results and sort them by cell_diff+
   result <- merged_data_with_DMC[, c("cg_probe", "cell_average", "other_average", "cell_diff", "cell_diff_plus")]
   colnames(result) <- c("cg_probe", "cell_average", "other_average", "cell_diff", "cell_diff_plus")
   
-  # 排序：按 cell_diff+ 值排序
+  # Sort by cell_diff+ value
   result_sorted <- result[order(result$cell_diff_plus, decreasing = TRUE), ]
   
-  # 设置行名为 cg_probe
+  # Set the line name to cg_probe
   rownames(result_sorted) <- result_sorted$cg_probe
   
-  # 移除 cg_probe 列
+  # Remove the cg_probe column
   result_sorted$cg_probe <- NULL
   
-  # 返回排序后的结果
+  # Return the sorted results
   return(result_sorted)
 }
 
-# 假设 merged_data 已经是处理好的数据框
-
-# 调用处理多个细胞类型的函数
+# Calling functions that handle multiple cell types
 results <- process_multiple_DHS_DMC_optimized(cell_type_results_updated, merged_data, cell_types)
 
-# 查看 bcell 结果
+# View bcell results
 head(results$bcell)
 
 
-##### 步骤6：针对每一个细胞类型筛选前50个差异性最大的cg探针编号，然后计算和EpiDISH给出的reference中cg探针的重叠程度
-##### 步骤6续：根据非重复探针列表生成对应的reference matrix
-# 封装数据处理为函数
+##### Step 6: For each cell type, select the top 50 most differentially expressed CG probes and then calculate their overlap with the CG probes in the EpiDISH reference.
+# Encapsulate data processing as functions
 process_and_calculate_methylation_centroids <- function(merged_data, bcell_results_optimized, nk_results_optimized, 
                                                         cd8_results_optimized, cd4_results_optimized, 
                                                         monocyte_results_optimized, neutrophil_results_optimized) {
-  # 提取前50个 DMC 的行名
+  # Extract the row names of the first 50 DMCs
   bcell_names <- rownames(bcell_results_optimized)[1:50]
   nk_names <- rownames(nk_results_optimized)[1:50]
   cd8_names <- rownames(cd8_results_optimized)[1:50]
@@ -376,13 +373,13 @@ process_and_calculate_methylation_centroids <- function(merged_data, bcell_resul
   monocyte_names <- rownames(monocyte_results_optimized)[1:50]
   neutrophil_names <- rownames(neutrophil_results_optimized)[1:50]
   
-  # 合并所有行名并提取唯一值
+  # Merge all row names and extract unique values
   EpiDISH_DHS_DMC <- unique(c(bcell_names, nk_names, cd8_names, cd4_names, monocyte_names, neutrophil_names))
   
-  # 提取 merged_data 中对应 cg_probe 的行
+  # Extract the row corresponding to cg_probe from merged_data.
   subset_data <- merged_data[merged_data$cg_probe %in% EpiDISH_DHS_DMC, ]
   
-  # 提取包含细胞类型的列
+  # Extract columns containing cell types
   bcell_columns <- grep("bcell", colnames(subset_data), value = TRUE)
   cd4_columns <- grep("cd4", colnames(subset_data), value = TRUE)
   cd8_columns <- grep("cd8", colnames(subset_data), value = TRUE)
@@ -390,7 +387,7 @@ process_and_calculate_methylation_centroids <- function(merged_data, bcell_resul
   monocyte_columns <- grep("monocyte", colnames(subset_data), value = TRUE)
   neutrophil_columns <- grep("neutrophil", colnames(subset_data), value = TRUE)
   
-  # 计算每种细胞类型的平均值
+  # Calculate the average value for each cell type
   bcell_avg <- rowMeans(subset_data[, bcell_columns], na.rm = TRUE)
   cd4_avg <- rowMeans(subset_data[, cd4_columns], na.rm = TRUE)
   cd8_avg <- rowMeans(subset_data[, cd8_columns], na.rm = TRUE)
@@ -398,7 +395,7 @@ process_and_calculate_methylation_centroids <- function(merged_data, bcell_resul
   monocyte_avg <- rowMeans(subset_data[, monocyte_columns], na.rm = TRUE)
   neutrophil_avg <- rowMeans(subset_data[, neutrophil_columns], na.rm = TRUE)
   
-  # 创建新的数据框 EpiDISH_450k_reference
+  # Create a new data frame EpiDISH_450k_reference
   EpiDISH_850k_reference <- data.frame(
     b = bcell_avg,
     cd4 = cd4_avg,
@@ -408,27 +405,26 @@ process_and_calculate_methylation_centroids <- function(merged_data, bcell_resul
     neutrophil = neutrophil_avg
   )
   
-  # 设置行名为 EpiDISH_DHS_DMC
+  # Set the line name to EpiDISH_DHS_DMC
   rownames(EpiDISH_850k_reference) <- EpiDISH_DHS_DMC
   
-  # 返回结果
+  # return results
   return(EpiDISH_850k_reference)
 }
 
-# 示例调用
-# 假设 bcell_results_optimized, nk_results_optimized 等数据框已经存在
+# usage
 EpiDISH_850k_reference <- process_and_calculate_methylation_centroids(
   merged_data,results$bcell, results$nk, results$cd8, results$cd4,
   results$monocyte, results$neutrophil)
 
-# 查看结果
+# pring
 print(EpiDISH_850k_reference)
 
-# 设置保存路径
-output_result_file <- "ref/EpiDISH_850k_reference_result.csv"
+# Set save path
+output_result_file <- "epidish_ref/EpiDISH_850k_reference_result.csv"
 
-# 保存数据框为 CSV 文件
+# save
 write.csv(EpiDISH_850k_reference, file = output_result_file, row.names = TRUE)
 
-# 打印提示信息
-cat("数据已保存为：", output_result_file, "\n")
+# print
+cat("The data has been saved as：", output_result_file, "\n")
