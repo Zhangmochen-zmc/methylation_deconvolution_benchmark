@@ -5,25 +5,17 @@ library(quadprog)
 library(peakRAM) 
 
 
-# 1. config
-ref_dir <- "ref"
+# config
+ref_dir <- "houseman_ref"
+input_folder <- "test_data"
+output_folder <- "hosueman_result"
 
-# 2. 待分析样本的文件夹路径 (存放已生成好的 CSV 文件)
-input_folder <- "/data/yuxy/data/data/wgbs_850k/random_1"
-
-# 3. 结果输出文件夹路径
-output_folder <- "results"
-
-# ==============================================================================
-
-# 创建输出目录
+# Create output directory
 if (!dir.exists(output_folder)) dir.create(output_folder, recursive = TRUE)
 
-# ------------------------------------------------------------------------------
-# A. 定义核心函数 (保持原逻辑不变)
-# ------------------------------------------------------------------------------
+# A. Define the core function
 
-# 1. Signature Probe 选择函数
+# 1. Signature Probe
 select_signature <- function(beta_ref, cell_ref, cellTypes,
                              probeSelect = c("any","both"),
                              p_cutoff = 1e-8, n_any = 100, n_each = 50) {
@@ -51,7 +43,7 @@ select_signature <- function(beta_ref, cell_ref, cellTypes,
   
   ok <- which(pval < p_cutoff & is.finite(rng) & rng > 0)
   
-  if (length(ok) == 0) return(NULL) # 如果没有筛选到，返回 NULL
+  if (length(ok) == 0) return(NULL) 
   
   if (probeSelect == "any") {
     ix <- ok[order(rng[ok], decreasing = TRUE)]
@@ -72,9 +64,8 @@ select_signature <- function(beta_ref, cell_ref, cellTypes,
   rownames(beta_ref)[feat]
 }
 
-# 2. QP 求解函数
+# 2. QP 
 houseman_qp <- function(Y, W, sum_to_one = TRUE) {
-  # 确保行名一致
   common <- intersect(rownames(Y), rownames(W))
   Y <- Y[common, , drop=FALSE]
   W <- W[common, , drop=FALSE]
@@ -85,7 +76,6 @@ houseman_qp <- function(Y, W, sum_to_one = TRUE) {
   
   P <- matrix(NA_real_, nrow = nS, ncol = K, dimnames = list(colnames(Y), ct))
   
-  # 约束矩阵准备
   Amat <- diag(K)
   bvec <- rep(0, K)
   meq  <- 0
@@ -123,27 +113,22 @@ houseman_qp <- function(Y, W, sum_to_one = TRUE) {
   P
 }
 
-# ------------------------------------------------------------------------------
-# B. 加载参考数据 (只做一次)
-# ------------------------------------------------------------------------------
+# B. Load reference data (do only once)
 cat(">>> [Step 1] Loading Reference Data (850k/EPIC)...\n")
 
-# 加载 850k 参考数据
+# load 850k ref
 cell_ref_global <- readRDS(file.path(ref_dir, "cell_ref_own_850k.rds"))
 beta_ref_global <- readRDS(file.path(ref_dir, "beta_ref_own_850k.rds"))
 cellTypes <- unique(cell_ref_global)
 
 cat("    Reference Loaded. Cell Types:", paste(cellTypes, collapse=", "), "\n\n")
 
+# C. Batch processing workflow
 
-# ------------------------------------------------------------------------------
-# C. 批量处理流程
-# ------------------------------------------------------------------------------
-
-# 获取输入文件夹下的所有 CSV
+# get CSV
 csv_files <- list.files(input_folder, pattern = "\\.csv$", full.names = TRUE)
 
-if (length(csv_files) == 0) stop("未找到CSV文件，请检查 input_folder 路径！")
+if (length(csv_files) == 0) stop("CSV file not found. Please check the input_folder path!")
 
 benchmark_log <- data.frame()
 cat(paste0(">>> [Step 2] Start Batch Processing: ", length(csv_files), " files...\n\n"))
@@ -154,35 +139,33 @@ for (i in seq_along(csv_files)) {
   file_name <- tools::file_path_sans_ext(basename(file_path))
   
   cat(sprintf("[%d/%d] Processing: %s\n", i, length(csv_files), file_name))
-  gc(verbose = FALSE) # 内存清理
+  gc(verbose = FALSE) 
   
-  # === 监控开始 ===
+  # peakRAM
   monitor_res <- peakRAM({
     
-    # 1. 读取 CSV 数据
+    # 1. read CSV
     # ------------------
     sample_df <- read.csv(file_path, header = TRUE, check.names = FALSE)
-    # 假设第一列是 CpG Probe ID
     rownames(sample_df) <- sample_df[, 1]
     beta_matrix <- as.matrix(sample_df[, -1])
     
     stopifnot(is.matrix(beta_matrix) || is.data.frame(beta_matrix))
     
-    # 2. 取 CpG 交集
-    # ------------------
+    # 2. Find the intersection of CpG
     common_cpg <- intersect(rownames(beta_matrix), rownames(beta_ref_global))
     
     if (length(common_cpg) < 200) {
-      # 错误处理：交集过少
+      # Error handling: Insufficient intersection
       write.table("Error: common_cpg < 200", file.path(output_folder, paste0(file_name, "_ERROR.txt")))
     } else {
       
-      # 3. 数据准备 (切片)
+      # 3. data preparation
       # ------------------
       beta_use <- beta_matrix[common_cpg, , drop = FALSE]
       beta_ref_current <- beta_ref_global[common_cpg, , drop = FALSE]
       
-      # 4. 计算 Reference Centroids
+      # 4. calculate Reference Centroids
       # ------------------
       ref_centroids <- sapply(cellTypes, function(ct) {
         rowMeans(beta_ref_current[, cell_ref_global == ct, drop = FALSE], na.rm = TRUE)
@@ -198,27 +181,27 @@ for (i in seq_along(csv_files)) {
         write.table("Error: No signature probes found", file.path(output_folder, paste0(file_name, "_NO_SIG.txt")))
       } else {
         
-        # 6. 构建矩阵 W 和 Y
+        # 6. Construct matrices W and Y
         W <- ref_centroids[feat, , drop = FALSE]
         Y <- beta_use[feat, , drop = FALSE]
         
-        # 7. 运行 QP 解卷积
+        # 7. Run QP deconvolution
         # ------------------
         sum_to_one <- TRUE
         P <- houseman_qp(Y, W, sum_to_one = sum_to_one)
         
-        # 8. 保存结果
+        # 8. save results
         # ------------------
         output_file_txt <- file.path(output_folder, paste0(file_name, "_Houseman_QP_result.txt"))
         write.table(P, file = output_file_txt, sep = "\t", col.names = NA, quote = FALSE)
       }
     }
   })
-  # === 监控结束 ===
+  # Monitoring Ended
   
-  # 记录日志
+  # log
   elapsed_time <- monitor_res$Elapsed_Time_sec
-  peak_mem     <- monitor_res$Peak_RAM_Used_MiB
+  peak_mem     <- monitor_res$Peak_RAM_Used_MiB* 1.048576
   cat(sprintf("    -> Time: %.2f s | Peak RAM: %.2f MB\n", elapsed_time, peak_mem))
   
   benchmark_log <- rbind(benchmark_log, data.frame(
@@ -228,8 +211,8 @@ for (i in seq_along(csv_files)) {
   ))
 }
 
-# 保存性能日志
-write.csv(benchmark_log, file.path(output_folder, "benchmark.csv"), row.names = FALSE)
+# save benchamrk
+write.csv(benchmark_log, file.path(output_folder, "houseman_benchmark.csv"), row.names = FALSE)
 
 cat("==============================================\n")
 cat("All tasks finished.\n")
