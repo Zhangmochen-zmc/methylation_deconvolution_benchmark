@@ -2,11 +2,11 @@ library(EpiDISH)
 library(peakRAM) # 引入用于记录时间和内存的包
 
 # config
-input_folder <- ""
+input_folder <- "test_data"
 # 输出文件夹：存放解卷积结果
 output_folder <- "results"
 # 性能日志文件保存路径
-log_file_path <- "low_benchmark.csv" 
+log_file_path <- "benchmark.csv" 
 
 # 如果输出目录不存在，则创建
 if (!dir.exists(output_folder)) {
