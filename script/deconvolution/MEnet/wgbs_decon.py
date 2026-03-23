@@ -13,7 +13,7 @@ def run_menet(input_file, model_path, output_dir, input_type, menet_path="MEnet"
     """
     Run the MEnet predict command line
     """
-    # 构建基础命令
+    # Build basic commands
     cmd = [
         menet_path, "predict",
         "--input", input_file,
@@ -22,70 +22,68 @@ def run_menet(input_file, model_path, output_dir, input_type, menet_path="MEnet"
         "--input_type", input_type
     ]
 
-    # 如果提供了 bedtools 路径，则加入参数
+    # If a path to bedtools is provided, add the parameter.
     if bedtools_path:
         cmd.extend(["--bedtools", bedtools_path])
 
-    # 执行命令并捕获错误
-    # stderr=subprocess.STDOUT 将错误信息合并到 stdout，方便 memory_usage 捕获或记录
+    # Execute commands and capture errors
     result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     return result
 
 def main():
     parser = argparse.ArgumentParser(
-        description="MEnet WGBS 批量处理工具 (自动兼容 Conda 环境)",
+        description="MEnet",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 
-    # 1. 路径配置
+    # 1. config
     parser.add_argument('-m', '--model', 
-                        default='/disk1/yuxy/software/MEnet_8/data/train/wgbs/CV_best_model.pickle',
-                        help="模型文件路径 (.pickle)")
+                        default='model/wgbs/CV_best_model.pickle', #select model
+                        help="Model file path (.pickle)")
 
     parser.add_argument('-i', '--input_dir', 
-                        default='/data/yuxy/data/menet/wgbs/data/',
-                        help="输入父目录路径")
+                        default='test_data/wgbs/',
+                        help="test_data")
 
-    parser.add_argument('-o', '--output_dir', default='results',
-                        help="总输出目录")
+    parser.add_argument('-o', '--output_dir', default='menet_result',
+                        help="output_dir")
 
-    # 2. 运行控制
+    # 2. run
     parser.add_argument('-t', '--target_folders', 
-                        help="指定子文件夹，逗号隔开 (如: real,random)。留空则处理所有。")
+                        help="Specify subfolders, separated by commas (e.g., real, random). Leave blank to process all.")
 
-    parser.add_argument('--input_type', default='bismark', help="输入文件类型 (bismark/array)")
+    parser.add_argument('--input_type', default='bismark', help="Input file type (bismark/array)")
 
     # 3. 关键路径修复参数
-    parser.add_argument('--menet_path', default="/data/yuxy/work/miniforge3/envs/menet/bin/MEnet")
+    parser.add_argument('--menet_path', default="MEnet")
     
-    parser.add_argument('--bedtools', default="/data/yuxy/work/miniforge3/envs/menet/bin/bedtools")
+    parser.add_argument('--bedtools', default="bedtools")
 
-    parser.add_argument('--log_name', default='benchmark_summary.csv', help="统计结果保存的文件名")
+    parser.add_argument('--log_name', default='menet_benchmark.csv', help="benchmark")
 
     args = parser.parse_args()
 
-    # --- 自动路径检测逻辑 ---
-    # 自动寻找当前环境下的 MEnet
+    # Automatically find MEnet in the current environment
     effective_menet = args.menet_path if args.menet_path else shutil.which("MEnet")
-    # 自动寻找当前环境下的 bedtools
+    # Automatically find bedtools in the current environment
     effective_bedtools = args.bedtools if args.bedtools else shutil.which("bedtools")
 
-    # 打印环境检查
+    # print
     print(f"==================================")
-    print(f"工作环境确认:")
-    print(f"  > MEnet 路径: {effective_menet}")
-    print(f"  > Bedtools 路径: {effective_bedtools}")
-    print(f"  > 模型文件: {args.model}")
-    print(f"  > 数据类型: {args.input_type}")
+    print(f"Work environment confirmation:")
+    print(f"  > MEnet path: {effective_menet}")
+    print(f"  > Bedtools path: {effective_bedtools}")
+    print(f"  > model file: {args.model}")
+    print(f"  > data type: {args.input_type}")
     
     if not effective_menet:
-        print("[Error] 找不到 MEnet 可执行程序，请激活 Conda 环境或通过 --menet_path 指定。")
+        print("[Error] The MEnet executable cannot be found. Please activate the Conda environment or specify it via --menet_path.")
         sys.exit(1)
     if args.input_type == "bismark" and not effective_bedtools:
-        print("[Warning] 处理 Bismark 格式需要 bedtools，但系统中未找到，程序可能会报错。")
+        print("[Warning] Processing Bismark format requires bedtools, but it is not found in the system, which may cause the program to report an error.")
     print(f"==================================\n")
 
-    # 确定要处理的子目录
+    # Determine the subdirectories to be processed.
     if args.target_folders:
         target_list = [s.strip() for s in args.target_folders.split(',')]
         sub_dirs = [os.path.join(args.input_dir, d) for d in target_list]
@@ -102,7 +100,7 @@ def main():
         if not input_files:
             continue
 
-        print(f"--- 正在处理目录: {folder_name} ({len(input_files)} 个文件) ---")
+        print(f"--- Processing directory: {folder_name} ({len(input_files)} files) ---")
 
         for f_path in input_files:
             file_full_name = os.path.basename(f_path)
@@ -122,7 +120,7 @@ def main():
             peak_memory = 0
 
             try:
-                # 监控内存并运行
+                # Monitor memory and run
                 mem_res = memory_usage(
                     (run_menet, (f_path, args.model, specific_out_dir, args.input_type, effective_menet, effective_bedtools)),
                     max_usage=True,
@@ -133,15 +131,15 @@ def main():
 
             except subprocess.CalledProcessError as e:
                 status = "Failed"
-                # 捕捉具体的 shell 报错内容
+                # Capture specific shell error messages
                 error_msg = e.stderr if e.stderr else e.stdout
-                print(f"\n    [Error] MEnet 运行失败: {file_full_name}")
+                print(f"\n    [Error] MEnet failure: {file_full_name}")
                 if error_msg:
-                    print(f"    原因: {error_msg.strip().splitlines()[-1]}") # 只打印最后一行错误
+                    print(f"    reason: {error_msg.strip().splitlines()[-1]}") 
             except Exception as e:
                 status = "Failed"
                 error_msg = str(e)
-                print(f"\n    [Error] 系统错误: {e}")
+                print(f"\n    [Error] System error: {e}")
 
             end_time = time.perf_counter()
             elapsed = end_time - start_time
@@ -156,15 +154,14 @@ def main():
             }
             benchmark_summary.append(record)
             
-            # 每个文件处理完打个勾，显示耗时
             if status == "Success":
                 print(f" | Done! {elapsed:.1f}s, {peak_memory:.1f}MB")
 
-    # 保存最终统计
+    # save bechamrk
     if benchmark_summary:
         summary_df = pd.DataFrame(benchmark_summary)
         summary_df.to_csv(args.log_name, index=False)
-        print(f"\n任务完成！统计表已保存至: {args.log_name}")
+        print(f"\nTask completed! The statistics table has been saved.: {args.log_name}")
 
 if __name__ == "__main__":
     main()
