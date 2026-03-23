@@ -1,6 +1,5 @@
-
-# 1. 参数设置
-ref_file_path <- "/data/yuxy/data/data/wgbs_850k/wgbs_850k_ref_raw.csv"          # 你的 Ref 文件
+# 1. config
+ref_file_path <- "episcore_ref/wgbs_850k_ref_raw.csv"          # 你的 Ref 文件
 sample_folder_path <- "/data/yuxy/data/data/wgbs_850k/episcore" # 存放 Project CSV 的文件夹
 chip_type <- "850k"                      # "450k" 或"850k"
 
