@@ -1,15 +1,13 @@
 # 1. config
-ref_file_path <- "episcore_ref/wgbs_850k_ref_raw.csv"          # 你的 Ref 文件
-sample_folder_path <- "/data/yuxy/data/data/wgbs_850k/episcore" # 存放 Project CSV 的文件夹
-chip_type <- "850k"                      # "450k" 或"850k"
+ref_file_path <- "ref_raw.csv"         
+sample_folder_path <- "test_data" 
+chip_type <- "850k"                      # "450k" or "850k"
 
-# --------------------------
-# 2. 加载环境与函数
-# --------------------------
+# 2. load and function
 library(EpiSCORE)
 if(chip_type == "450k") { data("probeInfo450k") } else { data("probeInfo850k") }
 
-# 转换函数 (保持不变，功能是 CpG -> Gene)
+# The conversion function remains unchanged; its function is CpG -> Gene.
 constAvBetaTSS <- function(beta.m, type=c("450k","850k","EPICv2")){
   if(type=="450k"){ if(exists("probeInfo450k.lv")) probeInfoALL.lv <- probeInfo450k.lv } 
   else if (type=="850k"){ probeInfoALL.lv <- probeInfo850k.lv } 
@@ -42,50 +40,43 @@ constAvBetaTSS <- function(beta.m, type=c("450k","850k","EPICv2")){
   return(avbeta.m);
 }
 
-# --------------------------
-# 3. 处理 Reference
-# --------------------------
-cat(">>> 处理 Reference 矩阵...\n")
-if(!file.exists(ref_file_path)) stop("找不到 Ref 文件！")
+# 3. process Reference
+cat(">>> Processing the Reference Matrix...\n")
+if(!file.exists(ref_file_path)) stop("Ref file not found！")
 raw_ref <- read.csv(ref_file_path, row.names=1, check.names=FALSE)
-# 转换后：行=Gene, 列=CellType
 ref_gene_full <- constAvBetaTSS(as.matrix(raw_ref), type=chip_type) 
-cat(paste("Ref 处理完毕，基因数:", nrow(ref_gene_full), "\n"))
+cat(paste("Ref processing complete, gene count:", nrow(ref_gene_full), "\n"))
 
-# --------------------------
-# 4. 批量处理 Project CSV
-# --------------------------
+# 4. process Project CSV
 project_files <- list.files(path = sample_folder_path, pattern = "\\.csv$", full.names = TRUE)
-if(length(project_files) == 0) stop("文件夹为空！")
+if(length(project_files) == 0) stop("The folder is empty!")
 
-cat(paste(">>> 发现", length(project_files), "个项目文件，开始处理...\n"))
+cat(paste(">>> find", length(project_files), "Project files, begin processing...\n"))
 
-# 列表用于存储处理后的矩阵
-# 每个元素的结构：Row=Genes, Col=Samples (Patient1, Patient2...)
+# Lists are used to store the processed matrices.
 project_data_list <- list()
 
 for(i in 1:length(project_files)){
   f_path <- project_files[i]
   f_name <- basename(f_path)
   
-  cat(paste0(">>> [", i, "/", length(project_files), "] 处理 Project: ", f_name, " ... "))
+  cat(paste0(">>> [", i, "/", length(project_files), "] process Project: ", f_name, " ... "))
   
-  # 1. 读取原始矩阵 (Row=CpG, Col=Samples)
+  # 1. Read the original matrix (Row=CpG, Col=Samples)
   raw_proj <- read.csv(f_path, row.names=1, check.names=FALSE)
   mat_proj <- as.matrix(raw_proj)
   
-  # 2. 转换为 Gene-level (Row=Gene, Col=Samples)
-  # 注意：列名保持不变，即原本是 Patient1, 转换后还是 Patient1
+  # 2. Convert to Gene-level (Row=Gene, Col=Samples)
   gene_proj <- constAvBetaTSS(mat_proj, type=chip_type)
   
-  # 3. 存入列表
+  # 3. Save to list
   project_data_list[[f_name]] <- gene_proj
   
-  cat(paste("完成 (包含样本数:", ncol(gene_proj), ")\n"))
+  cat(paste("Complete (including sample:", ncol(gene_proj), ")\n"))
 }
 
 # --------------------------
-# 5. 保存中间结果
+# 5. save
 # --------------------------
-save(ref_gene_full, project_data_list, file = "ref/episcore.RData")
-cat(">>> 数据已保存至 'Project_Level_Data.RData'\n")
+save(ref_gene_full, project_data_list, file = "episcore_ref/episcore.RData")
+cat(">>> Data has been saved to 'Project_Level_Data.RData'\n")
