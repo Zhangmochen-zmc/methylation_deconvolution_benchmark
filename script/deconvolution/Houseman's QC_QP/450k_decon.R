@@ -192,7 +192,7 @@ for (i in seq_along(csv_files)) {
   })
   # Monitoring Ended
   
-  # 记录日志
+  # log
   elapsed_time <- monitor_res$Elapsed_Time_sec
   peak_mem     <- monitor_res$Peak_RAM_Used_MiB* 1.048576
   cat(sprintf("    -> time: %.2f s | peak memory: %.2f MB\n", elapsed_time, peak_mem))
