@@ -54,7 +54,7 @@ for (i in seq_along(csv_files)) {
     beta_data <- read.csv(file_path, row.names = 1, check.names = FALSE)
     beta_matrix <- as.matrix(beta_data)
     
-    cat("Data Dimensions: ", dim(beta_matrix)[1], "行, ", dim(beta_matrix)[2], "列\n")
+    cat("Data Dimensions: ", dim(beta_matrix)[1], "row, ", dim(beta_matrix)[2], "col\n")
 
     # Part 1: Using a custom reference matrix (Own Reference - 850k)
 
