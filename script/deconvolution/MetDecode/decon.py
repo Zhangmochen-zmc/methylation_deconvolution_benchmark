@@ -60,9 +60,9 @@ def main():
             duration = end_time - start_time
             max_mem = (max(mem_history) * MIB_TO_MB) if mem_history else 0
             
-            print(f"  > 完成! 时间: {duration:.2f}s, 峰值内存: {max_mem:.2f}MB")
+            print(f"  > down! time: {duration:.2f}s, peak memory: {max_mem:.2f}MB")
 
-            # 保存当前样本数据
+            # save
             performance_records.append({
                 "Sample": name,
                 "Time_s": round(duration, 4),
@@ -71,7 +71,7 @@ def main():
             })
 
         except Exception as e:
-            print(f"  > 处理 {name} 失败: {e}")
+            print(f"  > process {name} fail: {e}")
             performance_records.append({
                 "Sample": name,
                 "Time_s": 0,
@@ -79,15 +79,15 @@ def main():
                 "Status": f"Failed: {str(e)}"
             })
 
-    # 3. 使用 Pandas 汇总并导出结果
+    # 3. import results
     df_perf = pd.DataFrame(performance_records)
     
-    # 将汇总结果保存为 CSV
+    # save results
     df_perf.to_csv(LOG_OUTPUT, index=False)
     
     print("\n" + "="*30)
-    print(f"所有任务处理完成！")
-    print(f"性能统计报告已保存至: {LOG_OUTPUT}")
+    print(f"all tasks down！")
+    print(f"benchmark has benn saved: {LOG_OUTPUT}")
     print("="*30)
     print(df_perf.to_string(index=False))
 
