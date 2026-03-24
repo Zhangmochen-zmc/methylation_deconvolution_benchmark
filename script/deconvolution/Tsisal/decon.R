@@ -1,34 +1,22 @@
 library(TOAST)
 library(dplyr)
 library(stringr)
-library(peakRAM) # 用于监控
+library(peakRAM) 
 
-# ================= 配置区域 =================
+# config
+ref_file_path <- "tsisal_ref/reference_output_Tsisal.csv"
+input_folder <- "test_data" 
+output_folder <- "tsisal_result"
+benchmark_log_file <- file.path(output_folder, "tsisal_benchmark.csv")
 
-# Reference Matrix 文件路径
-ref_file_path <- "ref/wgbs_850k_reference_output_Tsisal.csv"
-
-# 待分析样本文件夹 (存放 CSV 文件)
-input_folder <- "/data/yuxy/data/data/wgbs_850k/random_1" 
-
-# 结果输出文件夹
-output_folder <- "results"
-
-# 性能日志路径
-benchmark_log_file <- file.path(output_folder, "benchmark.csv")
-
-# ============================================
-
-# 创建输出目录
+# Create output directory
 if (!dir.exists(output_folder)) dir.create(output_folder, recursive = TRUE)
 
-# --------------------------------------------------------------------
-# 步骤1：导入并预处理 Reference Matrix
-# --------------------------------------------------------------------
-cat("正在加载 Reference Matrix...\n")
+# Step 1: Import and preprocess the Reference Matrix
+cat("loading Reference Matrix...\n")
 df_ref <- read.csv(ref_file_path)
 
-# 处理行名
+# Process line name
 if (colnames(df_ref)[1] == "X") {
   rownames(df_ref) <- df_ref$X
   df_ref <- df_ref[,-1]
@@ -37,125 +25,113 @@ if (colnames(df_ref)[1] == "X") {
   df_ref <- df_ref[,-1]
 }
 
-ref_850k <- as.matrix(df_ref)
+ref_tsisal <- as.matrix(df_ref)
 
-# [优化]：Reference 的基础清洗可以先做一次
-# 对应原逻辑：检查参考集 (knowRef) 是否也有异常值
-ref_clean_master <- as.matrix(ref_850k)
-# 剔除 Reference 中含有 NA, NaN, Inf 的行
+# Check if the reference set also contains outliers.
+ref_clean_master <- as.matrix(ref_tsisal)
+# Remove rows containing NA, NaN, or Inf from the Reference list.
 ref_clean_master <- ref_clean_master[rowSums(!is.finite(ref_clean_master)) == 0, ]
-cat("Reference Matrix 加载及基础清洗完成。维度:", dim(ref_clean_master), "\n")
+cat("Reference Matrix loading and basic cleaning complete. Dimensions:", dim(ref_clean_master), "\n")
 
-
-# --------------------------------------------------------------------
-# 步骤2：批量处理样本
-# --------------------------------------------------------------------
+# Step 2: Batch processing of samples
 
 sample_files <- list.files(input_folder, pattern = "\\.csv$", full.names = TRUE)
-if (length(sample_files) == 0) stop("未找到 .csv 文件")
+if (length(sample_files) == 0) stop("csv file not found")
 
 benchmark_results <- data.frame()
 
-cat("开始批量处理", length(sample_files), "个文件...\n\n")
+cat("Start batch processing", length(sample_files), "files...\n\n")
 
 for (file_path in sample_files) {
   
   file_name <- tools::file_path_sans_ext(basename(file_path))
   cat("======================================================\n")
-  cat("正在处理样本:", file_name, "\n")
+  cat("Sample being processed:", file_name, "\n")
   
-  gc() # 内存清理
+  gc() 
   
-  # 监控开始
+  # peakRAM
   monitor_metrics <- peakRAM({
     
-    # --- A. 读取数据 ---
-    # 假设 CSV 第一列是 Probe ID
+    # A. Read data
     raw_data <- read.csv(file_path, header = TRUE, row.names = 1, check.names = FALSE)
     first_data_matrix <- as.matrix(raw_data)
     
-    # --- B. 核心数据格式转换 (保留你的原逻辑) ---
-    
-    # 1. 将矩阵转换为数值型 (apply 按列处理)
+    # B. Core data format conversion
     first_data_matrix_num <- apply(first_data_matrix, 2, as.numeric)
-    
-    # [补丁]：如果样本只有1列，apply可能会返回向量，导致丢失维度，这里强制转回矩阵
+
     if (is.vector(first_data_matrix_num)) {
       first_data_matrix_num <- as.matrix(first_data_matrix_num)
       colnames(first_data_matrix_num) <- colnames(first_data_matrix)
     }
     
-    # 2. 关键一步：找回行名
+    # Find the line name
     rownames(first_data_matrix_num) <- rownames(first_data_matrix)
     first_data_matrix <- first_data_matrix_num
     
-    # 3. 删除含有NA的位点 (na.omit)
+    # Delete sites containing NA
     first_data_matrix <- na.omit(first_data_matrix)
     
-    # --- C. 严格的数据清洗 (保留 Tsisal 报错处理逻辑) ---
+    # C. Strict data cleaning
     
-    # 1. 再次确保为矩阵和数值型
+    # 1. Please ensure again that it is a matrix and a numerical type.
     data_clean <- as.matrix(first_data_matrix)
     class(data_clean) <- "numeric"
     
-    # 2. 剔除含有 NA, NaN, Inf 的行
-    # rowSums(!is.finite(...)) == 0 表示这一行所有值都是正常的
+    # 2. Remove rows containing NA, NaN, or Inf.
     if (nrow(data_clean) > 0) {
       data_clean <- data_clean[rowSums(!is.finite(data_clean)) == 0, , drop=FALSE]
     }
     
-    # 3. Reference 已经预清洗过 (ref_clean_master)
+    # 3. Reference has been pre-cleaned
     
-    # 4. 取两者的交集位点，确保匹配
+    # 4. Find the intersection point of the two to ensure a match.
     common_probes <- intersect(rownames(data_clean), rownames(ref_clean_master))
     
     if (length(common_probes) < 100) {
-      warning("  [Warning] 有效位点过少 (<100)，跳过此样本")
-      out_estProp <- NULL # 标记为失败
+      warning("  [Warning] Insufficient valid loci (<100), skip this sample.")
+      out_estProp <- NULL 
     } else {
       
       data_input <- data_clean[common_probes, , drop=FALSE]
       ref_input <- ref_clean_master[common_probes, , drop=FALSE]
       
-      # 5. 计算行方差，过滤掉变异度极小的位点
-      # 注意：如果只有一个样本，方差计算结果为NA或0，Tsisal可能无法运行
+      # 5. Calculate row variance and filter out sites with extremely low variability.
       if (ncol(data_input) > 1) {
         row_vars <- apply(data_input, 1, var)
-        # 只保留方差大于 1e-8 的位点
+        # Only retain sites with variance greater than 1e-8.
         keep_idx <- which(row_vars > 1e-8)
         data_input <- data_input[keep_idx, , drop=FALSE]
         ref_input <- ref_input[rownames(data_input), , drop=FALSE]
       } else {
-        # 如果是单样本，无法计算方差(var返回NA)，则跳过方差过滤或仅保留非零行
-        # 这里为了保持脚本稳健，不做额外方差过滤，直接使用
-        cat("  [Info] 单样本无法计算行方差，跳过方差过滤步骤。\n")
+        cat("  [Info] Row variance cannot be calculated for a single sample; therefore, the variance filtering step is skipped.\n")
       }
       
-      # 检查过滤后是否还有数据
+      # Check if there is still data after filtering.
       if (nrow(data_input) == 0) {
-        stop("经过清洗和方差过滤后，没有剩余的有效位点。")
+        stop("After cleaning and variance filtering, no valid sites remain.")
       }
       
-      # --- D. 运行 Tsisal ---
+      # --- D. run Tsisal ---
       cat("  Running Tsisal (K=6)...\n")
       
-      # 运行核心函数
+      # run core function
       out <- Tsisal(data_input, K = 6, knowRef = ref_input)
       out_estProp <- out$estProp
       
-      # --- E. 保存结果 ---
+      # E. save
       output_txt_path <- file.path(output_folder, paste0(file_name, "_Tsisal_result.txt"))
       write.table(out_estProp, file = output_txt_path, sep = "\t", col.names = NA, quote = FALSE)
     }
     
-  }) # peakRAM End
+  }) 
   
-  # 提取指标
+  # Extraction indicators
   elapsed_time <- monitor_metrics$Elapsed_Time_sec
-  peak_mem <- monitor_metrics$Peak_RAM_Used_MiB
+  peak_mem <- monitor_metrics$Peak_RAM_Used_MiB * 1.048576
   
-  cat("处理完成: ", file_name, "\n")
-  cat("耗时: ", elapsed_time, "s | 内存: ", peak_mem, "MB\n")
+  cat("down: ", file_name, "\n")
+  cat("time: ", elapsed_time, "s | peak memory: ", peak_mem, "MB\n")
   
   benchmark_results <- rbind(benchmark_results, data.frame(
     Sample = file_name,
@@ -164,8 +140,8 @@ for (file_path in sample_files) {
     Result = ifelse(exists("out_estProp") && !is.null(out_estProp), "Success", "Failed")
   ))
   
-  # 实时保存日志
+  # Real-time log saving
   write.csv(benchmark_results, benchmark_log_file, row.names = FALSE)
 }
 
-cat("\n所有任务结束。日志已保存。\n")
+cat("\nAll tasks completed. Log saved.\n")
