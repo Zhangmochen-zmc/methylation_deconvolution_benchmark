@@ -1,83 +1,80 @@
-#################################### 一、读取450k数据的reference data情况
-
-#################################### 步骤1：从每种细胞类型中提取所有用于构建reference matrix的数据，对其进行合并
 library(limma)
 library(dplyr)
 library(tools)
 library(tibble)
 
-# 封装数据处理为函数
+# Extract all data used to construct the reference matrix for each cell type and merge them. 
+# Encapsulate data processing as functions
 process_methylation_data <- function(base_path) {
-  all_data <- list()  # 用来存放数据
+  all_data <- list()  
   
-  # 获取所有 .txt 文件
-  files <- list.files(base_path, pattern = "\\.txt$", full.names = TRUE)  # 只列出 .txt 文件
+  # Get all .txt files
+  files <- list.files(base_path, pattern = "\\.txt$", full.names = TRUE) 
   
-  cat("正在处理文件夹：", base_path, "\n")  # 打印正在处理的文件夹
+  cat("Folder being processed：", base_path, "\n")  
   
-  # 循环读取每个文件并整合数据
+  # Loop through each file and integrate the data.
   for (file in files) {
-    cat("正在读取文件：", file, "\n")  # 打印正在读取的文件名
+    cat("Reading file：", file, "\n")  
     
-    # 读取数据
+    # Read data
     data <- read.table(file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
     
-    # 获取文件名（去掉路径和扩展名）
+    # Get the filename (remove the path and extension).
     file_name <- file_path_sans_ext(basename(file))
     
-    # 为列名赋予“文件夹名-文件名”的格式
-    # 根据 cell type 动态赋予列名
+    # Assign column names the format "folder name-file name".
     col_name <- paste(basename(base_path), file_name, sep = "-")
     
-    # 设置列名：cg_probe 和 文件夹-文件名
+    # Set column names: cg_probe and folder-filename.
     colnames(data) <- c("cg_probe", col_name)
     
-    # 合并数据：按cg_probe合并
+    # Merge data: Merge by cg_probe
     if (length(all_data) == 0) {
       all_data <- list(data)
-      cat("初始化 all_data\n")  # 打印初始化提示
+      cat("initialization all_data\n")  
     } else {
-      cat("正在合并数据...\n")  # 打印合并提示
+      cat("Data being merged...\n")  
       all_data <- mapply(function(x, y) merge(x, y, by = "cg_probe", all = TRUE),
                          all_data, list(data), SIMPLIFY = FALSE)
     }
   }
   
-  # 将所有数据合并为一个data.frame
-  cat("开始合并数据...\n")  # 打印合并提示
+  # Merge all data into a single data.frame
+  cat("Start merging data...\n") 
   final_data <- Reduce(function(x, y) merge(x, y, by = "cg_probe", all = TRUE), all_data)
   
-  cat("数据合并完成，行数：", nrow(final_data), " 列数：", ncol(final_data), "\n")  # 打印合并后的数据维度
+  cat("Data merging complete, rows：", nrow(final_data), " cols：", ncol(final_data), "\n")  
   
-  # 输出合并后的结果
+  # Output the merged result
   output_path <- paste0(base_path, "_merged_methylation_data.txt")
   write.table(final_data, file = output_path, sep = "\t", row.names = FALSE, col.names = TRUE)
   
-  cat("数据整合完成，已保存为", output_path, "\n")  # 打印文件保存路径
+  cat("Data integration is complete and has been saved as", output_path, "\n")  
   
-  cat("数据处理完成！\n")
+  cat("Data processing completed！\n")
   
-  return(final_data)  # 返回合并后的数据框
+  return(final_data) 
 }
 
-# 调用函数进行数据处理
+# Calling functions to process data
 cell_types <- c("bcell", "cd4", "cd8", "nk", "monocyte", "neutrophil")
 for (cell_type in cell_types) {
-  base_path <- paste0("/data/yuxy/data/data/wgbs_850k/ref_data/", cell_type)
+  base_path <- paste0("ref_data/", cell_type)
   processed_data <- process_methylation_data(base_path)
   
-  # 将生成的所有结果文件移动到指定路径
-  output_dir <- "ref"
+  # Move all generated result files to the specified path.
+  output_dir <- "prmeth_ref"
   file.rename(paste0(base_path, "_merged_methylation_data.txt"), 
               file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")))
-  cat("文件已移动至：", file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")), "\n")
+  cat("The file has been moved to：", file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")), "\n")
 }
 
-################################################# 步骤2：整合数据，生成merged_data数据框和merged_data_matrix矩阵
+# Integrate the data to generate a merged_data data frame and a merged_data_matrix.
 
-# 封装数据处理为函数
+# Encapsulate data processing as functions
 process_methylation_matrix <- function(base_path, output_file) {
-  # 读取各个细胞类型的合并数据
+  # Read merged data from various cell types
   bcell <- read.table(file.path(base_path, "bcell_merged_methylation_data.txt"), header = TRUE, sep = "\t", stringsAsFactors = FALSE)
   cd4 <- read.table(file.path(base_path, "cd4_merged_methylation_data.txt"), header = TRUE, sep = "\t", stringsAsFactors = FALSE)
   cd8 <- read.table(file.path(base_path, "cd8_merged_methylation_data.txt"), header = TRUE, sep = "\t", stringsAsFactors = FALSE)
@@ -85,95 +82,94 @@ process_methylation_matrix <- function(base_path, output_file) {
   monocyte <- read.table(file.path(base_path, "monocyte_merged_methylation_data.txt"), header = TRUE, sep = "\t", stringsAsFactors = FALSE)
   nk <- read.table(file.path(base_path, "nk_merged_methylation_data.txt"), header = TRUE, sep = "\t", stringsAsFactors = FALSE)
   
-  # 修改列名以反映细胞类型
+  # Modify column names to reflect cell type
   colnames(cd4) <- gsub("bcell", "cd4", colnames(cd4))
   colnames(cd8) <- gsub("bcell", "cd8", colnames(cd8))
   colnames(nk) <- gsub("bcell", "nk", colnames(nk))
   colnames(neutrophil) <- gsub("bcell", "neutrophil", colnames(neutrophil))
   colnames(monocyte) <- gsub("bcell", "monocyte", colnames(monocyte))
   
-  # 合并数据框
+  # Merge Data Frames
   merged_data <- merge(bcell, cd4, by = "cg_probe", all = TRUE)
   merged_data <- merge(merged_data, cd8, by = "cg_probe", all = TRUE)
   merged_data <- merge(merged_data, neutrophil, by = "cg_probe", all = TRUE)
   merged_data <- merge(merged_data, monocyte, by = "cg_probe", all = TRUE)
   merged_data <- merge(merged_data, nk, by = "cg_probe", all = TRUE)
   
-  # 打印合并后的数据维度
-  cat("合并后的数据维度：", nrow(merged_data), "行，", ncol(merged_data), "列\n")
+  # Print merged data dimensions
+  cat("Merged data dimensions：", nrow(merged_data), "row，", ncol(merged_data), "col\n")
   
-  # 删除属性值为NA的行
+  # Delete rows with the attribute value NA
   merged_data <- merged_data %>% filter(!apply(merged_data, 1, function(row) any(row == "NA")))
   
-  # 打印删除NA行后的数据维度
-  cat("删除包含NA的条目后的数据维度：", nrow(merged_data), "行，", ncol(merged_data), "列\n")
+  # Print the data dimensions after deleting NA rows.
+  cat("Data dimensions after deleting entries containing NA：", nrow(merged_data), "row，", ncol(merged_data), "col\n")
   
-  # 输出合并后的数据
+  # Output merged data
   write.table(merged_data, file = output_file, sep = "\t", row.names = FALSE, col.names = TRUE)
-  cat("数据已保存为：", output_file, "\n")
+  cat("The data has been saved as：", output_file, "\n")
   
-  # 将 merged_data 转换为 matrix 形式，并设置行名为 cg_probe
+  # Convert merged_data to matrix form and set the row name to cg_probe.
   if ("cg_probe" %in% colnames(merged_data)) {
-    merged_data_matrix <- as.matrix(merged_data[, -which(colnames(merged_data) == "cg_probe")])  # 删除 cg_probe 列
-    rownames(merged_data_matrix) <- merged_data$cg_probe  # 设置行名为 cg_probe
+    merged_data_matrix <- as.matrix(merged_data[, -which(colnames(merged_data) == "cg_probe")])  
+    rownames(merged_data_matrix) <- merged_data$cg_probe  
     
-    # 返回转换后的矩阵
+    # Return the transformed matrix
     return(list(merged_data = merged_data, merged_data_matrix = merged_data_matrix))
   } else {
-    cat("警告：数据框中不存在 'cg_probe' 列！\n")
+    cat("Warning: The column 'cg_probe' does not exist in the data frame!\n")
     return(NULL)
   }
 }
 
-# 调用函数进行数据处理
-base_path <- "ref"
-output_file <- "ref/merged_data.txt"
+# Calling functions to process data
+base_path <- "prmeth_ref"
+output_file <- "prmeth_ref/merged_data.txt"
 result <- process_methylation_matrix(base_path, output_file)
 
 merged_data <- result$merged_data
 merged_data_matrix <- result$merged_data_matrix
 
-# 如果需要查看矩阵的前几行
+# If you need to view the first few rows of the matrix
 if (!is.null(merged_data_matrix)) {
-  cat("合并后的数据矩阵的前几行：\n")
+  cat("The first few rows of the merged data matrix:\n")
   print(head(merged_data_matrix))
 }
 
 
-################################################# 步骤3：整合数据，将每个细胞类型生成一个平均值
-# 定义细胞类型关键词
+# Integrate the data and generate an average value for each cell type.
 cell_types <- c('bcell', 'cd4', 'cd8', 'neutrophil', 'monocyte', 'nk')
 
-# 创建一个空的数据框来存储每个细胞类型的平均值
+# Create an empty data frame to store the average value for each cell type.
 averaged_df <- data.frame(cg_id = rownames(merged_data_matrix))
 
-# 遍历每个细胞类型并计算每个细胞类型的平均值
+# Iterate through each cell type and calculate the average value for each cell type.
 for (cell_type in cell_types) {
-  # 提取包含当前细胞类型关键词的列
+  # Extract columns containing keywords related to the current cell type.
   selected_columns <- grep(cell_type, colnames(merged_data_matrix), value = TRUE)
   
-  # 提取相应的列数据
+  # Extract the corresponding column data
   selected_data <- merged_data_matrix[, selected_columns]
   
-  # 计算该细胞类型每行的平均值
+  # Calculate the average value for each row of this cell type.
   averaged_data <- rowMeans(selected_data, na.rm = TRUE)
   
-  # 将计算结果添加到新的数据框中
+  # Add the calculation results to the new data frame.
   averaged_df[[cell_type]] <- averaged_data
 }
 
-# 显示结果
+# Display results
 print(averaged_df)
 
-# 如果你需要对列名进行重命名，已经在 averaged_df 中包含了 cg_id 和细胞类型的平均值列
+# If you need to rename the columns, the average columns for cg_id and cell type are already included in averaged_df.
 rownames(averaged_df) <- averaged_df$cg_id
 averaged_df <- averaged_df[,-1]
 
-# 定义保存路径，将生成的reference matrix进行保存
-output_path <- "ref/wgbs_850k_reference_output_PRMeth.csv"
+# Define a save path to save the generated reference matrix.
+output_path <- "prmeth_ref/reference_output_PRMeth.csv"
 
-# 将 averaged_df 保存为 CSV 文件
+# Save averaged_df as a CSV file
 write.csv(averaged_df, file = output_path, row.names = TRUE, col.names = TRUE)
 
-# 提示保存成功
+# Successful saving message
 cat("File saved to:", output_path)
