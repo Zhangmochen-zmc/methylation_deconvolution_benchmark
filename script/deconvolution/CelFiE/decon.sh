@@ -2,7 +2,7 @@
 
 # config
 CELFIE_SCRIPT="decon.py"
-PERF_WRAPPER="celfie_perf.py"
+PERF_WRAPPER="perf_monitor.py"
 INPUT_BASE="test_data"
 OUTPUT_BASE="celfie_result"
 K_VALUE=100
