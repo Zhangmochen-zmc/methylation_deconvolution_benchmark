@@ -171,7 +171,7 @@ most_variant_9999 <- averaged_df[names(variance[order(variance, decreasing = TRU
 
 
 # Define a save path to save the generated reference matrix.
-output_path <- "reffreeewas_ref/wgbs_850k_reference_output_RefFreeEWAS.csv"
+output_path <- "reffreeewas_ref/reference_output_RefFreeEWAS.csv"
 
 # Save averaged_df as a CSV file
 write.csv(most_variant_9999, file = output_path, row.names = TRUE, col.names = TRUE)
