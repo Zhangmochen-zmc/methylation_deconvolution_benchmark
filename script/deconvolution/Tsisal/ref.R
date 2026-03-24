@@ -64,7 +64,7 @@ for (cell_type in cell_types) {
   processed_data <- process_methylation_data(base_path)
   
   # Move all generated result files to the specified path.
-  output_dir <- "prmeth_ref"
+  output_dir <- "tsisal_ref"
   file.rename(paste0(base_path, "_merged_methylation_data.txt"), 
               file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")))
   cat("The file has been moved to：", file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")), "\n")
@@ -123,8 +123,8 @@ process_methylation_matrix <- function(base_path, output_file) {
 }
 
 # Calling functions to process data
-base_path <- "prmeth_ref"
-output_file <- "prmeth_ref/merged_data.txt"
+base_path <- "tsisal_ref"
+output_file <- "tsisal_ref/merged_data.txt"
 result <- process_methylation_matrix(base_path, output_file)
 
 merged_data <- result$merged_data
@@ -166,7 +166,7 @@ rownames(averaged_df) <- averaged_df$cg_id
 averaged_df <- averaged_df[,-1]
 
 # Define a save path to save the generated reference matrix.
-output_path <- "prmeth_ref/reference_output_Tsisal.csv"
+output_path <- "tsisal_ref/reference_output_Tsisal.csv"
 
 # Save averaged_df as a CSV file
 write.csv(averaged_df, file = output_path, row.names = TRUE, col.names = TRUE)
