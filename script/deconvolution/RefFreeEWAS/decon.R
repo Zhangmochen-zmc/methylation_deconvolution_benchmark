@@ -112,7 +112,7 @@ for (file_path in sample_files) {
   benchmark_results <- rbind(benchmark_results, data.frame(
     Sample_Name = file_name,
     Elapsed_Time_Sec = elapsed_time,
-    Peak_RAM_MiB = peak_mem,
+    Peak_RAM_MB = peak_mem,
     Common_CpGs = length(common_rows) 
   ))
   
