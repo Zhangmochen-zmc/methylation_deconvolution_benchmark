@@ -5,37 +5,24 @@ library(factoextra)
 library(brgedata)
 library(minfi)
 library(medepir)
-library(peakRAM) # 新增：用于监控时间和内存
+library(peakRAM) 
 
-# ================= 配置区域 (请根据实际情况修改路径) =================
+# config
+ref_file_path <- "reffreeewas_ref/reference_output_RefFreeEWAS.csv"
+input_folder <- "test_data" 
+output_folder <- "reffreeewas_result"
+benchmark_log_file <- file.path(output_folder, "reffreeewas_benchmark.csv")
 
-# Reference Matrix 文件路径
-ref_file_path <- "ref/wgbs_850k_reference_output_RefFreeEWAS.csv"
-
-# 待分析样本的文件夹路径 (存放待处理CSV文件的文件夹)
-# 假设这里存放的是已经整理好的单样本CSV文件
-input_folder <- "/data/yuxy/data/data/wgbs_850k/random_1" 
-
-# 结果输出文件夹路径
-output_folder <- "results"
-
-# 性能日志保存路径
-benchmark_log_file <- file.path(output_folder, "benchmark.csv")
-
-# ====================================================================
-
-# 创建输出目录
+# Create output directory
 if (!dir.exists(output_folder)) {
   dir.create(output_folder, recursive = TRUE)
 }
 
-# --------------------------------------------------------------------
-# 步骤1：导入并预处理 Reference Matrix (只需加载一次)
-# --------------------------------------------------------------------
-cat("正在加载 Reference Matrix...\n")
+# Step 1: Import and preprocess the Reference Matrix (load only once)
+cat("loadins Reference Matrix...\n")
 df_ref <- read.csv(ref_file_path)
 
-# 处理 Reference 行名 (假设第一列是X或者ID)
+# Process the Reference row name (assuming the first column is X or ID).
 if (colnames(df_ref)[1] == "X") {
   rownames(df_ref) <- df_ref$X
   df_ref <- df_ref[,-1]
@@ -44,103 +31,94 @@ if (colnames(df_ref)[1] == "X") {
   df_ref <- df_ref[,-1]
 }
 
-ref_850k <- as.matrix(df_ref)
-cat("Reference Matrix 加载完成，维度:", dim(ref_850k), "\n")
+ref_reffreeewas <- as.matrix(df_ref)
+cat("Reference Matrix loading complete, dimensions...:", dim(ref_reffreeewas), "\n")
 
-
-# --------------------------------------------------------------------
-# 步骤2：批量读取样本并运行解卷积
-# --------------------------------------------------------------------
-
-# 获取所有 .csv 文件
+# Step 2: Read samples in batches and run deconvolution.
 sample_files <- list.files(input_folder, pattern = "\\.csv$", full.names = TRUE)
 
 if (length(sample_files) == 0) {
-  stop("在输入文件夹中未找到 .csv 文件！")
+  stop("No .csv file found in the input folder!")
 }
 
-# 初始化日志数据框
+# Initialize log data frame
 benchmark_results <- data.frame()
 
-cat("开始批量处理，共找到", length(sample_files), "个文件...\n\n")
+cat("Batch processing started, find", length(sample_files), "files...\n\n")
 
 for (file_path in sample_files) {
   
   file_name <- tools::file_path_sans_ext(basename(file_path))
   cat("======================================================\n")
-  cat("正在处理样本:", file_name, "\n")
+  cat("Sample being processed:", file_name, "\n")
   
-  # 强制垃圾回收
+  # gc
   gc()
   
-  # 使用 peakRAM 监控
+  # peakRAM 
   monitor_metrics <- peakRAM({
     
-    # --- A. 读取数据 ---
-    # 假设 CSV 第一列是 Probe ID
+    # read data
     raw_data <- read.csv(file_path, header = TRUE, row.names = 1, check.names = FALSE)
     first_data_matrix <- as.matrix(raw_data)
     
-    # --- B. 数据格式转换 (保留你要求的核心逻辑) ---
-    # 1. 将矩阵转换为数值型
-    # apply(..., 2, ...) 表示按列处理，as.numeric 将字符转为数字
+    # Convert data 
+    # Convert the matrix to a numerical value.
     first_data_matrix_num <- apply(first_data_matrix, 2, as.numeric)
     
-    # 2. 关键一步：apply 转换后会丢失行名，需要把原来的行名（cg...）找回来
+    # The `apply` command will lose line names after conversion; you need to retrieve the original line names (cg...).
     rownames(first_data_matrix_num) <- rownames(first_data_matrix)
     
     first_data_matrix <- first_data_matrix_num
     
-    # --- C. 选择和reference能对应上的位点值 ---
-    # 获取行名交集
-    common_rows <- intersect(rownames(first_data_matrix), rownames(ref_850k))
+    # Select the site value that corresponds to the reference
+    common_rows <- intersect(rownames(first_data_matrix), rownames(ref_reffreeewas))
     
-    # 如果交集为空，跳过该样本
+    # If the intersection is empty, skip the sample.
     if (length(common_rows) == 0) {
-      warning(paste("样本", file_name, "与 Reference 没有重合的 CpG 位点，跳过。"))
+      warning(paste("sample", file_name, "Skip any CpG sites that do not overlap with the Reference."))
     } else {
       
-      # 从 first_data_matrix 和 ref 中提取这些行
+      # Extract these lines from first_data_matrix and ref.
       first_data_matrix_updated <- first_data_matrix[common_rows, , drop=FALSE]
-      ref_850k_updated <- ref_850k[common_rows, , drop=FALSE]
+      ref_reffreeewas_updated <- ref_reffreeewas[common_rows, , drop=FALSE]
       
-      # --- D. 运行 RefFreeEWAS ---
-      # 这里的逻辑是 Reference-Based (传入了 mu0)
+      # run RefFreeEWAS 
       cat("  Running RefFreeCellMix...\n")
       cell_mix <- RefFreeEWAS::RefFreeCellMix(
         Y = first_data_matrix_updated, 
-        mu0 = ref_850k_updated, 
+        mu0 = ref_reffreeewas_updated, 
         iters = 10, 
-        verbose = FALSE # 批量运行时建议关闭 verbose 以减少刷屏，或者设为 FALSE
+        verbose = FALSE 
       )
       
-      # --- E. 保存结果 ---
+      # save results
       output_txt_path <- file.path(output_folder, paste0(file_name, "_RefFreeEWAS_result.txt"))
       
-      # 保存 Omega (细胞混合比例)
+      # save Omega 
       write.table(cell_mix$Omega, file = output_txt_path, sep = "\t", col.names = NA, quote = FALSE)
     }
     
-  }) # peakRAM 结束
+  }) 
   
-  # 提取性能指标
+  # Extract performance indicators
   elapsed_time <- monitor_metrics$Elapsed_Time_sec
-  peak_mem <- monitor_metrics$Peak_RAM_Used_MiB
+  peak_mem <- monitor_metrics$Peak_RAM_Used_MiB * 1.048576
   
-  cat("处理完成: ", file_name, "\n")
-  cat("耗时: ", elapsed_time, " 秒 | 内存峰值: ", peak_mem, " MiB\n")
+  cat("down: ", file_name, "\n")
+  cat("time: ", elapsed_time, " s | peak memory: ", peak_mem, " MB\n")
   
-  # 记录到日志表
+  # Recorded in the log table
   benchmark_results <- rbind(benchmark_results, data.frame(
     Sample_Name = file_name,
     Elapsed_Time_Sec = elapsed_time,
     Peak_RAM_MiB = peak_mem,
-    Common_CpGs = length(common_rows) # 记录一下使用了多少个位点
+    Common_CpGs = length(common_rows) 
   ))
   
-  # 实时保存日志
+  # Real-time log saving
   write.csv(benchmark_results, file = benchmark_log_file, row.names = FALSE)
 }
 
-cat("\n所有样本处理完毕！\n")
-cat("Benchmark 日志已保存至: ", benchmark_log_file, "\n")
+cat("\nAll samples have been processed!\n")
+cat("Benchmark logs have been saved to: ", benchmark_log_file, "\n")
