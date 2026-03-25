@@ -8,7 +8,7 @@ from memory_profiler import memory_usage
 # config
 INPUT_PATH = "test_data/test_data.txt"
 OUTPUT_DIR = "celfeer_result"
-NUM_SAMPLES = "100"
+NUM_SAMPLES = "1"
 SCRIPT_PATH = "CelFEER/scripts/celfeer.py"
 
 def run_task():
