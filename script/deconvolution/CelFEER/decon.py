@@ -6,7 +6,7 @@ import os
 from memory_profiler import memory_usage
 
 # config
-INPUT_PATH = "test_data/test.txt"
+INPUT_PATH = "test_data/test_data.txt"
 OUTPUT_DIR = "celfeer_result"
 NUM_SAMPLES = "100"
 SCRIPT_PATH = "CelFEER/scripts/celfeer.py"
