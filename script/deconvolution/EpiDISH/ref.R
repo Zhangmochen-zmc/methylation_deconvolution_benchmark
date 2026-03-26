@@ -254,9 +254,9 @@ filter_and_save_DMC <- function(DHS_cpg_path, DMC_list, output_dir, cell_types) 
 
 # Set the DHS_cpg file path and output folder
 # DHS merger
-DHS_cpg_path <- "/data/zhangmch/deconvolution_benchmark/requirement/DHS/epigenomic-roadmap/filtered_cg_info_850k.bed"
+DHS_cpg_path <- "DHS/epigenomic-roadmap/filtered_cg_info_850k.bed"
 # DHS alone
-# DHS_cpg_path <- "/data/zhangmch/deconvolution_benchmark/requirement/DHS/epigenomic-roadmap/850k_DHS_cell_type"
+# DHS_cpg_path <- "DHS/epigenomic-roadmap/850k_DHS_cell_type"
 output_dir <- "epidish_ref"
 
 # Call the function to filter and save the results
