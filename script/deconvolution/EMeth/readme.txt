@@ -8,14 +8,14 @@ Prepare your input data in `.csv` format. It is recommended to place them in a `
 Prepare the ref_raw file
 Prepare the EMeth
 
-## Step 1: Feature Alignment (`ref.py`)
+## Step 1: Feature Alignment (`ref.R`)
 
 This step aligns the features (e.g., Gene Symbols or Probe IDs) between the reference and the mixture data, keeping only the intersection of the two.
 
 ```bash
 Rscript ref.R
 ```
-## Step 2: Deconvolution (`decon.py`)
+## Step 2: Deconvolution (`decon.R`)
 
 This step performs the core ARIC algorithm, including marker gene selection and weighted support vector regression.
 
