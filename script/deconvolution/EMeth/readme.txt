@@ -22,3 +22,5 @@ This step performs the core ARIC algorithm, including marker gene selection and 
 ```bash
 Rscript decon.R
 ```
+
+We provide pre-processed data files in the test_data that can be used directly for testing the pipeline. Users can point the input path to these files to immediately evaluate the performance of EMeth. Specifically, the filtered reference files used for deconvolution are located in the emeth_ref, ensuring you have a streamlined starting point for your analysis.
