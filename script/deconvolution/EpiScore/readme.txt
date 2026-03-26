@@ -23,4 +23,4 @@ This step performs the core ARIC algorithm, including marker gene selection and 
 Rscript decon.R
 ```
 
-We provide pre-processed data files in the test_data that can be used directly for testing the pipeline. Users can point the input path to these files to immediately evaluate the performance of EpiScore. Specifically, the filtered reference files used for deconvolution are located in the episcore_ref, ensuring you have a streamlined starting point for your analysis.
+Unlike other methods, EpiScore integrates the selection of reference profiles and the merging of data into a single, unified step. We provide pre-processed data files in the test_data that can be used directly for testing the pipeline. Users can point the input path to these files to immediately evaluate the performance of EpiScore.
