@@ -8,7 +8,7 @@ from memory_profiler import memory_usage
 
 # config
 ATLAS_PATH = "metdecode_ref/atlas.tsv"
-DATA_DIR = "test_data/test_data"
+DATA_DIR = "test_data"
 RESULTS_DIR = "metdecode_result"
 LOG_OUTPUT = "metdecode_benchmark.csv"
 
