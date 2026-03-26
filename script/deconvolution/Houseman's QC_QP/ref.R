@@ -144,13 +144,13 @@ out_dir <- "houseman_ref"
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # 1) Save as RDS
-saveRDS(cell_ref, file = file.path(out_dir, "cell_ref_own_850k.rds"))
-saveRDS(beta_ref, file = file.path(out_dir, "beta_ref_own_850k.rds"))
+saveRDS(cell_ref, file = file.path(out_dir, "cell_ref_own.rds"))
+saveRDS(beta_ref, file = file.path(out_dir, "beta_ref_own.rds"))
 
 cat("Saved to:", out_dir, "\n")
 
 # Define a save path to save the generated reference matrix.
-output_path <- "hosueman_ref/wgbs_850k_reference_output_houseman.csv"
+output_path <- "hosueman_ref/reference_output_houseman.csv"
 
 # Save averaged_df as a CSV file
 write.csv(merged_data_matrix, file = output_path, row.names = TRUE, col.names = TRUE)
