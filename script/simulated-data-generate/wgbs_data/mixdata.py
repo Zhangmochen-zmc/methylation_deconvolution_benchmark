@@ -1,5 +1,5 @@
 # =======================================================
-# Script Name: mix_pat.py
+# Script Name: mixdata.py
 # Function: Simulate mixed WGBS samples by combining purified cell-type profiles.
 #           1. Load cell-type proportions from a CSV file
 #           2. Mix PAT files using wgbstools mix_pat
