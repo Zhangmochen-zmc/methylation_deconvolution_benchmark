@@ -12,16 +12,13 @@ This module handles the generation of cell-type mixing proportions using Dirichl
 
 ### 2. `array_data/` (Infinium Array Simulation)
 Scripts for simulating Illumina Methylation Array data.
-* **Data Mixing**: Combines purified cell-type profiles based on generated proportions.
-* **Noise Injection (`noisy.py`)**: Adds various levels of technical or biological noise to the synthetic array samples.
-* `mixdata.py`: Core script for generating the final mixed array matrix.
+* `mixdata.py`: Combines purified cell-type profiles based on generated proportions to generate the mixed array matrix.
+* `noisy.py`: Adds various levels of technical or biological noise to the synthetic array samples.
 
 ### 3. `wgbs_data/` (WGBS Simulation)
 Tools for generating simulated sequencing data in PAT and BED formats.
-* **PAT Format Generation**: Mixes purified PAT files to create simulation samples at various sequencing depths.
-* **BED Processing**: Converts and processes the mixed PAT files into standard BED format for downstream analysis.
+* `mix_pat.py`: Mixes purified PAT files to create simulation samples at various sequencing depths.
 * `bed_generate.sh`: Automates the workflow from mixing to BED generation.
-* `mixdata.py`: Python wrapper for coordinating the WGBS mixing process.
 
 ## Workflow Summary
 
