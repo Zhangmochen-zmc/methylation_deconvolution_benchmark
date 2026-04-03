@@ -37,7 +37,7 @@ pat_files = [
 
 target_cov = 20.0
 max_parallel_jobs = 5
-threads_per_job = 12
+threads_per_job = 1
 
 # =====================================================
 
