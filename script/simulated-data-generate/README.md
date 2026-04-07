@@ -27,9 +27,3 @@ Tools for generating simulated sequencing data in PAT and BED formats.
     * **For Array**: Run `array_data/mixdata.py` to produce beta-value matrices.
     * **For WGBS**: Use `wgbs_data/mixdata.py` to generate depth-specific PAT files.
 3.  **Process/Refine**: Add noise to array data using `noisy.py` or convert WGBS files to BED format using `bed_generate.sh`.
-
-## Requirements
-* Python 3.10
-* Pandas
-* wgbstools
-* numpy/scipy (for Dirichlet distribution and noise injection)
