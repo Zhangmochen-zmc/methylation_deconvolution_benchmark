@@ -22,7 +22,7 @@ python ref.py
 ```
 
 **Input:** `ref_raw.csv`, `mix.csv`  
-**Output:** Aligned matrices (e.g., `ref.csv`) containing only shared features.
+**Output:** Aligned matrices (e.g., `ref.csv`) containing only shared features (`aric_ref`).
 
 ---
 
