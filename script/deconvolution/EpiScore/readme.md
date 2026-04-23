@@ -22,7 +22,7 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `.txt`(`ref_data`)    
+**Input:** `ref_raw.csv`(`ref_data`)    
 **Output:** `avg_data_matrix.RData` (`emeth_ref`)
 
 
