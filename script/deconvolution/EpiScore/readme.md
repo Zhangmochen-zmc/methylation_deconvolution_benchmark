@@ -9,7 +9,6 @@ Before running the scripts, organize your input data. It is recommended to place
 *   **Reference Matrix (`ref_raw.csv`)**: 
     *   **Rows**: Features (Probe IDs).
     *   **Columns**: Known cell types.
-    *   Organization: Data for different cell types are organized as individual subfolders within the reference directory.
 *   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
     *   **Rows**: Features (must use the same naming convention as the reference matrix).
     *   **Columns**: Samples.  
