@@ -1,6 +1,6 @@
-# WGBS Auto Detection and BED Generation Pipeline
+# WGBS Data Processing for BED Generation
 
-This project provides a complete **bash-based pipeline** for processing Whole-Genome Bisulfite Sequencing (WGBS) data. It automatically detects input file types (`.bam` or `.pat.gz`) and converts them into high-quality **1-based BED files** containing methylation information.
+This project provides a complete **pipeline** for processing Whole-Genome Bisulfite Sequencing (WGBS) data. It automatically detects input file types (`.bam` or `.pat.gz`) and converts them into high-quality **BED files** containing methylation information.
 
 ---
 
@@ -8,10 +8,9 @@ This project provides a complete **bash-based pipeline** for processing Whole-Ge
 
 This pipeline is designed to streamline WGBS data processing by integrating multiple steps into a single workflow. It supports both raw alignment files and processed methylation pattern files, making it flexible for different stages of analysis.
 
-The output BED files include:
-- Genomic coordinates (converted to 1-based)
-- Read-level methylation data
-- Mean methylation values
+The output files include:
+- PAT files: Read-level methylation data
+- BED files: Methylation level at each CpG genomic coordinate
 
 ---
 
@@ -29,8 +28,8 @@ The output BED files include:
 
 ## Requirements
 
-- `wgbstools`
-- `samtools`
+- `wgbstools`: [https://github.com/nloyfer/wgbs_tools.git](https://github.com/nloyfer/wgbs_tools.git)
+- `samtools` : [https://github.com/samtools/samtools.git](https://github.com/samtools/samtools.git)
 
 ---
 
