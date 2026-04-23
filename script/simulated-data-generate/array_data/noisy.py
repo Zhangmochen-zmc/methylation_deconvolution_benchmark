@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+np.random.seed(42)
+
 def add_gaussian_noise_via_m_value(beta_matrix, noise_std=0.1, epsilon=1e-6):
     # Clipping
     beta_clipped = np.clip(beta_matrix, epsilon, 1 - epsilon)
