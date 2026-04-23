@@ -54,7 +54,7 @@ def main():
 
     parser.add_argument('--input_type', default='bismark', help="Input file type (bismark/array)")
 
-    # 3. 关键路径修复参数
+    # 3. Critical path repair parameters
     parser.add_argument('--menet_path', default="MEnet")
     
     parser.add_argument('--bedtools', default="bedtools")
