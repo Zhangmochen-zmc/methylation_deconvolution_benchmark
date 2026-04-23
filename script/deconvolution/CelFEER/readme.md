@@ -22,9 +22,9 @@ Run `ref.py` (markers.py in CelFEER) using your processed scRNA-seq reference da
 python markers.py <input_file> <output_file> <num_values> <tissues> <depth_filter> <nan_filter> <extra_filter> <variant>
 ```
 
-**Input:** `ref.txt`(ref_data).
+**Input:** `ref.txt`(ref_data)  
+**Output:** `marker.txt`(celfeer_ref)
 
-**Output:** `marker.txt`(celfeer_ref).
 
 ### Step 3: Integration
 
