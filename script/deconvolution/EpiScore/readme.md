@@ -16,14 +16,14 @@ Before running the scripts, organize your input data. It is recommended to place
 
 ### Step 2: Marker Selection and data integration
 
-Run `ref.R` using reference data to extract cell type specific marker genes and generate the signature matrix.
+Run `ref.R` using reference data to extract cell type specific marker genes and generate the signature matrix. The processed reference matrix and the list of all project datasets are finally saved into a single `.RData` file.
 
 ```bash
 Rscript ref.R
 ```
 
-**Input:** `ref_raw.csv`(`ref_data`), `test.csv`(`test_data`)
-**Output:** `avg_data_matrix.RData` (`episcore_ref`)
+**Input:** `ref_raw.csv`(`ref_data`), `test.csv`(`test_data`)    
+**Output:** `episcore.RData` (`episcore_ref`)
 
 
 ### Step 3: Deconvolution
@@ -34,13 +34,12 @@ Run `decon.R` to perform the core deconvolution. This process includes:
 Rscript decon.R
 ```
 
-**Input:** `avg_data_matrix.RData` from Step 2.  
+**Input:** `episcore.RData` from Step 2.  
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
 
 ### Notes
-*   **More Information**: [https://github.com/Sun-lab/dMeth.git](https://github.com/Sun-lab/dMeth.git)
-*   **Environment**: Users need to download ‘EMeth’ before proceeding with the workflow.
+*   **More Information**: [https://github.com/aet21/EpiSCORE.git](https://github.com/aet21/EpiSCORE.git)
 
 
