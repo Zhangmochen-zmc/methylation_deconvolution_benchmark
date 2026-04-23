@@ -39,5 +39,6 @@ python decon.py
 **Input:** Aligned files from Step 2.  
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
----
+
+*   **More Information**: 具体详情见 [https://github.com/pi-zz-a/CelFEER.git](https://github.com/pi-zz-a/CelFEER.git)
 
