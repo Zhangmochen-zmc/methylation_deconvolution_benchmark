@@ -1,3 +1,45 @@
-1. run ref.py (tim.py in CelFiE) 
-2. run decon.sh
-We provide pre-processed data files in the test_data that can be used directly for testing the pipeline. Users can point the input path to these files to immediately evaluate the performance of CelFiE. Specifically, the filtered reference files used for deconvolution are located in the celfie_ref, ensuring you have a streamlined starting point for your analysis.
+## Workflow
+
+The execution is divided into three main steps. Please follow them in order.
+
+### Step 1: Data Preparation
+
+Before running the scripts, organize your input data. It is recommended to place all files in  `ref_data/` and `test_data/`folder.
+
+*   **Reference Matrix (`ref_raw.csv`)**: A signature matrix where:
+    *   **Rows**: Features (Gene Symbols, Probe IDs, or CpG sites).
+    *   **Columns**: Known cell types.
+*   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
+    *   **Rows**: Features (must use the same naming convention as the reference matrix).
+    *   **Columns**: Samples.
+
+### Step 2: Feature Alignment
+
+Run `ref.py` to align the features between the reference and the mixture data. This script identifies the intersection of features present in both datasets to ensure compatibility.
+
+```bash
+python ref.py
+```
+
+**Input:** `ref_raw.csv`, `mix.csv`  
+**Output:** Aligned matrices (e.g., `ref.csv`) containing only shared features (`aric_ref`).
+
+
+### Step 3: Deconvolution
+
+Run `decon.py` to perform the core ARIC algorithm. This process includes:
+*   **Marker Selection**: Identifying highly informative features for each cell type.
+*   **Deconvolution**: Performing deconvolution using a weighted Support Vector Regression approach.
+
+```bash
+python decon.py
+```
+
+**Input:** Aligned files from Step 2.  
+**Output:** Predicted cell type proportions for each sample in the mixture matrix.
+
+---
+
+### Notes
+*   **More Information**: [https://github.com/XWangLabTHU/ARIC.git](https://github.com/XWangLabTHU/ARIC.git)
+
