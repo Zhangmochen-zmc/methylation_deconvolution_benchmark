@@ -7,7 +7,7 @@ The execution is divided into three main steps. Please follow them in order.
 Before running the scripts, organize your input data. It is recommended to place all files in  `ref_data/` and `test_data/`folder.
 
 *  **Reference Matrix (`ref_raw.csv`)**: A signature matrix where:
-    *   **Rows**: Features (Gene Symbols, Probe IDs, or CpG sites).
+    *   **Rows**: Features (Probe IDs).
     *   **Columns**: Known cell types.
 *  **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
     *   **Rows**: Features (must use the same naming convention as the reference matrix).
