@@ -1,8 +1,27 @@
-# Workflow
+## Workflow
 
-run decon.py
+The execution is divided into three main steps. Please follow them in order.
 
-We provide pre-processed data files in the test_data that can be used directly for testing the pipeline. Users can point the input path to these files to immediately evaluate the performance of MEnet. Specifically, the model files used for deconvolution are located in the model, ensuring you have a streamlined starting point for your analysis.
+### Step 1: Data Preparation
+
+Before running the scripts, organize your input data. It is recommended to place all files in `test_data` folder.
+
+*   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
+    *   **Rows**: Features (must use the same naming convention as the reference matrix).
+    *   **Columns**: Samples.  
+
+### Step 2: Deconvolution
+
+Run `array_decon.py`/`wgbs_decon.py` to perform the core deconvolution. The pre-trained `.yaml` models are provided. This process includes:
+
+```bash
+python array_decon.py -m model/menet.pkl
+```
+
+**Input:** `test_data` from Step 1.  
+**Output:** Predicted cell type proportions for each sample in the mixture matrix.
+
+---
 
 ### Notes
 *   **More Information**: [https://github.com/yyoshiaki/MEnet.git](https://github.com/yyoshiaki/MEnet.git)
