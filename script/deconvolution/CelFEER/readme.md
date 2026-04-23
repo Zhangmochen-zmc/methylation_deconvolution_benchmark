@@ -6,13 +6,14 @@ The execution of **CelFEER** is divided into three main steps. Please follow the
 
 Before running the scripts, organize your input data. It is recommended to place all files in  `ref_data/` and `test_data/`folder.
 
-1.  **Reference Matrix (`ref.txt`)**: A signature matrix where:
+*  **Reference Matrix (`ref.txt`)**: A signature matrix where:
     *   **Rows**: Defined by chrom, chrom_start, and chrom_end.
     *   **Columns**: Each cell type consists of 5 space-separated integers representing the read counts for the same five methylation levels (0%, 25%, 50%, 75%, and 100%).
-2.  **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
+*  **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
     *   **Rows**: Defined by chrom, chrom_start, and chrom_end (match the Reference Matrix).
     *   **Columns**: Each sample consists of 5 tab-separated groups of space-separated integers, representing the number of reads at 0%, 25%, 50%, 75%, and 100% methylation levels.
-    A single input line may look as follows:
+A single input line may look as follows:
+
 `chr1 <tab> 1 <tab> 500 <tab> 0 1 0 2 34 <tab> 12 8 0 0 0 <tab> chr1 <tab> 1 <tab> 500 <tab>  12 5 1 1 1 <tab> 0 1 1 5 41  <tab> 2 2 5 2 3`
 
 This line contains the cfDNA of two different individuals, and the reference data of three different cell types. 
