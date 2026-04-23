@@ -14,7 +14,7 @@ methylbert finetune \
     -p output/hg38_output/ \
     -s 160 \
     --loss focal_bce \
-    -b 600 \
+    -b 256 \
     -e 1000 \
     --lr 4e-4 \
     --with_cuda
