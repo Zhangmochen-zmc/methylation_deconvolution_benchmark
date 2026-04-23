@@ -21,8 +21,8 @@ Run `ref.py` to align the features between the reference and the mixture data. T
 python ref.py
 ```
 
-**Input:** `ref_raw.csv`, `mix.csv`  
-**Output:** Aligned matrices (e.g., `ref.csv`) containing only shared features (`aric_ref`).
+**Input:** `ref_raw.csv`, `mix.csv`(ref_data)
+**Output:** `ref.csv`(`aric_ref`)
 
 
 ### Step 3: Deconvolution
