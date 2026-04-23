@@ -22,7 +22,7 @@ Rscript ref.R
 ```
 
 **Input:** `ref_raw.csv`(`ref_data`), `test.csv`(`test_data`)    
-**Output:** `episcore.RData` (`episcore_ref`)
+**Output:** `episcore.RData` (`marker_ref`)
 
 
 ### Step 3: Deconvolution
