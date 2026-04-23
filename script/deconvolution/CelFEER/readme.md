@@ -1,6 +1,6 @@
 ## Workflow
 
-The execution of **CelFEER** is divided into three main steps. Please follow them in order:
+The execution of **CelFEER** is divided into four main steps. Please follow them in order:
 
 ### Step 1: Data Preparation
 
