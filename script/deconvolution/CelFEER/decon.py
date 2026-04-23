@@ -60,7 +60,7 @@ if __name__ == "__main__":
     
     df = pd.DataFrame(results)
     
-    # 7. 打印并保存到 CSV
+    # 7. Print and save to CSV
     print("\n--- benchmark ---")
     print(df.to_string(index=False))
     
