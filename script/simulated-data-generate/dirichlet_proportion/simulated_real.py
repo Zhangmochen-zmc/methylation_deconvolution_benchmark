@@ -1,12 +1,14 @@
 import numpy as np
 import pandas as pd
 
+np.random.seed(42)
+
 num_samples = 100
 num_categories = 6
 
 alpha_vector = [2, 2, 2, 2, 10, 2]
 
-data = np.random.dirichlet(alpha_vector, size=num_sample
+data = np.random.dirichlet(alpha_vector, size=num_samples)
 
 data = np.round(data, 4)
 
@@ -26,6 +28,7 @@ cell_types = [
     "Neutrophils",   
     "Natural Killer cells"
 ]
+
 df = pd.DataFrame(data, columns=cell_types)
 
 df.to_csv("450kreal.csv", index=False, float_format='%.4f')
