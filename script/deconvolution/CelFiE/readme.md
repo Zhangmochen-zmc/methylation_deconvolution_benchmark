@@ -23,7 +23,7 @@ chr1	60	61	89.0	115.0
 
 ### Step 2: Marker Selection (`ref.py`)
 
-Run `ref.py` (tim.py in CelFiE) using your processed scRNA-seq reference data (`ref.txt` in `ref_data/`) to extract cell-type-specific marker genes and generate the signature matrix.
+Run `ref.py` (tim.py in CelFiE) using reference data to extract cell type specific marker genes and generate the signature matrix.
 
 ```bash
 python tim.py <input file> <output file> <num of tim/tissue> <num of tissues> <depth filter> <nan filter>
@@ -49,7 +49,7 @@ This file contains one different individuals, and the reference data of one diff
 
 ### Step 4: Deconvolution (`decon.sh`)
 
-Run `decon.sh` (celfie.py in CelFiE) using your prepared bulk RNA-seq data and the signature matrix generated in the previous step.
+Run `decon.sh` (celfie.py in CelFiE) using methylation data and the signature matrix generated in the previous step.
 
 ```bash
 sh decon.sh
