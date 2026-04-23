@@ -523,7 +523,7 @@ nk_avg <- rowMeans(filtered_data[, nk_cols], na.rm = TRUE)
 
 # store the mean as a new data frame
 avg_data <- data.frame(
-  cg_probe = filtered_data$cg_probe,  # 保留 cg_probe 列
+  cg_probe = filtered_data$cg_probe,  # Retain the cg_probe column
   bcell_avg = bcell_avg,
   cd4_avg = cd4_avg,
   cd8_avg = cd8_avg,
