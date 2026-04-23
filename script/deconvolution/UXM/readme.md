@@ -1,6 +1,6 @@
 ## Workflow
 
-The execution is divided into three main steps. Please follow them in order.
+The execution is divided into 4 main steps. Please follow them in order. This pipeline requires the use of both `wgbstools` and `uxm`.
  
 ### Step 1: Genome Segmentation
 
