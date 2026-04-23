@@ -12,7 +12,7 @@ Before running the scripts, organize your input data. It is recommended to place
     *   Organization: Data for different cell types are organized as individual subfolders within the reference directory.
 *   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
     *   **Rows**: Features (must use the same naming convention as the reference matrix).
-    *   **Columns**: Samples.
+    *   **Columns**: Samples.  
 
 ### Step 2: Marker Selection
 
@@ -41,4 +41,5 @@ Rscript decon.R
 
 ### Notes
 *   **More Information**: [https://github.com/Sun-lab/dMeth.git](https://github.com/Sun-lab/dMeth.git)
+*   **Environment**：Users need to download ‘EMeth’ before proceeding with the workflow.
 
