@@ -16,7 +16,7 @@ def main():
     parser.add_argument('-m', '--model', required=True, 
                         help="Path to the trained model file (.pkl)")
 
-    # 可选参数
+    # Optional parameters
     parser.add_argument('-i', '--input_dir', default='test_data', 
                         help="Enter the folder path (including the CSV file).")
     
