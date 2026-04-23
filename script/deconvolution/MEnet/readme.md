@@ -4,7 +4,7 @@ The execution is divided into three main steps. Please follow them in order.
 
 ### Step 1: Data Preparation
 
-Before running the scripts, organize your input data. It is recommended to place all files in `test_data` folder.
+Before running the scripts, organize your input data. It is recommended to place all files in `test_data/` folder.
 
 *   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
     *   **Rows**: Features (must use the same naming convention as the reference matrix).
