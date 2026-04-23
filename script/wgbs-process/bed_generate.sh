@@ -16,7 +16,7 @@ fi
 
 INPUT_DIR=$1
 GENOME="hg38"
-THREADS=${2:-12}
+THREADS=${2:-1}
 
 if [ ! -d "$INPUT_DIR" ]; then
     echo "Error: Input path '$INPUT_DIR' is not a directory!"
