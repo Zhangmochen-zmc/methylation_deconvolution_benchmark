@@ -1,4 +1,4 @@
-<img width="252" height="34" alt="image" src="https://github.com/user-attachments/assets/e20e6fd4-c593-4a99-97dd-f02f7221d5e1" />## Workflow
+## Workflow
 
 The execution is divided into 4 main steps. Please follow them in order. This pipeline requires the use of both `wgbstools` and `uxm`.
  
