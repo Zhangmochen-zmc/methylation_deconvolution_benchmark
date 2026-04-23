@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 
+np.random.seed(42)
+
 num_samples = 100
 num_categories = 6
 alpha_value = 1.0
