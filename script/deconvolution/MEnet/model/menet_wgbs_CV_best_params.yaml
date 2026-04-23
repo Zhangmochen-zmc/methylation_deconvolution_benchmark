@@ -1,0 +1,12 @@
+activation: tanh
+best_epoch:
+- 325
+- 582
+- 262
+- 902
+- 835
+dropout_rate: 0.21949054099938073
+hidden_dim: 530
+lr: 0.0007037661635038536
+n_layers: 7
+optimizer: Adam

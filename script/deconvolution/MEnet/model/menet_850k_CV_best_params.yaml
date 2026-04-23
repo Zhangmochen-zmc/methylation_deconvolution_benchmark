@@ -1,0 +1,12 @@
+activation: tanh
+best_epoch:
+- 290
+- 54
+- 802
+- 597
+- 2325
+dropout_rate: 0.21174387168356618
+hidden_dim: 130
+lr: 0.007403941994455324
+n_layers: 2
+optimizer: RMSprop
