@@ -22,7 +22,7 @@ Rscript ref.R
 ```
 
 **Input:** `.txt`(`ref_data`) and `test_data/`
-**Output:** `test_data_ref.csv` (`methylcibersort_ref`)
+**Output:** `test_data_ref.txt` (`marker_ref`)
 
 
 ### Step 3: Deconvolution
