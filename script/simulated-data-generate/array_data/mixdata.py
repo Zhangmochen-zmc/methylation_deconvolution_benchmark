@@ -3,6 +3,8 @@ import numpy as np
 import os
 import glob
 
+np.random.seed(42)
+
 #path of the proportion file 
 prop_file_path = "../proposion/450klow_nk.csv"
 
