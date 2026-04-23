@@ -41,5 +41,5 @@ Rscript decon.R
 
 ### Notes
 *   **More Information**: [https://github.com/Sun-lab/dMeth.git](https://github.com/Sun-lab/dMeth.git)
-*   **Environment**：Users need to download ‘EMeth’ before proceeding with the workflow.
+*   **Environment**: Users need to download ‘EMeth’ before proceeding with the workflow.
 
