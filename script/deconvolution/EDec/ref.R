@@ -1,9 +1,9 @@
 library(EDec)
 
 # screening sites
-meth_data <- read.table("ref/refdata.txt", row.names = 1, header = TRUE, sep = "\t", check.names = FALSE)
+meth_data <- read.table("ref_data/refdata.txt", row.names = 1, header = TRUE, sep = "\t", check.names = FALSE)
 meth_data <- as.matrix(meth_data)
-meta_data <- read.csv("ref/refmeta.csv")
+meta_data <- read.csv("ref_data/refmeta.csv")
 
 common_samples <- intersect(colnames(meth_data), meta_data$FileID)
 meth_data <- meth_data[, common_samples] 
