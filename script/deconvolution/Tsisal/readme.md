@@ -24,7 +24,7 @@ Rscript ref.R
 ```
 
 **Input:** `.txt`(`ref_data`)    
-**Output:** `reference_output_Tsisal.csv` (`tsisal_ref`)
+**Output:** `reference_output_Tsisal.csv` (`marker_ref`)
 
 
 ### Step 3: Deconvolution
