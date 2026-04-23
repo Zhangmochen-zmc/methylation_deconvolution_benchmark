@@ -1,25 +1,48 @@
-# Workflow
+## Workflow
 
-The execution is divided into three main steps. Please follow them in order:
+The execution is divided into three main steps. Please follow them in order.
 
-## Step 0: Data Preparation
+### Step 1: Data Preparation
 
-Prepare your input data in `.csv` format. It is recommended to place them in a `test_data/` folder.
-Prepare the ref_raw file
+Before running the scripts, organize your input data. It is recommended to place all files in `ref_data/` and `test_data/`folder.
 
-## Step 1: Feature Alignment (`ref.py`)
+*   **Reference Matrix (`refdata.txt`)**: A signature matrix where:
+    *   **Rows**: Features (Gene Symbols, Probe IDs, or CpG sites).
+    *   **Columns**: Known cell types.
+*   **Reference Metadata Matrix (`refmeta.csv`)**:
+    *   **Rows**:Features.
+    *   **Columns**:Cell types information.
+*   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
+    *   **Rows**: Features (must use the same naming convention as the reference matrix).
+    *   **Columns**: Samples.
 
-This step aligns the features (e.g., Gene Symbols or Probe IDs) between the reference and the mixture data, keeping only the intersection of the two.
+### Step 2: Feature Alignment
+
+Run `ref.R` to align the features between the reference and the mixture data. This script identifies the intersection of features present in both datasets to ensure compatibility.
 
 ```bash
 Rscript ref.R
 ```
-## Step 2: Deconvolution (`decon.py`)
 
-This step performs the core ARIC algorithm, including marker gene selection and weighted support vector regression.
+**Input:** `ref_data.txt`, `refmeta.csv`(`ref_data`)
+**Output:** `` (`edec_ref`).
+
+
+### Step 3: Deconvolution
+
+Run `decon.py` to perform the core ARIC algorithm. This process includes:
+*   **Marker Selection**: Identifying highly informative features for each cell type.
+*   **Deconvolution**: Performing deconvolution using a weighted Support Vector Regression approach.
 
 ```bash
-Rscript decon.R
+python decon.py
 ```
 
-We provide pre-processed data files in the test_data that can be used directly for testing the pipeline. Users can point the input path to these files to immediately evaluate the performance of EDec. Specifically, the filtered reference files used for deconvolution are located in the edec_ref, ensuring you have a streamlined starting point for your analysis.
+**Input:** Aligned files from Step 2.  
+**Output:** Predicted cell type proportions for each sample in the mixture matrix.
+
+---
+
+### Notes
+*   **More Information**: [https://github.com/XWangLabTHU/ARIC.git](https://github.com/XWangLabTHU/ARIC.git)
+
