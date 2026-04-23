@@ -6,25 +6,23 @@ The execution is divided into three main steps. Please follow them in order.
 
 Before running the scripts, organize your input data. It is recommended to place all files in `ref_data/` and `test_data/`folder.
 
-*   **Reference Matrix (`refdata.txt`)**: A signature matrix where:
+*   **Reference Matrix (`.txt`)**: 
     *   **Rows**: Features (Gene Symbols, Probe IDs, or CpG sites).
     *   **Columns**: Known cell types.
-*   **Reference Metadata Matrix (`refmeta.csv`)**:
-    *   **Rows**:Features.
-    *   **Columns**:Cell types information.
+    *   Organization: Data for different cell types are organized as individual subfolders within the reference directory.
 *   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
     *   **Rows**: Features (must use the same naming convention as the reference matrix).
     *   **Columns**: Samples.
 
-### Step 2: Feature Alignment
+### Step 2: Rreference
 
-Run `ref.R` to align the features between the reference and the mixture data. This script identifies the intersection of features present in both datasets to ensure compatibility.
+Run `ref.R` using reference data to extract cell type specific marker genes and generate the signature matrix.
 
 ```bash
 Rscript ref.R
 ```
 
-**Input:** `ref_data.txt`, `refmeta.csv`(`ref_data`)    
+**Input:** `.txt`(`ref_data`)    
 **Output:** `edec_stage0_markers.rds` (`edec_ref`)
 
 
