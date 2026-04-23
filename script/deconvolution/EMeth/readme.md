@@ -23,7 +23,7 @@ Rscript ref.R
 ```
 
 **Input:** `.txt`(`ref_data`)    
-**Output:** `avg_data_matrix.RData` (`emeth_ref`)
+**Output:** `avg_data_matrix.RData` (`marker_ref`)
 
 
 ### Step 3: Deconvolution
