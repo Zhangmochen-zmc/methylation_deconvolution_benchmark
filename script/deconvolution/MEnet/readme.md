@@ -15,7 +15,7 @@ Before running the scripts, organize your input data. It is recommended to place
 Run `array_decon.py`/`wgbs_decon.py` to perform the core deconvolution. The pre-trained `.yaml` models are provided. This process includes:
 
 ```bash
-python array_decon.py -m model/menet.pkl
+python array_decon.py <model>
 ```
 
 **Input:** `test_data` from Step 1.  
