@@ -24,7 +24,6 @@ python ref.py
 **Input:** `ref_raw.csv`, `mix.csv`(ref_data)
 **Output:** `ref.csv`(`aric_ref`)
 
-
 ### Step 3: Deconvolution
 
 Run `decon.py` to perform the core ARIC algorithm. This process includes:
