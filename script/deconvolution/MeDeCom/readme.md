@@ -25,7 +25,7 @@ Rscript decon.R
 ```
 
 **Input:** `test.csv` from Step 1.  
-**Output:** ``, ``.
+**Output:** `medecom_rds/test_data.rds`, `medecom_pdf/test_data.pdf`.
 
 ### Step 3: Deconvolution Result Processing
 
@@ -33,7 +33,7 @@ Rscript decon.R
 Rscript decon_process.R
 ```
 
-**Input:** ``, ``. from Step 2.  
+**Input:** ``medecom_rds/test_data.rds`, `medecom_pdf/test_data.pdf` from Step 2.  
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
