@@ -1,4 +1,4 @@
-## Workflow
+<img width="252" height="34" alt="image" src="https://github.com/user-attachments/assets/e20e6fd4-c593-4a99-97dd-f02f7221d5e1" />## Workflow
 
 The execution is divided into 4 main steps. Please follow them in order. This pipeline requires the use of both `wgbstools` and `uxm`.
  
@@ -34,7 +34,8 @@ wgbstools find_markers \
 Merge all marker BED files:
 
 ```bash
-awk 'FNR==1 && NR!=1 {next} 1' *.bed > all_markers_merged.bed
+awk 'FNR==1 && NR!=1 {next} 1' *.bed > all_markers.bed
+sort -k1,1V -k2,2n all_markers.bed > all_markers_sorted.bed
 ```
 
 *  **blocks_path (`blocks_blood.bed`)**: Segmented genomic regions.
@@ -47,7 +48,7 @@ Build a reference atlas using selected markers:
 
 ```bash
 uxm build \
-    -m ../25markers/all_25markers_merged.bed \
+    -m ../25markers/all_markers_sorted.bed \
     --pats *.pat.gz \
     -o ../25markers/atlas/25marker_atlas.csv \
     --groups ../wgbstools_pat_meta.csv \
