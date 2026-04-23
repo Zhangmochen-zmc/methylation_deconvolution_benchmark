@@ -14,7 +14,7 @@ Before running the scripts, organize your input data. It is recommended to place
     *   **Rows**: Features (must use the same naming convention as the reference matrix).
     *   **Columns**: Samples.
 
-### Step 2: Rreference
+### Step 2: Marker Selection
 
 Run `ref.R` using reference data to extract cell type specific marker genes and generate the signature matrix.
 
