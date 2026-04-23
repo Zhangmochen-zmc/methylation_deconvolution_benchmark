@@ -14,7 +14,7 @@ Before running the scripts, organize your input data. It is recommended to place
     *   **Rows**: Features (must use the same naming convention as the reference matrix).
     *   **Columns**: Samples.  
 
-### Step 2: Marker Selection
+### Step 2: Marker Selection and data integration
 
 Run `ref.R` using reference data to extract cell type specific marker genes and generate the signature matrix.
 
@@ -22,8 +22,8 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `ref_raw.csv`(`ref_data`)    
-**Output:** `avg_data_matrix.RData` (`emeth_ref`)
+**Input:** `ref_raw.csv`(`ref_data`), `test.csv`(`test_data`)
+**Output:** `avg_data_matrix.RData` (`episcore_ref`)
 
 
 ### Step 3: Deconvolution
