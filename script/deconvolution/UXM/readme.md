@@ -1,12 +1,6 @@
 ## Workflow
 
 The execution is divided into three main steps. Please follow them in order.
-
-
-- Sample data for Step 4: `*.pat.gz` files
-- Metadata:
-  - Step 2: `uxm_wgbs_meta.csv`
-  - Step 3: `wgbstools_pat_meta.csv`
  
 ### Step 1: Genome Segmentation
 
@@ -43,9 +37,9 @@ Merge all marker BED files:
 awk 'FNR==1 && NR!=1 {next} 1' *.bed > all_markers_merged.bed
 ```
 
-*  **blocks_path (blocks_blood.bed)**: Segmented genomic regions.
+*  **blocks_path (`blocks_blood.bed`)**: Segmented genomic regions.
 *  **betas (`*.beta`)**: Reference data used for marker selection.
-*  **groups_file (uxm_wgbs_meta.csv)**: Metadata of the reference data.
+*  **groups_file (`uxm_wgbs_meta.csv`)**: Metadata of the reference data.
 
 ### Step 3: Atlas Construction
 
@@ -62,8 +56,8 @@ uxm build \
 ```
 
 *  **pats (`*.pat.gz`)**: Reference data used for atlas construction.
-*  **groups (wgbstools_pat_meta.csv)**: Metadata of the reference data.
-*  **m (all_25markers_merged.bed)**: Selected specific markers.
+*  **groups (`wgbstools_pat_meta.csv`)**: Metadata of the reference data.
+*  **m (`all_25markers_merged.bed`)**: Selected specific markers.
 
 ### Step 4: Deconvolution
 
@@ -72,6 +66,7 @@ Run batch deconvolution using the provided script:
 ```bash
 bash UXM_deconv.sh <input_dir> <output_dir>
 ```
+---
 
 ### Notes
 
