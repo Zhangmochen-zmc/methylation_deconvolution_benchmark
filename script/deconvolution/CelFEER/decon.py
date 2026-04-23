@@ -9,7 +9,7 @@ from memory_profiler import memory_usage
 INPUT_PATH = "test_data/test_data.txt"
 OUTPUT_DIR = "celfeer_result"
 NUM_SAMPLES = "1"
-SCRIPT_PATH = "CelFEER/scripts/celfeer.py"
+SCRIPT_PATH = "CelFEER/scripts/celfeer.py" # the users to download
 
 def run_task():
     """
