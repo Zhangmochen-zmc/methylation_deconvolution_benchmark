@@ -1,6 +1,6 @@
 ## Workflow
 
-The execution of **CelFEER** is divided into four main steps. Please follow them in order:
+The execution is divided into four main steps. Please follow them in order:
 
 ### Step 1: Data Preparation
 
@@ -33,7 +33,7 @@ A single input line may look as follows:
 
 `chr1 <tab> 1 <tab> 500 <tab> 0 1 0 2 34 <tab> 12 8 0 0 0 <tab> chr1 <tab> 1 <tab> 500 <tab>  12 5 1 1 1 <tab> 0 1 1 5 41  <tab> 2 2 5 2 3`
 
-This line contains the cfDNA of two different individuals, and the reference data of three different cell types. 
+This line contains two different individuals, and the reference data of three different cell types. 
 
 ### Step 4: Deconvolution (`decon.py`)
 
