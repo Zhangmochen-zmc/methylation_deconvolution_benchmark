@@ -34,7 +34,7 @@ python tim.py <input file> <output file> <num of tim/tissue> <num of tissues> <d
 
 ### Step 3: Integration
 
-Integrate `marker.txt` and `test_raw.txt`, and sort them according to chromosome order.
+Integrate `marker.txt` and `test_raw.txt`, and sort them according to chromosome order (`test.txt`).
 
 A single input file may look as follows:
 
