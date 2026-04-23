@@ -22,7 +22,7 @@ python ref.py
 ```
 
 **Input:** `ref_raw.csv`, `mix.csv`(ref_data)  
-**Output:** `ref.csv`(`aric_ref`)
+**Output:** `ref.csv`(`marker_ref`)
 
 ### Step 3: Deconvolution
 
