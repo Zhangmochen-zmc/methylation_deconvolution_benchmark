@@ -39,6 +39,7 @@ python decon.py
 **Input:** Aligned files from Step 2.  
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
+
 ### Notes
 *   **More Information**: [https://github.com/XWangLabTHU/ARIC.git](https://github.com/XWangLabTHU/ARIC.git)
 
