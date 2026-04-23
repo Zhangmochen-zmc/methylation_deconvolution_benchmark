@@ -9,14 +9,10 @@ Before running the scripts, organize your input data. It is recommended to place
 *  **Reference Matrix (`ref.txt`)**: A signature matrix where:
     *   **Rows**: Defined by chrom, chrom_start, and chrom_end.
     *   **Columns**: Each cell type consists of 5 space-separated integers representing the read counts for the same five methylation levels (0%, 25%, 50%, 75%, and 100%).
-*  **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
+*  **Mixture Matrix (`test_raw.txt`)**: The bulk data matrix to be deconvolved where:
     *   **Rows**: Defined by chrom, chrom_start, and chrom_end (match the Reference Matrix).
     *   **Columns**: Each sample consists of 5 tab-separated groups of space-separated integers, representing the number of reads at 0%, 25%, 50%, 75%, and 100% methylation levels.
-A single input line may look as follows:
 
-`chr1 <tab> 1 <tab> 500 <tab> 0 1 0 2 34 <tab> 12 8 0 0 0 <tab> chr1 <tab> 1 <tab> 500 <tab>  12 5 1 1 1 <tab> 0 1 1 5 41  <tab> 2 2 5 2 3`
-
-This line contains the cfDNA of two different individuals, and the reference data of three different cell types. 
 
 ### Step 2: Marker Selection (`ref.py`)
 
@@ -26,7 +22,20 @@ Run `ref.py` (markers.py in CelFEER) using your processed scRNA-seq reference da
 python markers.py <input_file> <output_file> <num_values> <tissues> <depth_filter> <nan_filter> <extra_filter> <variant>
 ```
 
-### Step 3: Deconvolution (`decon.py`)
+**Input:** `ref.txt`(ref_data)
+**Output:** `markser.txt`(celfeer_ref)
+
+### Step 3: Integration
+
+Integrate `marker.txt` and `test_raw.txt`, and sort them according to chromosome order.
+
+A single input line may look as follows:
+
+`chr1 <tab> 1 <tab> 500 <tab> 0 1 0 2 34 <tab> 12 8 0 0 0 <tab> chr1 <tab> 1 <tab> 500 <tab>  12 5 1 1 1 <tab> 0 1 1 5 41  <tab> 2 2 5 2 3`
+
+This line contains the cfDNA of two different individuals, and the reference data of three different cell types. 
+
+### Step 4: Deconvolution (`decon.py`)
 
 Run `decon.py` (celfeer.py in CelFEER) using your prepared bulk RNA-seq data and the signature matrix generated in the previous step.
 
@@ -34,7 +43,11 @@ Run `decon.py` (celfeer.py in CelFEER) using your prepared bulk RNA-seq data and
 python decon.py
 ```
 
+**Input:** Integrated files from Step 3.  
+**Output:** Predicted cell type proportions for each sample in the mixture matrix.
+
 ---
 
 ### Notes
+*   **Data processing**：[https://github.com/pi-zz-a/CelFEER.git](https://github.com/pi-zz-a/CelFEER.git)
 *   **More Information**:  [https://github.com/pi-zz-a/CelFEER.git](https://github.com/pi-zz-a/CelFEER.git)
