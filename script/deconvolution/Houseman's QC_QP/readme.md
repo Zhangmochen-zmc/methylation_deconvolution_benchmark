@@ -22,23 +22,27 @@ Rscript ref.R
 ```
 
 **Input:** `.txt`(`ref_data`)      
-**Output:** `episcore.RData` (`houseman_ref`)
+**Output:** `reference_output_houseman.csv` (`houseman_ref`)
 
 
 ### Step 3: Deconvolution
 
-Run `decon.R` to perform the core deconvolution. This process includes:
+Run `450k_decon.R`/`850k_decon.R` to perform the core deconvolution. This process includes:
 
 ```bash
-Rscript decon.R
+Rscript 450k_decon.R
 ```
 
-**Input:** `episcore.RData` from Step 2.  
+```bash
+Rscript 850k_decon.R
+```
+
+**Input:** `reference_output_houseman.csv` from Step 2.  
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
 
 ### Notes
-*   **More Information**: [https://github.com/aet21/EpiSCORE.git](https://github.com/aet21/EpiSCORE.git)
+*   **More Information**: [https://link.springer.com/article/10.1186/1471-2105-13-86](https://link.springer.com/article/10.1186/1471-2105-13-86)
 
 
