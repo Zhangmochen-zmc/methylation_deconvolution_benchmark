@@ -17,7 +17,7 @@ def run_benchmark():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 
-    parser.add_argument('-a', '--atlas', default='methatlas_ref/ref.csv', 
+    parser.add_argument('-a', '--atlas', default='methatlas_ref/ref_raw.csv', 
                         help="Reference Atlas CSV")
     parser.add_argument('-i', '--input_dir', default='test_data', 
                         help="Input folder containing the CSV file to be analyzed")
