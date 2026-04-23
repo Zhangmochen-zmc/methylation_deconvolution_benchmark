@@ -25,7 +25,7 @@ Rscript ref.R
 ```
 
 **Input:** `ref_data.txt`, `refmeta.csv`(`ref_data`)    
-**Output:** `edec_stage0_markers.rds` (`edec_ref`)
+**Output:** `edec_stage0_markers.rds` (`marker_ref`)
 
 
 ### Step 3: Deconvolution
