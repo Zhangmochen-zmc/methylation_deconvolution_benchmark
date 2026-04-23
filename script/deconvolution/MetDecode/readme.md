@@ -4,7 +4,7 @@ The execution is divided into three main steps. Please follow them in order.
 
 ### Step 1: Data Preparation
 
-Before running the scripts, organize your input data. It is recommended to place all files in `ref_data/` and `test_data/`folder.
+Before running the scripts, organize your input data. It is recommended to place all files in `metdecode_ref/` and `test_data/`folder.
 
 *   **Reference Matrix (`atlas.tsv`)**:
     *   **Rows**: Regions.
