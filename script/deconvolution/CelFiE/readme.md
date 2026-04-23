@@ -15,10 +15,10 @@ Before running the scripts, organize your input data. It is recommended to place
 
 ### Step 2: Feature Alignment
 
-Run `ref.py` to align the features between the reference and the mixture data. This script identifies the intersection of features present in both datasets to ensure compatibility.
+Run `ref.py`  to align the features between the reference and the mixture data. This script identifies the intersection of features present in both datasets to ensure compatibility.
 
 ```bash
-python ref.py
+python ref.py $input_file $output_file $number_tims $number_tissues $depth_filter $na_filter
 ```
 
 **Input:** `ref_raw.csv`, `mix.csv`  
