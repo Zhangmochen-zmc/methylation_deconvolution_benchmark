@@ -30,7 +30,7 @@ python tim.py <input file> <output file> <num of tim/tissue> <num of tissues> <d
 ```
 
 **Input:** `ref.txt`(ref_data)  
-**Output:** `marker.txt`(celfie_ref)
+**Output:** `marker.txt`(marker_ref)
 
 ### Step 3: Integration
 
