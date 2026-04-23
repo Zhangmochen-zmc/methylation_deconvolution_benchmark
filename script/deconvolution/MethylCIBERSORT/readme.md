@@ -22,7 +22,7 @@ Rscript ref.R
 ```
 
 **Input:** `.txt`(`ref_data`) and `test_data/`
-**Output:** `avg_data_matrix.RData` (`emeth_ref`)
+**Output:** `test_data_ref.csv` (`methylcibersort_ref`)
 
 
 ### Step 3: Deconvolution
@@ -33,11 +33,11 @@ Run `decon.R` to perform the core deconvolution. This process includes:
 Rscript decon.R
 ```
 
-**Input:** `avg_data_matrix.RData` from Step 2.  
+**Input:** `test_data_ref.csv` and `test_data/` from Step 2.  
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
 
 ### Notes
-*   **More Information**: [https://github.com/Sun-lab/dMeth.git](https://github.com/Sun-lab/dMeth.git)
+*   **More Information**: [https://github.com/WonyoungCho/MethylCIBERSORT.git](https://github.com/WonyoungCho/MethylCIBERSORT.git)
 
