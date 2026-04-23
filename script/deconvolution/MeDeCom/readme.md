@@ -14,3 +14,5 @@ Rscript decon_process.R
 ```
 We provide pre-processed data files in the test_data that can be used directly for testing the pipeline. 
 
+### Notes
+*   **More Information**: [https://github.com/CompEpigen/MeDeCom.git](https://github.com/CompEpigen/MeDeCom.git)
