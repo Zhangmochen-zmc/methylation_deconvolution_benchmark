@@ -23,7 +23,7 @@ Rscript 450k_ref.R
 ```
 
 **Input:** `.txt`(`ref_data`)    
-**Output:** `EpiDISH_450k_reference_result.csv` (`epidish_ref`)
+**Output:** `EpiDISH_450k_reference_result.csv` (`marker_ref`)
 
 
 ### Step 3: Deconvolution
