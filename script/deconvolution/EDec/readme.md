@@ -24,25 +24,23 @@ Run `ref.R` to align the features between the reference and the mixture data. Th
 Rscript ref.R
 ```
 
-**Input:** `ref_data.txt`, `refmeta.csv`(`ref_data`)
-**Output:** `` (`edec_ref`).
+**Input:** `ref_data.txt`, `refmeta.csv`(`ref_data`)    
+**Output:** `edec_stage0_markers.rds` (`edec_ref`)
 
 
 ### Step 3: Deconvolution
 
-Run `decon.py` to perform the core ARIC algorithm. This process includes:
-*   **Marker Selection**: Identifying highly informative features for each cell type.
-*   **Deconvolution**: Performing deconvolution using a weighted Support Vector Regression approach.
+Run `decon.R` to perform the core ARIC algorithm. This process includes:
 
 ```bash
-python decon.py
+Rscript decon.R
 ```
 
-**Input:** Aligned files from Step 2.  
+**Input:** `edec_stage0_markers.rds` from Step 2.  
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
 
 ### Notes
-*   **More Information**: [https://github.com/XWangLabTHU/ARIC.git](https://github.com/XWangLabTHU/ARIC.git)
+*   **More Information**: [https://github.com/BRL-BCM/EDec.git](https://github.com/BRL-BCM/EDec.git)
 
