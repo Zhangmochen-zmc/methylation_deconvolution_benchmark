@@ -12,7 +12,7 @@ Before running the scripts, organize your input data. It is recommended to place
 
 ### Step 2: Deconvolution
 
-Run `array_decon.py`/`wgbs_decon.py` to perform the core deconvolution. The pre-trained `.yaml` models are provided. This process includes:
+Run `array_decon.py`/`wgbs_decon.py` to perform the core deconvolution. The pre-trained `.pkl` models are provided. This process includes:
 
 ```bash
 python array_decon.py <model>
