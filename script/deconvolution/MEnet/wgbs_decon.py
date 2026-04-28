@@ -27,7 +27,10 @@ def run_menet(input_file, model_path, output_dir, input_type, menet_path="MEnet"
         cmd.extend(["--bedtools", bedtools_path])
 
     # Execute commands and capture errors
-    result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    env = os.environ.copy()
+    env["CUDA_VISIBLE_DEVICES"] = ""
+    
+    result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env)
     return result
 
 def main():
