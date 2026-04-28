@@ -5,7 +5,6 @@ import sys
 import argparse
 import time
 
-os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 def main():
     # 1. Define parameters
@@ -85,10 +84,14 @@ def main():
 
         try:
             # run
-            subprocess.run(cmd, check=True)
+
+            env = os.environ.copy()
+            env["CUDA_VISIBLE_DEVICES"] = ""
+            
+            subprocess.run(cmd, check=True, env=env)
             
             elapsed = time.time() - start_time
-            print(f"  -> down (time {elapsed:.2f}s)")
+            print(f"  -> done (time {elapsed:.2f}s)")
             success_count += 1
 
         except subprocess.CalledProcessError as e:
