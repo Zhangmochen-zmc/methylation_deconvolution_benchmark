@@ -5,6 +5,8 @@ import sys
 import argparse
 import time
 
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
+
 def main():
     # 1. Define parameters
     parser = argparse.ArgumentParser(
