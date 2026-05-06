@@ -58,7 +58,7 @@ uxm build \
 
 *  **pats (`*.pat.gz`)**: Reference data used for atlas construction.
 *  **groups (`wgbstools_pat_meta.csv`)**: Metadata of the reference data.
-*  **m (`all_25markers_merged.bed`)**: Selected specific markers.
+*  **m (`all_markers_sorted.bed`)**: Selected specific markers.
 
 ### Step 4: Deconvolution
 
