@@ -14,7 +14,7 @@ wgbstools segment \
     -o ../blocks_blood.bed
 ```
 
-*  **betas (`*.beta`)**: Reference data used for genome segmentation.
+*  **betas (`*.beta`)**: Reference data used for genome segmentation. For a detailed description of the .beta files, please refer to [https://github.com/nloyfer/wgbs_tools.git](https://github.com/nloyfer/wgbs_tools.git).
 
 ### Step 2: Marker Selection
 
@@ -56,7 +56,7 @@ uxm build \
     --rlen 4
 ```
 
-*  **pats (`*.pat.gz`)**: Reference data used for atlas construction.
+*  **pats (`*.pat.gz`)**: Reference data used for atlas construction. For a detailed description of the .pat files, please refer to [https://github.com/nloyfer/wgbs_tools.git](https://github.com/nloyfer/wgbs_tools.git).
 *  **groups (`wgbstools_pat_meta.csv`)**: Metadata of the reference data.
 *  **m (`all_markers_sorted.bed`)**: Selected specific markers.
 
