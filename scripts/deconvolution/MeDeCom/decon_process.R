@@ -7,7 +7,7 @@ best_lambda <- 0.001 # Please adjust this value according to the chart.
 # Load the results and raw data
 medecom_result <- readRDS("medecom_rds/test_data.rds")
 bulk_data <- read.csv("test_data/test_data.csv", row.names = 1, check.names = FALSE)
-# LMCs 和 Proportions
+# LMCs and Proportions
 cat("Extracting LMCs and proportions...\n")
 lmcs <- getLMCs(medecom_result, K=best_K, lambda=best_lambda)
 rownames(lmcs) <- rownames(bulk_data)
