@@ -26,7 +26,7 @@ Run `450k_decon.R` to perform the core deconvolution. This process includes:
 Rscript 450k_decon.R
 ```
 
-**Input:** `EpiDISH_450k_reference_result.csv` from Step 2, `methylation_deconvolution_benchmark/data/test_data/450k/`.
+**Input:** `EpiDISH_450k_reference_result.csv` from Step 2, `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/).       
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
