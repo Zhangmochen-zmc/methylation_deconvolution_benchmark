@@ -1,43 +1,32 @@
 ## Workflow
 
-The execution is divided into three main steps. Please follow them in order.
+The execution is divided into three main steps. Please follow them in order. (Taking 450k as an example)
 
 ### Step 1: Data Preparation
 
-Before running the scripts, organize your input data. It is recommended to place all files in `ref_data/` and `test_data/`folder.
-
-*   **Reference Matrix (`.txt`)**: 
-    *   **Rows**: Features (Probe IDs).
-    *   **Columns**: Known cell types.
-    *   Organization: Data for different cell types are organized as individual subfolders within the reference directory.
-*   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
-    *   **Rows**: Features (must use the same naming convention as the reference matrix).
-    *   **Columns**: Samples.  
+Before running the scripts, organize your tested data in `methylation_deconvolution_benchmark/data/test_data/450k/` folder.
 
 ### Step 2: Marker Selection
 
 Run `ref.R` using reference data to extract cell type specific marker genes and generate the signature matrix. 
+
 ```bash
 Rscript ref.R
 ```
 
-**Input:** `.txt`(`ref_data`)      
-**Output:** `reference_output_houseman.csv` (`marker_ref`)
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref`      
+**Output:** `450k_reference_output_houseman.csv` (`marker_ref`)
 
 
 ### Step 3: Deconvolution
 
-Run `450k_decon.R`/`850k_decon.R` to perform the core deconvolution. This process includes:
+Run `450k_decon.R`/`850k_decon.R` to perform the core deconvolution. (Taking 450k as an example)
 
 ```bash
 Rscript 450k_decon.R
 ```
 
-```bash
-Rscript 850k_decon.R
-```
-
-**Input:** `reference_output_houseman.csv` from Step 2.  
+**Input:** `450k_reference_output_houseman.csv` from Step 2, `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/).     
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
