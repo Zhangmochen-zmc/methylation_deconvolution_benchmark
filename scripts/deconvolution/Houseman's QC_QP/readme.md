@@ -14,13 +14,13 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref`      
-**Output:** `450k_reference_output_houseman.csv` (`marker_ref`)
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref/`      
+**Output:** `450k_reference_output_houseman.csv` (marker_ref/)
 
 
 ### Step 3: Deconvolution
 
-Run `450k_decon.R` to perform the core deconvolution. (Taking 450k as an example)
+Run `450k_decon.R` to perform the core deconvolution. 
 
 ```bash
 Rscript 450k_decon.R
