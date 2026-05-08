@@ -24,8 +24,8 @@ Run `ref.py` to align the features between the reference and the mixture data. T
 python ref.py
 ```
 
-**Input:** `ref_data.csv` from Step 1, `simulated real.csv'(methylation_deconvolution_benchmark/data/test_data/450k/)         
-**Output:** `ref.csv`, `mix.csv` (marker_ref)
+**Input:** `ref_data.csv` from Step 1, `simulated real.csv'(methylation_deconvolution_benchmark/data/test_data/450k/)          
+**Output:**  `ref.csv` and `mix.csv` (marker_ref)
 
 ### Step 3: Deconvolution
 
