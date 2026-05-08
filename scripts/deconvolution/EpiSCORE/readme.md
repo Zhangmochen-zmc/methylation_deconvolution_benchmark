@@ -12,7 +12,7 @@ Run `data_processing.py` to generate a  methylation matrix by averaging the `raw
 python data_processing.py
 ```
 
-**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref`    
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref/`    
 **Output:** `ref_data.csv`   
 
 ### Step 2: Marker Selection and data integration
@@ -23,8 +23,8 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `ref_data.csv`, `test.csv`
-**Output:** `episcore.RData` (`marker_ref`)
+**Input:** `ref_data.csv` from Step 1, `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/).
+**Output:** `episcore.RData` (marker_ref/)
 
 
 ### Step 3: Deconvolution
