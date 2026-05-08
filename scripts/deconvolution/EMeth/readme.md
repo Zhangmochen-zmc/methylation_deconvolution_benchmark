@@ -26,7 +26,7 @@ Run `decon.R` to perform the core deconvolution. This process includes:
 Rscript decon.R
 ```
 
-**Input:** `avg_data_matrix.RData` from Step 2, `simulated real.csv' in `methylation_deconvolution_benchmark/data/test_data/450k/`.     
+**Input:** `avg_data_matrix.RData` from Step 2, `simulated_real.csv'(methylation_deconvolution_benchmark/data/test_data/450k/).
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
