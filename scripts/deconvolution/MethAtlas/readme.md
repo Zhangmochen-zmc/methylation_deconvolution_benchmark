@@ -24,7 +24,7 @@ Run `decon.py` to perform the core deconvolution. This process includes:
 python decon.py
 ```
 
-**Input:** `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/), `ref_datacsv` from Step 1.  
+**Input:** `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/), `ref_data.csv` from Step 1.  
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
