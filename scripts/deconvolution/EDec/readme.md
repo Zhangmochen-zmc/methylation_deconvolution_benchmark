@@ -39,7 +39,7 @@ Run `decon.R` to perform the deconvolution. This process includes:
 Rscript decon.R
 ```
 
-**Input:** `edec_stage0_markers.rds` from Step 2, `simulated_real.csv'(methylation_deconvolution_benchmark/data/test_data/450k/).
+**Input:** `edec_stage0_markers.rds` from Step 2, `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/).
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
