@@ -8,7 +8,7 @@ library(medepir)
 library(peakRAM) 
 
 # config
-ref_file_path <- "reffreeewas_ref/reference_output_RefFreeEWAS.csv"
+ref_file_path <- "marker_ref/reference_output_RefFreeEWAS.csv"
 input_folder <- "test_data" 
 output_folder <- "reffreeewas_result"
 benchmark_log_file <- file.path(output_folder, "reffreeewas_benchmark.csv")
