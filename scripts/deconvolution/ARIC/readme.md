@@ -12,7 +12,7 @@ Run `data_processing.py` to generate a  methylation matrix by averaging the orig
 python data_processing.py
 ```
 
-**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/original_data` 
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/original_data`    
 **Output:** `ref_data.csv`   
 
 
