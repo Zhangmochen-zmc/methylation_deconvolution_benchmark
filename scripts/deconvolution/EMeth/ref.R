@@ -548,4 +548,4 @@ colnames(avg_data) <- gsub("_avg", "", colnames(avg_data))
 avg_data_matrix <- as.matrix(avg_data)
 
 # save results
-save(avg_data_matrix, file = "emeth_ref/avg_data_matrix.RData")
+save(avg_data_matrix, file = "marker_ref/avg_data_matrix.RData")
