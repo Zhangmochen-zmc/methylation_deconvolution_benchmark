@@ -4,14 +4,17 @@ The execution is divided into three main steps. Please follow them in order. (Ta
 
 ### Step 1: Data Preparation
 
-Before running the scripts, organize your input data. It is recommended to place all files in  `methylation_deconvolution_benchmark/data/reference_data/450k/` and `methylation_deconvolution_benchmark/data/test_data/450k/`folder.
+Before running the scripts, organize your tested data in `methylation_deconvolution_benchmark/data/test_data/450k/` folder.
 
-*  **Reference Matrix (`Ravg.csv`)**: A signature matrix where:
-    *   **Rows**: Features (Probe IDs).
-    *   **Columns**: Known cell types.
-*  **Mixture Matrix (`simulated_real.csv`)**: The bulk data matrix to be deconvolved where:
-    *   **Rows**: Features (must use the same naming convention as the reference matrix).
-    *   **Columns**: Samples.
+Run ‘data_processing.py' to generate a  methylation matrix by averaging the original_data for each cell type. 
+
+```bash
+python data_processing.py
+```
+
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/original_data` 
+**Output:** `ref_data.csv`   
+
 
 ### Step 2: Feature Alignment
 
@@ -21,7 +24,7 @@ Run `ref.py` to align the features between the reference and the mixture data. T
 python ref.py
 ```
 
-**Input:** `Ravg.csv` 
+**Input:** `ref_data.csv` 
 **Output:** `ref.csv`, `mix.csv`
 
 ### Step 3: Deconvolution
