@@ -1,6 +1,6 @@
 ## Workflow
 
-The execution is divided into three main steps. Please follow them in order.
+The execution is divided into three main steps. Please follow them in order. (Taking 450k as an example)
 
 ### Step 1: Data Preparation
 
