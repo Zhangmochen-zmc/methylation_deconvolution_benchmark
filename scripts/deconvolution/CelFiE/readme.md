@@ -4,7 +4,7 @@ The execution is divided into four main steps. Please follow them in order:
 
 ### Step 1: Data Preparation
 
-Before running the scripts, organize your input data. It is recommended to place all files in  `ref_data/` and `test_data/`folder.
+Before running the scripts, organize your input data. It is recommended to place all files in  `ref_data/` and `test_data/`folder. For detailed data, please see `More Information`.
 
 *  **Reference Matrix (`ref.txt`)**: A signature matrix where:
     *   **Rows**: Defined by chrom, chrom_start, and chrom_end.
@@ -34,7 +34,7 @@ python ref.py <input file> <output file> <num of tim/tissue> <num of tissues> <d
 
 ### Step 3: Integration
 
-Integrate `marker.txt` and `test_data.tsv`, and sort them according to chromosome order.
+Integrate `marker.txt` and `test_data.tsv`, and sort them according to chromosome order. (`test.tsv` in `test_data/` )
 
 A single input file may look as follows:
 
