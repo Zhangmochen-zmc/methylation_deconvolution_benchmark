@@ -4,7 +4,7 @@ library("MethylCIBERSORT")
 beta_file <- "test_data/test.csv" 
 ref_file  <- "ref_data.RData"
 csv_name <- file_path_sans_ext(basename(beta_file))
-output_dir <- "methylcibersort_ref"
+output_dir <- "marker_ref"
 
 if (!dir.exists(output_dir)) {
   dir.create(output_dir, recursive = TRUE)
