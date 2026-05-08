@@ -4,15 +4,15 @@ The execution is divided into three main steps. Please follow them in order. (Ta
 
 ### Step 1: Data Preparation
 
-Before running the scripts, organize your tested data and metadata in `methylation_deconvolution_benchmark/data/test_data/450k` folder.
+Before running the scripts, organize your tested data and metadata in `methylation_deconvolution_benchmark/data/test_data/450k/` folder.
 
-Run `data_processing.py` to generate a methylation matrix by integrating the `raw_ref` for each sample.
+Run `data_processing.py` to generate a methylation matrix by integrating the `raw_ref/` for each sample.
 
 ```bash
 python data_processing.py
 ```
 
-**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref`    
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref/`    
 **Output:** `ref_data.txt`   
 
 *   **Reference Metadata Matrix (`refmeta.csv`)**:
@@ -28,7 +28,7 @@ Rscript ref.R
 ```
 
 **Input:** `ref_data.txt`, `refmeta.csv`       
-**Output:** `edec_stage0_markers.rds` (marker_ref)
+**Output:** `edec_stage0_markers.rds` (marker_ref/)
 
 
 ### Step 3: Deconvolution
@@ -39,7 +39,7 @@ Run `decon.R` to perform the deconvolution. This process includes:
 Rscript decon.R
 ```
 
-**Input:** `edec_stage0_markers.rds` from Step 2, `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k).
+**Input:** `edec_stage0_markers.rds` from Step 2, `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/).
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
