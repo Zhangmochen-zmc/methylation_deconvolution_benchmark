@@ -4,15 +4,7 @@ The execution is divided into three main steps. Please follow them in order.
 
 ### Step 1: Data Preparation
 
-Before running the scripts, organize your input data. It is recommended to place all files in `ref_data/` and `test_data/`folder.
-
-*   **Reference Matrix (`.txt`)**: 
-    *   **Rows**: Features (Probe IDs).
-    *   **Columns**: Known cell types.
-    *   Organization: Data for different cell types are organized as individual subfolders within the reference directory.
-*   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
-    *   **Rows**: Features (must use the same naming convention as the reference matrix).
-    *   **Columns**: Samples.  
+Before running the scripts, organize your tested data in `methylation_deconvolution_benchmark/data/test_data/450k/` folder.
 
 ### Step 2: Marker Selection
 
@@ -22,7 +14,7 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `.txt`(`ref_data`)    
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/original_data`     
 **Output:** `avg_data_matrix.RData` (`marker_ref`)
 
 
