@@ -14,8 +14,8 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref`     
-**Output:** `avg_data_matrix.RData` (`marker_ref`)
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref/`     
+**Output:** `avg_data_matrix.RData` (marker_ref/)
 
 
 ### Step 3: Deconvolution
