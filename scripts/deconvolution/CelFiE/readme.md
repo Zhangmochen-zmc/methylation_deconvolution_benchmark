@@ -16,7 +16,7 @@ chr1	50	51	71.0	133.0
 chr1	60	61	89.0	115.0
 ```
       
-*  **Mixture Matrix (`test_raw.txt`)**: The bulk data matrix to be deconvolved where:
+*  **Mixture Matrix (`test_data.tsv`)**: The bulk data matrix to be deconvolved where:
     *   **Rows**: Defined by chrom, chrom_start, and chrom_end (match the Reference Matrix).
     *   **Columns**: The model expects the methylation data in the form: # of methylated reads (METH) and # of total reads (DEPTH) for each sample.
 
@@ -26,7 +26,7 @@ chr1	60	61	89.0	115.0
 Run `ref.py` (tim.py in CelFiE) using reference data to extract cell type specific marker genes and generate the signature matrix.
 
 ```bash
-python tim.py <input file> <output file> <num of tim/tissue> <num of tissues> <depth filter> <nan filter>
+python ref.py <input file> <output file> <num of tim/tissue> <num of tissues> <depth filter> <nan filter>
 ```
 
 **Input:** `ref.txt`(ref_data)  
@@ -34,7 +34,7 @@ python tim.py <input file> <output file> <num of tim/tissue> <num of tissues> <d
 
 ### Step 3: Integration
 
-Integrate `marker.txt` and `test_raw.txt`, and sort them according to chromosome order (`test.txt`).
+Integrate `marker.txt` and `test_data.tsv`, and sort them according to chromosome order.
 
 A single input file may look as follows:
 
