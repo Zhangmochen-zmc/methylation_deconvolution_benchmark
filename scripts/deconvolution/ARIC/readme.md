@@ -25,7 +25,7 @@ python ref.py
 ```
 
 **Input:** `ref_data.csv` from Step 1, `simulated real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/)  
-**Output:**  `ref.csv` and `mix.csv` (marker_ref)
+**Output:**  `ref.csv` and `mix.csv` (marker_ref/)
 
 ### Step 3: Deconvolution
 
