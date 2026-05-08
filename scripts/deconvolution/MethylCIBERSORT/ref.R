@@ -30,7 +30,7 @@ Signature <- FeatureSelect.V4(
   CellLines.matrix = NULL,
   Heatmap = TRUE,
   export = TRUE,
-  sigName = paste0(csv_name, "_ref"), 
+  sigName = paste0("test_ref_Signature"), 
   Stroma.matrix = RefData,
   deltaBeta = 0.2,
   FDR = 0.01,
