@@ -4,7 +4,7 @@ library(peakRAM)
 
 # config
 rdir <- "PRMeth-main/PRMeth/R"
-ref_file_path <- "prmeth_ref/reference_output_PRMeth.csv"
+ref_file_path <- "marker_ref/reference_output_PRMeth.csv"
 input_folder <- "test_data" 
 output_folder <- "prmeth_result"
 benchmark_log_file <- file.path(output_folder, "prmeth_benchmark.csv")

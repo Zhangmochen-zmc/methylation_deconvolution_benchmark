@@ -80,7 +80,7 @@ for (current_csv_file in csv_files_list) {
     
     purity <- rep(0.0000000001, ncol(first_data))
     
-    load("emeth_ref/avg_data_matrix.RData")
+    load("marker_ref/avg_data_matrix.RData")
     mu <- avg_data_matrix 
     
     first_data_nona_matrix_EMeth_reference <- first_data_imputed_row_median_matrix[rownames(first_data_imputed_row_median_matrix) %in% rownames(mu), ]

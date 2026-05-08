@@ -63,7 +63,7 @@ for (cell_type in cell_types) {
   processed_data <- process_methylation_data(base_path)
   
   # Move all generated result files to the specified path.
-  output_dir <- "reffreeewas_ref"
+  output_dir <- "marker_ref"
   file.rename(paste0(base_path, "_merged_methylation_data.txt"), 
               file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")))
   cat("The file has been moved to：", file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")), "\n")
@@ -122,8 +122,8 @@ process_methylation_matrix <- function(base_path, output_file) {
 }
 
 # Calling functions to process data
-base_path <- "reffreeewas_ref"
-output_file <- "reffreeewas_ref/merged_data.txt"
+base_path <- "marker_ref"
+output_file <- "marker_ref/merged_data.txt"
 result <- process_methylation_matrix(base_path, output_file)
 
 merged_data <- result$merged_data
@@ -171,7 +171,7 @@ most_variant_9999 <- averaged_df[names(variance[order(variance, decreasing = TRU
 
 
 # Define a save path to save the generated reference matrix.
-output_path <- "reffreeewas_ref/reference_output_RefFreeEWAS.csv"
+output_path <- "marker_ref/reference_output_RefFreeEWAS.csv"
 
 # Save averaged_df as a CSV file
 write.csv(most_variant_9999, file = output_path, row.names = TRUE, col.names = TRUE)

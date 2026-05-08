@@ -2,8 +2,8 @@ library(MASS)
 library(peakRAM) 
 
 # 1. load data
-if(!file.exists("episcore_ref/episcore.RData"))
-load("episcore_ref/episcore.RData")
+if(!file.exists("marker_ref/episcore.RData"))
+load("marker_ref/episcore.RData")
 
 cat(paste(">>> Data loading complete. Number of projects pending processing:", length(project_data_list), "\n"))
 

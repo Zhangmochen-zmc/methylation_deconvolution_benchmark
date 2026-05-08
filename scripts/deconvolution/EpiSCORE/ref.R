@@ -1,5 +1,5 @@
 # 1. config
-ref_file_path <- "ref_raw.csv"         
+ref_file_path <- "ref_data.csv"         
 sample_folder_path <- "test_data" 
 chip_type <- "850k"                      # "450k" or "850k"
 
@@ -78,5 +78,5 @@ for(i in 1:length(project_files)){
 # --------------------------
 # 5. save
 # --------------------------
-save(ref_gene_full, project_data_list, file = "episcore_ref/episcore.RData")
+save(ref_gene_full, project_data_list, file = "marker_ref/episcore.RData")
 cat(">>> Data has been saved to 'episcore.RData'\n")

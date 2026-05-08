@@ -8,7 +8,7 @@ from ARIC import *
 
 def run_benchmark():
     # 1. path configuration 
-    data_dir = "aric_ref"  
+    data_dir = "marker_ref"  
     results_dir = "aric_result"
     
     # list used for recording performance metrics

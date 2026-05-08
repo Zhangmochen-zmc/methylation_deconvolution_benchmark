@@ -140,7 +140,7 @@ beta_ref <- merged_data_matrix
 cell_ref <- sub("\\..*$", "", colnames(merged_data_matrix))
 
 # Save cell_ref and beta_ref
-out_dir <- "houseman_ref"
+out_dir <- "marker_ref"
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # 1) Save as RDS
@@ -150,7 +150,7 @@ saveRDS(beta_ref, file = file.path(out_dir, "beta_ref_own.rds"))
 cat("Saved to:", out_dir, "\n")
 
 # Define a save path to save the generated reference matrix.
-output_path <- "hosueman_ref/reference_output_houseman.csv"
+output_path <- "marker_ref/reference_output_houseman.csv"
 
 # Save averaged_df as a CSV file
 write.csv(merged_data_matrix, file = output_path, row.names = TRUE, col.names = TRUE)
