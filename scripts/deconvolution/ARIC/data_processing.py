@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-base_dir = "methylation_deconvolution_benchmark/data/reference_data/450k/original_data"
+base_dir = "methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref"
 
 celltype_avg_list = []
 cell_types = []
