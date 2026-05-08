@@ -24,8 +24,8 @@ Run `ref.py` to align the features between the reference and the mixture data. T
 python ref.py
 ```
 
-**Input:** `ref_data.csv` 
-**Output:** `ref.csv`, `mix.csv`
+**Input:** `ref_data.csv` from Step 1.    
+**Output:** `ref.csv`, `mix.csv` (marker_ref)
 
 ### Step 3: Deconvolution
 
