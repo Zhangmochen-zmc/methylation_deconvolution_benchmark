@@ -34,5 +34,5 @@ Rscript decon.R
 
 ### Notes
 *   **More Information**: [https://github.com/hedingqin/PRMeth.git](https://github.com/hedingqin/PRMeth.git)
-*   **Environment**: Users need to download ‘PEMeth’ before proceeding with the workflow.
+*   **Environment**: Users need to download ‘PRMeth’ before proceeding with the workflow.
 
