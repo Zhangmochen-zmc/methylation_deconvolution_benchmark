@@ -22,8 +22,8 @@ Run `ref.py` (markers.py in CelFEER) using data to extract cell-type-specific ma
 python ref.py <input_file> <output_file> <num_values> <tissues> <depth_filter> <nan_filter> <extra_filter> <variant>
 ```
 
-**Input:** `ref.txt`(ref_data)  
-**Output:** `marker.tsv`(marker_ref)
+**Input:** `ref.txt`(ref_data/)  
+**Output:** `marker.tsv`(marker_ref/)
 
 ### Step 3: Integration
 
