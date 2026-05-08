@@ -27,7 +27,7 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `ref_data.txt` from Step 1, `refmeta.csv`(`methylation_deconvolution_benchmark/data/reference_data/450k/)       
+**Input:** `ref_data.txt` from Step 1, `refmeta.csv`(methylation_deconvolution_benchmark/data/reference_data/450k/)       
 **Output:** `edec_stage0_markers.rds` (marker_ref/)
 
 
