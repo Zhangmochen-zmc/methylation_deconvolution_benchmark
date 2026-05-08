@@ -6,7 +6,7 @@ library(peakRAM)
 
 
 # config
-ref_dir <- "houseman_ref"
+ref_dir <- "marker_ref"
 input_folder <- "test_data"
 output_folder <- "hosueman_result"
 
