@@ -1,6 +1,6 @@
 ## Workflow
 
-The execution is divided into three main steps. Please follow them in order.Since Episdh handles 450k and 850k methylation arrays differently, this workflow and the provided examples are based on the 450k array.
+The execution is divided into three main steps. Please follow them in order. Episdh handles 450k and 850k methylation arrays differently.(Taking 450k as an example)
 
 ### Step 1: Data Preparation
 
