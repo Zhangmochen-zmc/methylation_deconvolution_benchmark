@@ -16,7 +16,7 @@ chr1	50	51	71.0	133.0
 chr1	60	61	89.0	115.0
 ```
       
-*  **Mixture Matrix (`test_data.tsv`)**: The bulk data matrix to be deconvolved where:
+*  **Mixture Matrix (`test_data.tsv`)**: The bulk data matrix to be deconvolved where: 
     *   **Rows**: Defined by chrom, chrom_start, and chrom_end (match the Reference Matrix).
     *   **Columns**: The model expects the methylation data in the form: # of methylated reads (METH) and # of total reads (DEPTH) for each sample.
 
