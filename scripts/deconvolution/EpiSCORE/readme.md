@@ -1,17 +1,19 @@
 ## Workflow
 
-The execution is divided into three main steps. Please follow them in order.
+The execution is divided into three main steps. Please follow them in order. (Taking 450k as an example)
 
 ### Step 1: Data Preparation
 
-Before running the scripts, organize your input data. It is recommended to place all files in `ref_data/` and `test_data/`folder.
+Before running the scripts, organize your tested data in `methylation_deconvolution_benchmark/data/test_data/450k/` folder.
 
-*   **Reference Matrix (`ref_raw.csv`)**: 
-    *   **Rows**: Features (Probe IDs).
-    *   **Columns**: Known cell types.
-*   **Mixture Matrix (`test.csv`)**: The bulk data matrix to be deconvolved where:
-    *   **Rows**: Features (must use the same naming convention as the reference matrix).
-    *   **Columns**: Samples.  
+Run `data_processing.py` to generate a  methylation matrix by averaging the `original_data` for each cell type. 
+
+```bash
+python data_processing.py
+```
+
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/original_data`    
+**Output:** `ref_data.csv`   
 
 ### Step 2: Marker Selection and data integration
 
@@ -21,7 +23,7 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `ref_raw.csv`(`ref_data`), `test.csv`(`test_data`)    
+**Input:** `ref_data.csv`, `test.csv`
 **Output:** `episcore.RData` (`marker_ref`)
 
 
