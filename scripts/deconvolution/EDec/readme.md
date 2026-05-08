@@ -6,13 +6,13 @@ The execution is divided into three main steps. Please follow them in order. (Ta
 
 Before running the scripts, organize your tested data and metadata in `methylation_deconvolution_benchmark/data/test_data/450k/` folder.
 
-Run `data_processing.py` to generate a methylation matrix by integrating the `original_data` for each sample.
+Run `data_processing.py` to generate a methylation matrix by integrating the `raw_ref` for each sample.
 
 ```bash
 python data_processing.py
 ```
 
-**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/original_data`    
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref`    
 **Output:** `ref_data.txt`   
 
 *   **Reference Metadata Matrix (`refmeta.csv`)**:
