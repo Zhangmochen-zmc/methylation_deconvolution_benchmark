@@ -66,7 +66,7 @@ for (cell_type in cell_types) {
   processed_data <- process_methylation_data(base_path)
   
   # Move all generated result files to the specified path.
-  output_dir <- "epidish_ref"
+  output_dir <- "marker_ref"
   file.rename(paste0(base_path, "_merged_methylation_data.txt"), 
               file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")))
   cat("The file has been moved to：", file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")), "\n")
@@ -125,8 +125,8 @@ process_methylation_matrix <- function(base_path, output_file) {
 }
 
 # Calling functions to process data
-base_path <- "epidish_ref"
-output_file <- "epidish_ref/merged_data.txt"
+base_path <- "marker_ref"
+output_file <- "marker_ref/merged_data.txt"
 result <- process_methylation_matrix(base_path, output_file)
 
 merged_data <- result$merged_data
@@ -198,7 +198,7 @@ process_cell_type_data_dynamic <- function(merged_data_matrix, cell_types, outpu
 }
 
 # usage
-output_dir <- "epidish_ref"
+output_dir <- "marker_ref"
 
 # define cell type
 cell_types <- c("bcell", "cd4", "cd8", "neutrophil", "monocyte", "nk")
@@ -257,7 +257,7 @@ filter_and_save_DMC <- function(DHS_cpg_path, DMC_list, output_dir, cell_types) 
 DHS_cpg_path <- "DHS/epigenomic-roadmap/filtered_cg_info_450k.bed"
 # DHS alone
 # DHS_cpg_path <- "DHS/epigenomic-roadmap/450k_DHS_cell_type"
-output_dir <- "epidish_ref"
+output_dir <- "marker_ref"
 
 # Call the function to filter and save the results
 cell_type_results_updated <- filter_and_save_DMC(DHS_cpg_path, cell_type_results, output_dir, cell_types)
