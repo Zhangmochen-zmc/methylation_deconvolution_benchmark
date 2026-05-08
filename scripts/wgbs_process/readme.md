@@ -16,13 +16,13 @@ The output files include:
 
 ## Workflow Summary
 
-| Step | Purpose | Key Tool |
-|------|--------|----------|
-| **Input Detection** | Automatically detects whether input files are BAM or PAT | bash |
-| **Sorting (BAM only)** | Sorts BAM files for downstream processing | `samtools sort` |
-| **Conversion** | Converts BAM to PAT format | `wgbstools bam2pat` |
-| **Indexing** | Generates `.beta` files from PAT | `wgbstools index` |
-| **BED Generation** | Converts beta values to BED format and merges statistics | `wgbstools beta2bed`, `awk` |
+| Step | Purpose |
+|------|--------|
+| **Input Detection** | Automatically detects whether input files are BAM or PAT |
+| **Sorting (BAM only)** | Sorts BAM files for downstream processing |
+| **Conversion** | Converts BAM to PAT format |
+| **Indexing** | Generates `.beta` files from PAT |
+| **BED Generation** | Converts beta values to BED format and merges statistics | 
 
 ---
 
