@@ -7,9 +7,6 @@ Batch Merge TXT Files in Subfolders
 This script scans all subfolders in the current directory,
 reads all TXT files in each folder, and merges them by 'probeID'.
 The merged output for each folder is saved as {folder_name}.txt.
-
-Author: Your Name
-Date: 2026-05-08
 """
 
 import os
