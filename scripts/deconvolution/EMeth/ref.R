@@ -66,7 +66,7 @@ for (cell_type in cell_types) {
   processed_data <- process_methylation_data(base_path)
   
   # move all generated result files to the specified path.
-  output_dir <- "emeth_ref"
+  output_dir <- "marker_ref"
   file.rename(paste0(base_path, "_merged_methylation_data.txt"), 
               file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")))
   cat("The file has been moved to ：", file.path(output_dir, paste0(cell_type, "_merged_methylation_data.txt")), "\n")
@@ -127,8 +127,8 @@ process_methylation_matrix <- function(base_path, output_file) {
 }
 
 # calling functions to process data
-base_path <- "emeth_ref"
-output_file <- "emeth_ref/merged_data.txt"
+base_path <- "marker_ref"
+output_file <- "marker_ref/merged_data.txt"
 result <- process_methylation_matrix(base_path, output_file)
 
 merged_data <- result$merged_data
@@ -201,7 +201,7 @@ process_cell_type_data_dynamic <- function(merged_data_matrix, cell_types, outpu
 }
 
 # usage
-output_dir <- "emeth_ref"
+output_dir <- "marker_ref"
 
 # define cell type list
 cell_types <- c("bcell", "cd4", "cd8", "neutrophil", "monocyte", "nk")

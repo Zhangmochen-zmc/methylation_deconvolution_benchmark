@@ -4,7 +4,7 @@ library(stringr)
 library(peakRAM) 
 
 # config
-ref_file_path <- "tsisal_ref/reference_output_Tsisal.csv"
+ref_file_path <- "marker_ref/reference_output_Tsisal.csv"
 input_folder <- "test_data" 
 output_folder <- "tsisal_result"
 benchmark_log_file <- file.path(output_folder, "tsisal_benchmark.csv")
