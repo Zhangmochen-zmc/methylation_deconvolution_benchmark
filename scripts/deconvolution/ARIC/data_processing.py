@@ -25,16 +25,16 @@ for cell_type in os.listdir(base_dir):
             avg_df.rename(columns={'Beta': cell_type}, inplace=True)
             celltype_avg_list.append(avg_df[['CpG', cell_type]])
 
-# 合并所有细胞类型平均值
+# Combined average values ​​of all cell types
 if celltype_avg_list:
     ref_df = celltype_avg_list[0]
     for df in celltype_avg_list[1:]:
         ref_df = ref_df.merge(df, on='CpG', how='outer')
 
-    # 设置列名，第一列是 ID，其余是细胞类型
+    # Set the column names: the first column is ID, and the rest are cell types.
     ref_df.columns = ['ID'] + cell_types
 
-    # 保存 CSV
+    # save CSV
     ref_df.to_csv("ref_data.csv", index=False)
     print("ref_data.csv generated successfully with column names!")
 else:
