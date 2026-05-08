@@ -1,6 +1,6 @@
 ## Workflow
 
-The execution is divided into three main steps. Please follow them in order. (Taking 450k as an example)
+The execution is divided into three main steps. Please follow them in order. Houseman's QC_QP handles 450k and 850k methylation arrays differently.(Taking 450k as an example)
 
 ### Step 1: Data Preparation
 
@@ -20,7 +20,7 @@ Rscript ref.R
 
 ### Step 3: Deconvolution
 
-Run `450k_decon.R`/`850k_decon.R` to perform the core deconvolution. (Taking 450k as an example)
+Run `450k_decon.R` to perform the core deconvolution. (Taking 450k as an example)
 
 ```bash
 Rscript 450k_decon.R
