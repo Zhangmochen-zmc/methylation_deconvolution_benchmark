@@ -14,8 +14,8 @@ Run `450k_ref.R` using reference data to extract cell type specific marker genes
 Rscript 450k_ref.R
 ```
 
-**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/original_data`    
-**Output:** `EpiDISH_450k_reference_result.csv` (`marker_ref`)
+**Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref/`    
+**Output:** `EpiDISH_450k_reference_result.csv` (marker_ref/)
 
 
 ### Step 3: Deconvolution
@@ -26,7 +26,7 @@ Run `450k_decon.R` to perform the core deconvolution. This process includes:
 Rscript 450k_decon.R
 ```
 
-**Input:** `EpiDISH_450k_reference_result.csv` from Step 2.  
+**Input:** `EpiDISH_450k_reference_result.csv` from Step 2, `methylation_deconvolution_benchmark/data/test_data/450k/`.
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
