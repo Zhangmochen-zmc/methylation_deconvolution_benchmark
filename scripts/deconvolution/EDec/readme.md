@@ -27,7 +27,7 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `ref_data.txt`, `refmeta.csv`
+**Input:** `ref_data.txt`, `refmeta.csv`       
 **Output:** `edec_stage0_markers.rds` (`marker_ref`)
 
 
@@ -39,7 +39,7 @@ Run `decon.R` to perform the deconvolution. This process includes:
 Rscript decon.R
 ```
 
-**Input:** `edec_stage0_markers.rds` from Step 2.  
+**Input:** `edec_stage0_markers.rds` from Step 2, `simulated real.csv' in `methylation_deconvolution_benchmark/data/test_data/450k/`.
 **Output:** Predicted cell type proportions for each sample in the mixture matrix.
 
 ---
