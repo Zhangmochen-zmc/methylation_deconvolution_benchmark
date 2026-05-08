@@ -4,12 +4,12 @@ The execution is divided into four main steps. Please follow them in order:
 
 ### Step 1: Data Preparation
 
-Before running the scripts, organize your input data. It is recommended to place all files in `ref_data/` and `test_data/`folder.
+Before running the scripts, organize your input data. It is recommended to place all files in `ref_data/` and `test_data/` folder. For detailed data, please see `More Information`.
 
 *  **Reference Matrix (`ref.txt`)**: A signature matrix where:
     *   **Rows**: Defined by chrom, chrom_start, and chrom_end.
     *   **Columns**: Each cell type consists of 5 space-separated integers representing the read counts for the same five methylation levels (0%, 25%, 50%, 75%, and 100%).
-*  **Mixture Matrix (`test_raw.txt`)**: The bulk data matrix to be deconvolved where:
+*  **Mixture Matrix (`test_data.txt`)**: The bulk data matrix to be deconvolved where:
     *   **Rows**: Defined by chrom, chrom_start, and chrom_end (match the Reference Matrix).
     *   **Columns**: Each sample consists of 5 tab-separated groups of space-separated integers, representing the number of reads at 0%, 25%, 50%, 75%, and 100% methylation levels.
 
@@ -19,15 +19,15 @@ Before running the scripts, organize your input data. It is recommended to place
 Run `ref.py` (markers.py in CelFEER) using data to extract cell-type-specific marker genes and generate the signature matrix.
 
 ```bash
-python markers.py <input_file> <output_file> <num_values> <tissues> <depth_filter> <nan_filter> <extra_filter> <variant>
+python ref.py <input_file> <output_file> <num_values> <tissues> <depth_filter> <nan_filter> <extra_filter> <variant>
 ```
 
 **Input:** `ref.txt`(ref_data)  
-**Output:** `marker.txt`(marker_ref)
+**Output:** `marker.tsv`(marker_ref)
 
 ### Step 3: Integration
 
-Integrate `marker.txt` and `test_raw.txt`, and sort them according to chromosome order.
+Integrate `marker.tsv` and `test_data.txt`, and sort them according to chromosome order.
 
 A single input line may look as follows:
 
