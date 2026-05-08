@@ -28,7 +28,7 @@ Rscript ref.R
 ```
 
 **Input:** `ref_data.txt` from Step 1, `refmeta.csv`(methylation_deconvolution_benchmark/data/reference_data/450k/)       
-**Output:** `edec_stage0_markers.rds` (marker_ref/)
+**Output:** `edec_stage0_markers.rds`(marker_ref/)
 
 
 ### Step 3: Deconvolution
