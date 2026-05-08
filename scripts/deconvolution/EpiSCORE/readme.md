@@ -23,7 +23,7 @@ Run `ref.R` using reference data to extract cell type specific marker genes and 
 Rscript ref.R
 ```
 
-**Input:** `ref_data.csv` from Step 1, `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/).
+**Input:** `simulated_real.csv`(methylation_deconvolution_benchmark/data/test_data/450k/),`ref_data.csv` from Step 1.     
 **Output:** `episcore.RData` (marker_ref/)
 
 
