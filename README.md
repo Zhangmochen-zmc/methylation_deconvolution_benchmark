@@ -1,4 +1,4 @@
-# methylation_deconvolution_benchmark
+# Methylation_deconvolution_benchmark
 
 This repository contains the processed data, benchmarking pipelines, and analysis results used in the study:
 
