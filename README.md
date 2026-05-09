@@ -8,7 +8,7 @@ The project provides a comprehensive benchmarking framework for evaluating DNA m
 
 ---
 
-# Repository Structure
+## Repository Structure
 
 ```text
 methylation_deconvolution_benchmark/
@@ -29,9 +29,7 @@ methylation_deconvolution_benchmark/
 └── README.md
 ```
 
----
-
-# Installation
+## Installation
 
 ```text
 git clone https://github.com/Zhangmochen-zmc/methylation_deconvolution_benchmark.git
@@ -40,7 +38,7 @@ cd methylation_deconvolution_benchmark
 
 ---
 
-# Software Environment
+## Software Environment
 
 The analyses were performed under the following environments:
 
@@ -51,19 +49,19 @@ Additional package dependencies are described in the corresponding folders.
 
 ---
 
-# Included Methods
+## Included Methods
 
 This repository contains execution pipelines for all deconvolution methods included in the manuscript, with method-specific configurations and running instructions provided within the corresponding directories, and all methods implemented as closely as possible to their original publications and software documentation.
 
 ---
 
-# Usage
+## Usage
 
 Please refer to the README or documentation within each subdirectory for detailed execution instructions.
 
 ---
 
-# Citation
+## Citation
 
 If you use this repository, please cite:
 
@@ -71,6 +69,6 @@ If you use this repository, please cite:
 
 ---
 
-# Contact
+## Contact
 
 For questions regarding this repository or the benchmarking framework, please contact the corresponding authors of the study.
