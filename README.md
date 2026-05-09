@@ -8,9 +8,37 @@ The project provides a comprehensive benchmarking framework for evaluating DNA m
 
 ---
 
-# Repository Contents
+# Repository Structure
 
-This repository includes:
+```text
+methylation_deconvolution_benchmark/
+│
+├── data/                  
+│   ├── reference_data/          # Reference data used for benchmarking
+│   ├── real_data/               # Real methylation data used for benchmarking
+│   ├── test_data/               # Simulated bulk methylation data for benchmarking
+├── scripts/         
+│   ├── array_process/           # Array data preprocessing scripts
+│   ├── wgbs_process/            # WGBS data preprocessing scripts
+│   ├── simulated_data_generate/ # Simulated bulk methylation data generation scripts
+│   ├── deconvolution/           # Deconvolution methods execution scripts
+│   ├── requirements/            # R and Python package dependencies
+├── results/                
+│   ├── real_data/               # Benchmark results on real data
+│   ├── simulated_data/          # Benchmark results on simulated data
+└── README.md
+```
+
+---
+
+# Installation
+
+```text
+git clone https://github.com/Zhangmochen-zmc/methylation_deconvolution_benchmark.git
+cd methylation_deconvolution_benchmark
+```
+
+---
 
 # Software Environment
 
@@ -20,29 +48,6 @@ The analyses were performed under the following environments:
 - **Python**: v3.10.19
 
 Additional package dependencies are described in the corresponding folders.
-
----
-
-# Repository Structure
-
-```text
-methylation_deconvolution_benchmark/
-│
-├── data/                  
-│   ├── reference_data/              # Reference data used for benchmarking
-│   ├── real_data/              # Real methylation data used for benchmarking
-│   ├── test_data/              # Simulated bulk methylation data for benchmarking
-├── scripts/         
-│   ├── array_process/              # Array data preprocessing scripts
-│   ├── wgbs_process/              # WGBS data preprocessing scripts
-│   ├── simulated_data_generate/          # Simulated bulk methylation data generation scripts
-│   ├── deconvolution/          # Deconvolution methods execution scripts
-│   ├── requirements/          # R and Python package dependencies
-├── results/                
-│   ├── real_data/              # Benchmark results on real data
-│   ├── simulated_data/              # Benchmark results on simulated data
-└── README.md
-```
 
 ---
 
