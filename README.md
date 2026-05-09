@@ -29,6 +29,7 @@ methylation_deconvolution_benchmark/
 └── README.md
 ```
 
+
 ## Installation
 
 ```text
@@ -36,7 +37,6 @@ git clone https://github.com/Zhangmochen-zmc/methylation_deconvolution_benchmark
 cd methylation_deconvolution_benchmark
 ```
 
----
 
 ## Software Environment
 
@@ -47,19 +47,16 @@ The analyses were performed under the following environments:
 
 Additional package dependencies are described in the corresponding folders.
 
----
 
 ## Included Methods
 
 This repository contains execution pipelines for all deconvolution methods included in the manuscript, with method-specific configurations and running instructions provided within the corresponding directories, and all methods implemented as closely as possible to their original publications and software documentation.
 
----
 
 ## Usage
 
 Please refer to the README or documentation within each subdirectory for detailed execution instructions.
 
----
 
 ## Citation
 
@@ -67,7 +64,6 @@ If you use this repository, please cite:
 
 > *Cross-platform benchmarking of DNA methylation deconvolution methods across methylation array and whole-genome bisulfite sequencing data*
 
----
 
 ## Contact
 
