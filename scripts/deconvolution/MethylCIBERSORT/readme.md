@@ -9,7 +9,7 @@ Before running the scripts, organize your tested data in `methylation_deconvolut
 Run `data_processing.R` to generate a methylation matrix by integrating the `raw_ref/` for each sample.
 
 ```bash
-python data_processing.R
+Rscript data_processing.R
 ```
 
 **Input:** `methylation_deconvolution_benchmark/data/reference_data/450k/raw_ref/`    
