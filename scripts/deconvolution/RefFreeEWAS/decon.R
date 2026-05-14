@@ -7,6 +7,8 @@ library(minfi)
 library(medepir)
 library(peakRAM) 
 
+set.seed(123)
+
 # config
 ref_file_path <- "marker_ref/reference_output_RefFreeEWAS.csv"
 input_folder <- "test_data" 
