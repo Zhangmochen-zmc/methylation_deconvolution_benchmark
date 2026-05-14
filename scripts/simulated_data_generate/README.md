@@ -17,7 +17,7 @@ Scripts for simulating Illumina Methylation Array data.
 
 ### 3. `wgbs_data/` (WGBS Simulation)
 Tools for generating simulated sequencing data in PAT and BED formats.
-* `mix_pat.py`: Mixes purified PAT files to create simulation samples at various sequencing depths.
+* `mixdata.py`: Mixes purified PAT files to create simulation samples at various sequencing depths.
 * `bed_generate.sh`: Automates the workflow from mixing to BED generation.
 
 ## Workflow Summary
