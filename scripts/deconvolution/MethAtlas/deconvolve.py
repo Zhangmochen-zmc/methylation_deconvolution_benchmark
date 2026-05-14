@@ -10,7 +10,7 @@ import math
 import matplotlib.pylab as plt
 import matplotlib.cm
 import matplotlib.colors
-import matplotlib # 确保导入主库以便检查版本
+import matplotlib 
 
 ATLAS_FILE = 'ref.csv'
 OUT_PATH = '.'
