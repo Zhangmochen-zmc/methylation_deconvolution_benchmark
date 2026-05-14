@@ -1,4 +1,3 @@
-set.seed(123)
 library(devtools)
 devtools::install_github("BRL-BCM/EDec")
 library(EDec)
@@ -6,6 +5,8 @@ library(gplots)
 library(RColorBrewer)
 library(peakRAM)
 library(clue)
+
+set.seed(123)
 
 input_folder <- "test_data"  
 output_folder <- "edec_result" 
