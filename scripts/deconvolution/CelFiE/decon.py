@@ -8,6 +8,11 @@ import bottleneck as bn  # substantially speeds up calculations with nan's
 import numpy as np
 import pandas as pd
 import pickle as pkl  # to save output
+import random
+
+SEED = 123  
+np.random.seed(SEED)
+random.seed(SEED)
 
 np.seterr(divide="ignore", invalid="ignore")
 
@@ -156,10 +161,12 @@ if __name__ == "__main__":
 
     random_restarts = []
     for i in range(args.random_restarts):
-        print(f"Random restart {i+1}/{args.random_restarts}...")
+        np.random.seed(SEED + i)
+        random.seed(SEED + i)
+        print(f"Random restart {i+1}/{args.random_restarts} with seed {SEED + i}...")
         alpha, gamma, ll = em(x, x_depths, y, y_depths, args.max_iterations, args.convergence)
         random_restarts.append((ll, alpha, gamma))
-
+    
     ll_max, alpha_max, gamma_max = max(random_restarts)
     write_output(output_alpha_file, alpha_max, tissues, samples)
     write_output(output_gamma_file, gamma_max.T, tissues, list(range(gamma_max.shape[1])))
