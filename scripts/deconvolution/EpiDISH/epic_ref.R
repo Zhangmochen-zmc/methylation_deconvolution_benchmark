@@ -421,7 +421,7 @@ EpiDISH_850k_reference <- process_and_calculate_methylation_centroids(
 print(EpiDISH_850k_reference)
 
 # Set save path
-output_result_file <- "marker_ref/EpiDISH_850k_reference_result.csv"
+output_result_file <- "marker_ref/850k/EpiDISH_850k_reference_result.csv"
 
 # save
 write.csv(EpiDISH_850k_reference, file = output_result_file, row.names = TRUE)
