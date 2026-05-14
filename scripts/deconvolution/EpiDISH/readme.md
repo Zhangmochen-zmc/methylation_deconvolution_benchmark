@@ -1,6 +1,6 @@
 ## Workflow
 
-The execution is divided into three main steps. Please follow them in order. `EpiDISH` handles 450k and 850k methylation arrays differently. (Taking 450k as an example)
+The execution is divided into three main steps. Please follow them in order. Houseman's CP_QP handles 450k and EPIC methylation arrays and WGBS differently. (Taking 450k as an example)
 
 ### Step 1: Data Preparation
 
