@@ -66,7 +66,8 @@ for (i in seq_along(file_list)) {
         NINIT = 10,       
         NFOLDS = 10,      
         ITERMAX = 300,    
-        NCORES = 1     
+        NCORES = 1,
+        seed = 123
       )
     }, error = function(e) {
       cat(sprintf("\n  ERROR: runMeDeCom failed on %s: %s\n", file_name, e$message))
