@@ -1,3 +1,4 @@
+set.seed(123)
 library(devtools)
 devtools::install_github("BRL-BCM/EDec")
 library(EDec)
