@@ -15,7 +15,7 @@ if (!dir.exists(output_folder)) {
 cat("Loading reference matrix...\n")
 
 # 1. load Reference Matrix (850k)
-reference_EpiDISH_850k_path <- "marker_ref/EpiDISH_850k_reference_result.csv"
+reference_EpiDISH_850k_path <- "marker_ref/epic/EpiDISH_850k_reference_result.csv"
 own_ref_data <- read.csv(reference_EpiDISH_850k_path, row.names = 1)
 own_ref_matrix <- as.matrix(own_ref_data)
 
