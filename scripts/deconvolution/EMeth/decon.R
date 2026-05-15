@@ -3,6 +3,8 @@ library(peakRAM)
 library(quadprog)
 library(Matrix)
 
+set.seed(123)
+
 # 0. prepare
 
 initial_wd <- getwd()

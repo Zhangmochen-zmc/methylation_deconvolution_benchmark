@@ -2,6 +2,8 @@ library(matrixStats)
 library(quadprog)
 library(peakRAM) 
 
+set.seed(123)
+
 # config
 rdir <- "PRMeth-main/PRMeth/R"
 ref_file_path <- "marker_ref/reference_output_PRMeth.csv"

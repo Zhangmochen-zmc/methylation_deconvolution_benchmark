@@ -3,6 +3,8 @@ devtools::install_github("Moonerss/CIBERSORT")
 library(CIBERSORT)
 library(peakRAM) 
 
+set.seed(123)
+
 mix_data_dir  <- "test_data"         
 results_dir   <- "methylcibersort_result"           
 ref_file_path <- "test_ref_Signature.txt" 

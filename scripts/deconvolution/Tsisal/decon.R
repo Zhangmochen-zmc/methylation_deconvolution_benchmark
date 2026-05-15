@@ -3,6 +3,8 @@ library(dplyr)
 library(stringr)
 library(peakRAM) 
 
+set.seed(123)
+
 # config
 ref_file_path <- "marker_ref/reference_output_Tsisal.csv"
 input_folder <- "test_data" 

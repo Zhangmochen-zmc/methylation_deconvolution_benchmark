@@ -10,7 +10,7 @@ import math
 import matplotlib.pylab as plt
 import matplotlib.cm
 import matplotlib.colors
-import matplotlib # 确保导入主库以便检查版本
+import matplotlib 
 
 ATLAS_FILE = 'ref.csv'
 OUT_PATH = '.'
@@ -33,11 +33,8 @@ def hide_small_tissues(df):
     :return: The DataFrame with the new category ('other'),
              where the low-contribution tissues are set to 0.
     """
-    # 1. 计算所有小于阈值的总和
     others = df[df < OTHERS_THRESH].sum()
-    # 2. 将小于阈值的位置置为0
     df[df < OTHERS_THRESH] = 0.0
-    # 3. 创建 'other' 行并拼接到末尾 (Pandas 2.0 兼容写法)
     other_row = others.rename('other').to_frame().T
     df = pd.concat([df, other_row])
     return df
@@ -56,11 +53,10 @@ def gen_bars_colors_hatches(nr_tissues):
     nr_colors = int(math.ceil(nr_tissues / len(hatches)) + 1)
 
     # generate bars colors:
-    # [修改] 兼容新旧版本 Matplotlib 的 get_cmap
     try:
-        cmap = matplotlib.colormaps[COLOR_MAP] # 新版写法 (Matplotlib 3.5+)
+        cmap = matplotlib.colormaps[COLOR_MAP] 
     except AttributeError:
-        cmap = matplotlib.cm.get_cmap(COLOR_MAP) # 旧版写法
+        cmap = matplotlib.cm.get_cmap(COLOR_MAP) 
 
     norm = matplotlib.colors.Normalize(vmin=0.0, vmax=float(nr_colors))
     colors = [cmap(norm(k)) for k in range(nr_colors)]
@@ -212,7 +208,6 @@ class Deconvolve:
         samp = data.iloc[:, 0]
         red_atlas = data.iloc[:, 1:]
 
-        # [修改] 显式传入 .values 以确保是纯数值计算，避免 Pandas 索引警告
         mixture, residual = optimize.nnls(red_atlas.values, samp.values)
         mixture /= np.sum(mixture)
         return mixture, residual

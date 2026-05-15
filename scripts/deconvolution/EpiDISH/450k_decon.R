@@ -14,12 +14,12 @@ if (!dir.exists(output_folder)) {
 # Load the reference matrix (run only once)
 cat("Loading reference matrix...\n")
 
-# 1. load Reference Matrix (850k)
-reference_EpiDISH_850k_path <- "marker_ref/EpiDISH_850k_reference_result.csv"
-own_ref_data <- read.csv(reference_EpiDISH_850k_path, row.names = 1)
+# 1. load Reference Matrix (450k)
+reference_EpiDISH_450k_path <- "marker_ref/EpiDISH_450k_reference_result.csv"
+own_ref_data <- read.csv(reference_EpiDISH_450k_path, row.names = 1)
 own_ref_matrix <- as.matrix(own_ref_data)
 
-# 2. load EpiDISH Reference Matrix (cent12CT.m)
+# 2. load EpiDISH Reference Matrix (centDHSbloodDMC.m)
 data("centDHSbloodDMC.m") 
 
 # Initialization log
@@ -56,24 +56,21 @@ for (i in seq_along(csv_files)) {
     
     cat("Data Dimensions: ", dim(beta_matrix)[1], "row, ", dim(beta_matrix)[2], "col\n")
 
-    # Part 1: Using a custom reference matrix (Own Reference - 850k)
+    # Part 1: Using a custom reference matrix (Own Reference - 450k)
 
     # 1. RPC
-    # cat("    run Own Reference (850k) - RPC...\n")
     res_own_rpc <- epidish(beta.m = beta_matrix, ref.m = own_ref_matrix, method = "RPC")$estF
     write.table(res_own_rpc, 
                 file = file.path(output_folder, paste0(file_name, "_result_own_RPC.txt")), 
                 sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE)
     
     # 2. CBS 
-    # cat("    run Own Reference (850k) - CBS...\n")
     res_own_cbs <- epidish(beta.m = beta_matrix, ref.m = own_ref_matrix, method = "CBS")$estF
     write.table(res_own_cbs, 
                 file = file.path(output_folder, paste0(file_name, "_result_own_CBS.txt")), 
                 sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE)
     
     # 3. CP 
-    # cat("    run Own Reference (850k) - CP...\n")
     res_own_cp <- epidish(beta.m = beta_matrix, ref.m = own_ref_matrix, method = "CP")$estF
     write.table(res_own_cp, 
                 file = file.path(output_folder, paste0(file_name, "_result_own_CP.txt")), 
@@ -82,21 +79,18 @@ for (i in seq_along(csv_files)) {
     # Part Two: Using the built-in EpiDISH reference matrix (centDHSbloodDMC.m)
     
     # 1. RPC
-    # cat("    run EpiDISH Reference (centDHSbloodDMC.m) - RPC...\n")
     res_epi_rpc <- epidish(beta.m = beta_matrix, ref.m = centDHSbloodDMC.m, method = "RPC")$estF
     write.table(res_epi_rpc, 
                 file = file.path(output_folder, paste0(file_name, "_result_EpiDISH_RPC.txt")), 
                 sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE)
     
     # 2. CBS 
-    # cat("    run EpiDISH Reference (centDHSbloodDMC.m) - CBS...\n")
     res_epi_cbs <- epidish(beta.m = beta_matrix, ref.m = centDHSbloodDMC.m, method = "CBS")$estF
     write.table(res_epi_cbs, 
                 file = file.path(output_folder, paste0(file_name, "_result_EpiDISH_CBS.txt")), 
                 sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE)
     
     # 3. CP 
-    # cat("    run EpiDISH Reference (centDHSbloodDMC.m) - CP...\n")
     res_epi_cp <- epidish(beta.m = beta_matrix, ref.m = centDHSbloodDMC.m, method = "CP")$estF
     write.table(res_epi_cp, 
                 file = file.path(output_folder, paste0(file_name, "_result_EpiDISH_CP.txt")), 

@@ -1,6 +1,6 @@
 ## Workflow
 
-The execution is divided into two main steps. Please follow them in order. 
+The execution is divided into two main steps. Please follow them in order. Users need to download `MetDecode` to the project.
 
 ### Step 1: Data Preparation
 

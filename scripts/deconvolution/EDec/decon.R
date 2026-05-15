@@ -6,6 +6,8 @@ library(RColorBrewer)
 library(peakRAM)
 library(clue)
 
+set.seed(123)
+
 input_folder <- "test_data"  
 output_folder <- "edec_result" 
 k_num <- 6
