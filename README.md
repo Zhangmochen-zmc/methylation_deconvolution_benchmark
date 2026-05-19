@@ -84,23 +84,23 @@ All 21 methods were implemented as closely as possible to their original publica
 
 | Method              | Platform          | Language    |
 |---------------------|-------------------|-------------|
-| ARIC                | 450k, EPIC, WGBS  | Python      |
+| ARIC                | 450K, EPIC, WGBS  | Python      |
 | CelFEER             | WGBS              | Python      |
 | CelFiE              | WGBS              | Python      |
-| EDec                | 450k, EPIC, WGBS  | R / Python  |
-| EMeth-noraml/laplace| 450k, EPIC, WGBS  | R           |
-| EpiDISH-RPC/CP/CBS  | 450k, EPIC, WGBS  | R           |
-| EpiSCORE            | 450k, EPIC, WGBS  | R / Python  |
-| Houseman's QP       | 450k, EPIC, WGBS  | R           |
-| MEnet               | 450k, EPIC, WGBS  | Python      |
-| MeDeCom             | 450k, EPIC, WGBS  | R / Python  |
+| EDec                | 450K, EPIC, WGBS  | R / Python  |
+| EMeth-noraml/laplace| 450K, EPIC, WGBS  | R           |
+| EpiDISH-RPC/CP/CBS  | 450K, EPIC, WGBS  | R           |
+| EpiSCORE            | 450K, EPIC, WGBS  | R / Python  |
+| Houseman's QP       | 450K, EPIC, WGBS  | R           |
+| MEnet               | 450K, EPIC, WGBS  | Python      |
+| MeDeCom             | 450K, EPIC, WGBS  | R / Python  |
 | MetDecode           | WGBS              | Python      |
-| MethAtlas           | 450k, EPIC, WGBS  | Python      |
+| MethAtlas           | 450K, EPIC, WGBS  | Python      |
 | MethylBERT          | WGBS              | Python      |
-| MethylCIBERSORT     | 450k, EPIC, WGBS  | R           |
-| PRMeth              | 450k, EPIC, WGBS  | R           |
-| RefFreeEWAS         | 450k, EPIC, WGBS  | R           |
-| Tsisal              | 450k, EPIC, WGBS  | R           |
+| MethylCIBERSORT     | 450K, EPIC, WGBS  | R           |
+| PRMeth              | 450K, EPIC, WGBS  | R           |
+| RefFreeEWAS         | 450K, EPIC, WGBS  | R           |
+| Tsisal              | 450K, EPIC, WGBS  | R           |
 | UXM                 | WGBS              | Shell       |
 
 EpiDISH was evaluated with three internal algorithms (RPC, CBS, CP) and is reported as three entries in the results.
