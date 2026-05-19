@@ -4,7 +4,7 @@ This repository accompanies the manuscript:
 
 > **Cross-platform benchmarking of DNA methylation deconvolution methods across methylation array and whole-genome bisulfite sequencing data**
 
-It provides the complete data, scripts, and aggregated results for a systematic evaluation of 18 DNA methylation deconvolution methods across the Illumina 450k array, EPIC (850k) array, and whole-genome bisulfite sequencing (WGBS) platforms, using both simulated mixtures and real bulk blood methylation datasets spanning six immune cell types.
+It provides the complete data, scripts, and aggregated results for a systematic evaluation of 21 DNA methylation deconvolution methods across the Illumina 450K array, EPIC (850K) array, and whole-genome bisulfite sequencing (WGBS) platforms, using both simulated mixtures and real bulk blood methylation datasets spanning six immune cell types.
 
 This repository documents the benchmarking pipeline as executed in the study and is intended as a transparency and reproducibility resource accompanying the manuscript.
 
@@ -15,14 +15,14 @@ This repository documents the benchmarking pipeline as executed in the study and
 ```text
 methylation_deconvolution_benchmark/
 ├── data/
-│   ├── reference_data/          # Purified cell-type reference profiles (450k / EPIC / WGBS)
-│   ├── real_data/               # Real bulk blood methylation datasets (450k / EPIC)
+│   ├── reference_data/          # Purified cell-type reference profiles (450K / EPIC / WGBS)
+│   ├── real_data/               # Real bulk blood methylation datasets (450K / EPIC)
 │   └── test_data/               # Simulated bulk methylation mixtures used for benchmarking
 ├── scripts/
-│   ├── array_process/           # Preprocessing pipelines for 450k and EPIC array data
+│   ├── array_process/           # Preprocessing pipelines for 450K and EPIC array data
 │   ├── wgbs_process/            # Preprocessing pipeline for WGBS data
 │   ├── simulated_data_generate/ # Scripts for generating simulated mixture datasets
-│   ├── deconvolution/           # Per-method execution scripts (18 methods)
+│   ├── deconvolution/           # Per-method execution scripts (21 methods)
 │   └── requirements/            # Software dependency lists (R and Python)
 └── results/
     ├── real_data/               # Deconvolution results on real datasets
@@ -54,9 +54,9 @@ Five publicly available bulk blood methylation datasets with known cell-type com
 
 | Dataset    | Platform | Accession                                                          |
 |------------|----------|--------------------------------------------------------------------|
-| GSE127824  | 450k     | [GSE127824](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE127824) |
-| GSE77797   | 450k     | [GSE77797](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE77797)   |
-| GSE58888   | 450k     | [GSE58888](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE58888)   |
+| GSE127824  | 450K     | [GSE127824](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE127824) |
+| GSE77797   | 450K     | [GSE77797](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE77797)   |
+| GSE58888   | 450K     | [GSE58888](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE58888)   |
 | GSE110554  | EPIC     | [GSE110554](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE110554) |
 | GSE112618  | EPIC     | [GSE112618](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE112618) |
 
@@ -66,13 +66,13 @@ Synthetic bulk mixtures were generated from purified reference profiles under mu
 
 | Scenario         | Platform          | Description                                                        |
 |------------------|-------------------|--------------------------------------------------------------------|
-| `random`         | 450k, EPIC, WGBS  | Fully random Dirichlet-sampled cell-type proportions               |
-| `simulated_real` | 450k, EPIC, WGBS  | Proportions mimicking typical peripheral blood composition         |
-| `low`            | 450k, EPIC, WGBS  | All cell types present at uniformly low fractions                  |
-| `less_onetype`   | 450k, EPIC, WGBS  | One cell type present at very low abundance                        |
-| `more_onetype`   | 450k, EPIC, WGBS  | One cell type present at dominant abundance                        |
-| `noisy`          | 450k, EPIC        | Gaussian noise added in M-value space to simulate technical variation |
-| `sparsity`       | 450k, EPIC        | Sparse CpG feature coverage                                        |
+| `random`         | 450K, EPIC, WGBS  | Fully random Dirichlet-sampled cell-type proportions               |
+| `simulated_real` | 450K, EPIC, WGBS  | Proportions mimicking typical peripheral blood composition         |
+| `low`            | 450K, EPIC, WGBS  | All cell types present at uniformly low fractions                  |
+| `less_onetype`   | 450K, EPIC, WGBS  | One cell type present at very low abundance                        |
+| `more_onetype`   | 450K, EPIC, WGBS  | One cell type present at dominant abundance                        |
+| `noisy`          | 450K, EPIC        | Gaussian noise added in M-value space to simulate technical variation |
+| `sparsity`       | 450K, EPIC        | Sparse CpG feature coverage                                        |
 | `depth`          | WGBS              | Variable sequencing depth across samples                           |
 | `CpGcoverage`    | WGBS              | Variable CpG site coverage across samples                          |
 
@@ -80,30 +80,31 @@ Synthetic bulk mixtures were generated from purified reference profiles under mu
 
 ## Benchmarked Methods
 
-All 18 methods were implemented as closely as possible to their original publications and software documentation. Per-method execution scripts, reference construction pipelines, and any method-specific preprocessing steps are provided in `scripts/deconvolution/<method>/`.
+All 21 methods were implemented as closely as possible to their original publications and software documentation. Per-method execution scripts, reference construction pipelines, and any method-specific preprocessing steps are provided in `scripts/deconvolution/<method>/`.
 
-| Method           | Platform          | Language    |
-|------------------|-------------------|-------------|
-| ARIC             | 450k, EPIC, WGBS  | Python      |
-| CelFEER          | WGBS              | Python      |
-| CelFiE           | WGBS              | Python      |
-| EDec             | 450k, EPIC, WGBS  | R / Python  |
-| EMeth            | 450k, EPIC, WGBS  | R           |
-| EpiDISH          | 450k, EPIC, WGBS  | R           |
-| EpiSCORE         | 450k, EPIC, WGBS  | R / Python  |
-| Houseman's QP    | 450k, EPIC, WGBS  | R           |
-| MEnet            | 450k, EPIC, WGBS  | Python      |
-| MeDeCom          | 450k, EPIC, WGBS  | R / Python  |
-| MetDecode        | WGBS              | Python      |
-| MethAtlas        | 450k, EPIC, WGBS  | Python      |
-| MethylBERT       | WGBS              | Python      |
-| MethylCIBERSORT  | 450k, EPIC, WGBS  | R           |
-| PRMeth           | 450k, EPIC, WGBS  | R           |
-| RefFreeEWAS      | 450k, EPIC, WGBS  | R           |
-| Tsisal           | 450k, EPIC, WGBS  | R           |
-| UXM              | WGBS              | Shell       |
+| Method              | Platform          | Language    |
+|---------------------|-------------------|-------------|
+| ARIC                | 450k, EPIC, WGBS  | Python      |
+| CelFEER             | WGBS              | Python      |
+| CelFiE              | WGBS              | Python      |
+| EDec                | 450k, EPIC, WGBS  | R / Python  |
+| EMeth-noraml/laplace| 450k, EPIC, WGBS  | R           |
+| EpiDISH-RPC/CP/CBS  | 450k, EPIC, WGBS  | R           |
+| EpiSCORE            | 450k, EPIC, WGBS  | R / Python  |
+| Houseman's QP       | 450k, EPIC, WGBS  | R           |
+| MEnet               | 450k, EPIC, WGBS  | Python      |
+| MeDeCom             | 450k, EPIC, WGBS  | R / Python  |
+| MetDecode           | WGBS              | Python      |
+| MethAtlas           | 450k, EPIC, WGBS  | Python      |
+| MethylBERT          | WGBS              | Python      |
+| MethylCIBERSORT     | 450k, EPIC, WGBS  | R           |
+| PRMeth              | 450k, EPIC, WGBS  | R           |
+| RefFreeEWAS         | 450k, EPIC, WGBS  | R           |
+| Tsisal              | 450k, EPIC, WGBS  | R           |
+| UXM                 | WGBS              | Shell       |
 
 EpiDISH was evaluated with three internal algorithms (RPC, CBS, CP) and is reported as three entries in the results.
+EMeth was evaluated with three internal algorithms (noraml, laplace) and is reported as three entries in the results.
 
 ---
 
@@ -115,9 +116,9 @@ Aggregated deconvolution results are provided in `results/` as CSV files. Each f
 
 | File            | Dataset    | Platform |
 |-----------------|------------|----------|
-| `GSE127824.csv` | GSE127824  | 450k     |
-| `GSE77797.csv`  | GSE77797   | 450k     |
-| `GSE58888.csv`  | GSE58888   | 450k     |
+| `GSE127824.csv` | GSE127824  | 450K     |
+| `GSE77797.csv`  | GSE77797   | 450K     |
+| `GSE58888.csv`  | GSE58888   | 450K     |
 | `GSE110554.csv` | GSE110554  | EPIC     |
 | `GSE112618.csv` | GSE112618  | EPIC     |
 
